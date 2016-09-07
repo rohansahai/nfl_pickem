@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  week: MyString
+  home_team_id: MyString
+  away_team_id: MyString
+  spread: MyString
+
+two:
+  week: MyString
+  home_team_id: MyString
+  away_team_id: MyString
+  spread: MyString

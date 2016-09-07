@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: MyString
+  game_id: MyString
+  winner_id: MyString
+  week: MyString
+
+two:
+  user_id: MyString
+  game_id: MyString
+  winner_id: MyString
+  week: MyString

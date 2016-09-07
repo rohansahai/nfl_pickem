@@ -1,0 +1,2 @@
+class Pick < ApplicationRecord
+end
