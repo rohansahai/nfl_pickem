@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
-  get 'session/create'
+  get 'sessions/create'
 
-  get 'session/destroy'
+  get 'sessions/destroy'
 
-  get 'home/show'
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: redirect('/')
+  get 'signout', to: 'sessions#destroy', as: 'signout'
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :sessions, only: [:create, :destroy]
+  resource :home, only: [:show]
+
+  root to: "home#show"
 end
