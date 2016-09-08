@@ -5,6 +5,7 @@ class CreateGames < ActiveRecord::Migration[5.0]
       t.integer :home_team_id, index: true, foreign_key: true, null: false
       t.integer :away_team_id, index: true, foreign_key: true, null: false
       t.integer :spread, null: false
+      t.timestamp :time, null: false
 
       t.timestamps
     end

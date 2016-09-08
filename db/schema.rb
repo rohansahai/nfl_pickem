@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907065531) do
+ActiveRecord::Schema.define(version: 20160908221608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20160907065531) do
     t.integer  "home_team_id", null: false
     t.integer  "away_team_id", null: false
     t.integer  "spread",       null: false
+    t.datetime "time",         null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["away_team_id"], name: "index_games_on_away_team_id", using: :btree
@@ -37,6 +38,12 @@ ActiveRecord::Schema.define(version: 20160907065531) do
     t.index ["game_id"], name: "index_picks_on_game_id", using: :btree
     t.index ["user_id"], name: "index_picks_on_user_id", using: :btree
     t.index ["winner_id"], name: "index_picks_on_winner_id", using: :btree
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
