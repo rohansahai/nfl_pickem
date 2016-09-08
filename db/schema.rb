@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20160908221608) do
     t.integer  "game_id",    null: false
     t.integer  "winner_id",  null: false
     t.integer  "week",       null: false
-    t.boolean  "win"
+    t.string   "result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_picks_on_game_id", using: :btree

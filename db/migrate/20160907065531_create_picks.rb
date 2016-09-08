@@ -5,7 +5,7 @@ class CreatePicks < ActiveRecord::Migration[5.0]
       t.integer :game_id, index: true, foreign_key: true, null: false
       t.integer :winner_id, index: true, foreign_key: true, null: false
       t.integer :week, null: false
-      t.boolean :win
+      t.string :result
 
       t.timestamps
     end
