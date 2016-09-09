@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create, :destroy]
   resource :home, only: [:show]
   resources :weeks, only: [:index] do
-    resources :picks, only: [:index]
+    resources :games, only: [:index]
   end
 
   root to: "home#show"
