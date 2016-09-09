@@ -52,3 +52,5 @@ gem "omniauth-google-oauth2"
 
 # env
 gem 'dotenv-rails'
+
+gem 'react-rails', '~> 1.5'
