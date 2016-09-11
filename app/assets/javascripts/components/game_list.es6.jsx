@@ -11,12 +11,15 @@ class GameList extends React.Component {
         _.each(picks, function(pick){
             if (pick.game_id === new_pick.game_id) {
                 pick.winner_id = new_pick.winner_id;
-                updated_pick = true;
+                updated_pick = pick;
             }
         })
 
         if (!updated_pick) {
             picks.push(new_pick);
+            this.sendPickRequest(new_pick, 'POST');
+        } else {
+            this.sendPickRequest(updated_pick, 'PUT');
         }
 
         var games = this.state.games;
@@ -25,14 +28,41 @@ class GameList extends React.Component {
     }
 
     removePick (game_id) {
-        var picks = _.without(this.state.picks, _.findWhere(this.state.picks, {
+        var pick = _.findWhere(this.state.picks, {
             game_id: game_id
-        }));
+        })
+        var picks = _.without(this.state.picks, pick);
 
         var games = this.state.games;
         _.findWhere(games, {id: game_id}).winner_id = null;
 
         this.setState({picks: picks, games: games});
+        if (pick.id) {
+            this.sendPickRequest(pick, 'DELETE');
+        }
+    }
+
+    sendPickRequest (pick, request_type) {
+        if (pick.id) {
+            var url = this.props.url + '/' + pick.id
+        } else {
+            var url = this.props.url;
+        }
+
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            type: request_type,
+            data: {
+                pick: pick
+            },
+            success: function(daeta) {
+                console.log('success!');
+            },
+            error: function(xhr, status, err) {
+                console.error(url, status, err.toString());
+            }
+        })
     }
 
     render () {
@@ -43,7 +73,7 @@ class GameList extends React.Component {
             );
         })
         return (
-            <div className="gameList">
+            <div>
                 <h1>Games</h1>
                 <table>
                     <tbody>

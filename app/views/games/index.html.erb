@@ -1,4 +1,5 @@
 <%= react_component('GameList', {
 	games: @games,
-	picks: @picks
+	picks: @picks,
+	url: "/weeks/#{@week}/picks"
 }) %>
