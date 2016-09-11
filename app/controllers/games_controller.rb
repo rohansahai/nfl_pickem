@@ -9,7 +9,7 @@ class GamesController < ApplicationController
     @games.each do |game|
       pick = @picks.find_by(:game_id => game['id'])
       if (pick)
-        game['picked_team_id'] = pick['id']
+        game['picked_team_location'] = (game['home_team_id'] == pick['winner_id']) ? 'home' : 'away'
       end
     end
 
