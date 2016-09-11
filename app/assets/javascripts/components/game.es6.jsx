@@ -22,7 +22,12 @@ class Game extends React.Component {
     }
 
     handlePickSelect (e) {
-        this.props.onPickSelect();
+        var _this = this;
+        this.props.onPickSelect({
+            winner_id: $(e.target).data('team-id'),
+            game_id: _this.props.game.id,
+            week: _this.props.game.week
+        });
     }
 }
 
