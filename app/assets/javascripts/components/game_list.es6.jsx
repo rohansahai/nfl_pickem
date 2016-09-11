@@ -4,7 +4,7 @@ class GameList extends React.Component {
         this.state = {picks: props.picks, games: props.games};
     }
 
-    handlePickSelect (new_pick) {
+    addNewPick (new_pick) {
         var picks = this.state.picks;
         var updated_pick = false;
 
@@ -24,11 +24,22 @@ class GameList extends React.Component {
         this.setState({picks: picks, games: games});
     }
 
+    removePick (game_id) {
+        var picks = _.without(this.state.picks, _.findWhere(this.state.picks, {
+            game_id: game_id
+        }));
+
+        var games = this.state.games;
+        _.findWhere(games, {id: game_id}).winner_id = null;
+
+        this.setState({picks: picks, games: games});
+    }
+
     render () {
         var _this = this;
         var gameNodes = this.state.games.map(function(game) {
             return (
-                <Game key={game.id} game={game} onPickSelect={_this.handlePickSelect.bind(_this)} />
+                <Game key={game.id} game={game} addNewPick={_this.addNewPick.bind(_this)} removePick={_this.removePick.bind(_this)} />
             );
         })
         return (

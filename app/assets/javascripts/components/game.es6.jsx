@@ -22,9 +22,17 @@ class Game extends React.Component {
     }
 
     handlePickSelect (e) {
+        var winner_id = $(e.target).data('team-id');
+
+        // check if they are deselecting
+        if (this.props.game.winner_id == winner_id) {
+            this.props.removePick(this.props.game.id);
+            return;
+        }
+
         var _this = this;
-        this.props.onPickSelect({
-            winner_id: $(e.target).data('team-id'),
+        this.props.addNewPick({
+            winner_id: winner_id,
             game_id: _this.props.game.id,
             week: _this.props.game.week
         });
