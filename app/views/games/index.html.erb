@@ -1,14 +1,3 @@
-<table>
-	<tr>
-		<th>Home Team</th>
-		<th>Away Team</th>
-		<th>Spread</th>
-	</tr>
-	<% @games.each do |game| %>
-		<%= react_component('Game', { 
-			homeTeam: game.home_team.name,
-			awayTeam: game.away_team.name,
-			spread: game.spread
-		}) %>
-	<% end %>
-</table>
+<%= react_component('GameList', {
+	games: @games
+}) %>
