@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resource :home, only: [:show]
   resources :weeks, only: [:index] do
     resources :games, only: [:index]
+    resources :picks, only: [:create, :update, :destroy]
   end
 
   root to: "home#show"
