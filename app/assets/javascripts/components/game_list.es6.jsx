@@ -49,6 +49,7 @@ class GameList extends React.Component {
             var url = this.props.url;
         }
 
+        var _this = this;
         $.ajax({
             url: url,
             dataType: 'json',
@@ -56,8 +57,12 @@ class GameList extends React.Component {
             data: {
                 pick: pick
             },
-            success: function(daeta) {
-                console.log('success!');
+            success: function(data) {
+                if (request_type === 'POST') {
+                    var picks = _this.state.picks;
+                    _.findWhere(picks, {game_id: data.game_id}).id = data.id;
+                    _this.setState({picks: picks});
+                }
             },
             error: function(xhr, status, err) {
                 console.error(url, status, err.toString());
