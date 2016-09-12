@@ -5,28 +5,20 @@ class GameList extends React.Component {
     }
 
     addNewPick (new_pick) {
-        var picks = this.state.picks;
-        var updated_pick = false;
+        var request_type = (new_pick.id) ? 'PUT' : 'POST';
 
-        _.each(picks, function(pick){
-            if (pick.game_id === new_pick.game_id) {
-                pick.winner_id = new_pick.winner_id;
-                updated_pick = true;
-                new_pick = updated_pick;
-            }
-        })
-
-        if (!updated_pick) {
-            picks.push(new_pick);
-            var request_type = 'POST';
-        } else {
-            var request_type = 'PUT';
-        }
-
+        var _this = this;
         this.sendPickRequest(new_pick, request_type, function(pick){
-            var games = this.state.games;
+            var picks = _this.state.picks;
+            if (request_type === 'POST') {
+                picks.push(pick);
+            } else {
+                _.findWhere(picks, {id: pick.id}).winner_id = pick.winner_id;
+            }
+
+            var games = _this.state.games;
             _.findWhere(games, {id: pick.game_id}).winner_id = pick.winner_id;
-            this.setState({picks: picks, games: games});
+            _this.setState({picks: picks, games: games})
         })
     }
 
@@ -45,7 +37,7 @@ class GameList extends React.Component {
     handleDeletePick (pick) {
         var picks = _.without(this.state.picks, pick);
         var games = this.state.games;
-        _.findWhere(games, {id: game_id}).winner_id = null;
+        _.findWhere(games, {id: pick.game_id}).winner_id = null;
 
         this.setState({picks: picks, games: games});
     }
@@ -66,13 +58,7 @@ class GameList extends React.Component {
                 pick: pick
             },
             success: function(data) {
-                if (request_type === 'POST') {
-                    var picks = _this.state.picks;
-                    _.findWhere(picks, {game_id: data.game_id}).id = data.id;
-                    _this.setState({picks: picks});
-                }
-
-                callback(pick);
+                callback(data);
             },
             error: function(data, status, err) {
                 _this.handleErrors(data.responseJSON.errors);
