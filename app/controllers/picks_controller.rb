@@ -6,13 +6,21 @@ class PicksController < ApplicationController
       :week => pick_params[:week]
     })
 
-    render json: pick, status: 200
+    if pick.valid?
+      render json: pick, status: 200
+    else
+      render json: {:errors => pick.errors}, status: 400
+    end
   end
 
   def update
     pick = current_user.picks.find(pick_params[:id])
     pick.update(:winner_id => pick_params[:winner_id])
-    render json: pick, status: 200
+    if pick.valid?
+      render json: pick, status: 200
+    else
+      render json: {:errors => pick.errors}, status: 400
+    end
   end
 
   def destroy

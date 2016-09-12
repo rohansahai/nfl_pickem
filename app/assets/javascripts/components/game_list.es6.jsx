@@ -11,38 +11,46 @@ class GameList extends React.Component {
         _.each(picks, function(pick){
             if (pick.game_id === new_pick.game_id) {
                 pick.winner_id = new_pick.winner_id;
-                updated_pick = pick;
+                updated_pick = true;
+                new_pick = updated_pick;
             }
         })
 
         if (!updated_pick) {
             picks.push(new_pick);
-            this.sendPickRequest(new_pick, 'POST');
+            var request_type = 'POST';
         } else {
-            this.sendPickRequest(updated_pick, 'PUT');
+            var request_type = 'PUT';
         }
 
-        var games = this.state.games;
-        _.findWhere(games, {id: new_pick.game_id}).winner_id = new_pick.winner_id;
-        this.setState({picks: picks, games: games});
+        this.sendPickRequest(new_pick, request_type, function(pick){
+            var games = this.state.games;
+            _.findWhere(games, {id: pick.game_id}).winner_id = pick.winner_id;
+            this.setState({picks: picks, games: games});
+        })
     }
 
     removePick (game_id) {
         var pick = _.findWhere(this.state.picks, {
             game_id: game_id
-        })
-        var picks = _.without(this.state.picks, pick);
+        });
 
+        if (pick.id) {
+            this.sendPickRequest(pick, 'DELETE', this.handleDeletePick.bind(this, pick));
+        } else {
+            this.handleDeletePick(pick);
+        }
+    }
+
+    handleDeletePick (pick) {
+        var picks = _.without(this.state.picks, pick);
         var games = this.state.games;
         _.findWhere(games, {id: game_id}).winner_id = null;
 
         this.setState({picks: picks, games: games});
-        if (pick.id) {
-            this.sendPickRequest(pick, 'DELETE');
-        }
     }
 
-    sendPickRequest (pick, request_type) {
+    sendPickRequest (pick, request_type, callback) {
         if (pick.id) {
             var url = this.props.url + '/' + pick.id
         } else {
@@ -63,6 +71,8 @@ class GameList extends React.Component {
                     _.findWhere(picks, {game_id: data.game_id}).id = data.id;
                     _this.setState({picks: picks});
                 }
+
+                callback(pick);
             },
             error: function(xhr, status, err) {
                 console.error(url, status, err.toString());

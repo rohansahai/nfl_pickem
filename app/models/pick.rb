@@ -3,8 +3,8 @@ class Pick < ApplicationRecord
   belongs_to :game
   belongs_to :winner, class_name: "Team"
 
-  # validate :pick_locked, :on => :create
-  # validate :max_picks, :on => :create
+  validate :pick_locked, :on => [:create, :update]
+  validate :max_picks, :on => :create
 
   MAX_PICKS = 5
 
