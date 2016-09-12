@@ -10,5 +10,5 @@ Rails.application.routes.draw do
     resources :picks, only: [:create, :update, :destroy]
   end
 
-  root to: "home#show"
+  root to: redirect('/weeks')
 end
