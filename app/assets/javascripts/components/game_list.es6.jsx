@@ -74,10 +74,22 @@ class GameList extends React.Component {
 
                 callback(pick);
             },
-            error: function(xhr, status, err) {
-                console.error(url, status, err.toString());
+            error: function(data, status, err) {
+                _this.handleErrors(data.responseJSON.errors);
             }
         })
+    }
+
+    handleErrors (errors) {
+        var error_message = "";
+        _.each(errors, function(val, key){
+            error_message += "Errors with " + key + ":\n";
+            _.each(val, function(msg){
+                error_message +=  "  -" + msg + "\n";
+            })
+        })
+
+        alert(error_message);
     }
 
     render () {
