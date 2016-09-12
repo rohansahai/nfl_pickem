@@ -5,8 +5,16 @@ class Game extends React.Component {
                 <td data-team-id={this.props.game.home_team.id}> {this.props.game.home_team.name} </td>
                 <td data-team-id={this.props.game.away_team.id}> {this.props.game.away_team.name} </td>
                 <td> {this.props.game.spread} </td>
+                <td> {this.getDatePretty()} </td>
             </tr>
         );
+    }
+
+    getDatePretty () {
+        var days_map = {1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday', 7: 'Sunday'};
+        var date = new Date(this.props.game.time);
+        var day = days_map[date.getDay()];
+        return day + " " + date.toLocaleTimeString();
     }
 
     getPickedTeamLocation () {

@@ -94,6 +94,7 @@ class GameList extends React.Component {
                             <th>Home Team</th>
                             <th>Away Team</th>
                             <th>Spread</th>
+                            <th>Game Time</th>
                         </tr>
                         {gameNodes}
                     </tbody>
