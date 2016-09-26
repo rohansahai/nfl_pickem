@@ -93,14 +93,16 @@ class GameList extends React.Component {
             );
         })
         return (
-            <div>
-                <h1>Games</h1>
-                <table>
+            <div className="card weekly-picks-card">
+                <span className="card-title">Games</span>
+                <table className="bordered">
                     <tbody>
                         <tr>
+                            <th data-id="locked"></th>
                             <th>Home Team</th>
-                            <th>Away Team</th>
-                            <th>Spread</th>
+                            <th>Home Spread</th>
+                            <th>Visiting Team</th>
+                            <th>Visiting Spread</th>
                             <th>Game Time</th>
                         </tr>
                         {gameNodes}

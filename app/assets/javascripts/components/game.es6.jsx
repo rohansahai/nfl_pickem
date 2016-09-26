@@ -2,9 +2,11 @@ class Game extends React.Component {
     render () {
         return (
             <tr className={this.getPickedTeamLocation()} onClick={this.handlePickSelect.bind(this)}>
+                <td></td>
                 <td data-team-id={this.props.game.home_team.id}> {this.props.game.home_team.name} </td>
+                <td> {this.getSpreadPretty(true)} </td>
                 <td data-team-id={this.props.game.away_team.id}> {this.props.game.away_team.name} </td>
-                <td> {this.props.game.spread} </td>
+                <td> {this.getSpreadPretty(false)} </td>
                 <td> {this.getDatePretty()} </td>
             </tr>
         );
@@ -15,6 +17,14 @@ class Game extends React.Component {
         var date = new Date(this.props.game.time);
         var day = days_map[date.getDay()];
         return day + " " + date.toLocaleTimeString();
+    }
+
+    getSpreadPretty (home) {
+        var spread = (home) ? this.props.game.spread : this.props.game.spread * -1;
+        if (spread > 0) {
+            return "+" + spread;
+        }
+        return spread;
     }
 
     getPickedTeamLocation () {
