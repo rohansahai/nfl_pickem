@@ -1,7 +1,7 @@
 class GameList extends React.Component {
     constructor (props) {
         super(props);
-        this.state = {picks: props.picks, games: props.games};
+        this.state = {picks: props.picks, games: props.games, week: props.week};
     }
 
     addNewPick (new_pick) {
@@ -94,20 +94,25 @@ class GameList extends React.Component {
         })
         return (
             <div className="card weekly-picks-card">
-                <span className="card-title">Games</span>
-                <table className="bordered">
-                    <tbody>
-                        <tr>
-                            <th data-id="locked"></th>
-                            <th>Home Team</th>
-                            <th>Home Spread</th>
-                            <th>Visiting Team</th>
-                            <th>Visiting Spread</th>
-                            <th>Game Time</th>
-                        </tr>
-                        {gameNodes}
-                    </tbody>
-                </table>
+                <div className="card-content">
+                    <div className="row title-row">
+                        <span className="card-title">Week {this.props.week} Picks</span>
+                    </div>
+
+                    <table className="bordered">
+                        <tbody>
+                            <tr>
+                                <th data-id="locked"></th>
+                                <th>Home Team</th>
+                                <th>Home Spread</th>
+                                <th>Visiting Team</th>
+                                <th>Visiting Spread</th>
+                                <th>Game Time</th>
+                            </tr>
+                            {gameNodes}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }

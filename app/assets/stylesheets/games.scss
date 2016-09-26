@@ -1,27 +1,32 @@
 .card.weekly-picks-card {
-	margin: 40px;
-}
+    margin: 40px;
 
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
+    .card-content {
+        padding: 0px;
 
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
+        .title-row {
+            border-bottom: 1px solid lightgray;
+            height: 65px;
+            margin-bottom: 0px;
 
-.home {
-	background: lightblue;
-}
+            .card-title {
+                margin: 20px;
+                position: relative;
+                top: 10px;
+            }
+        }
+    }
 
-.away {
-	background: lightgray;
-}
+    .pick-active {
+        background: rgb(232,232,232);
+    }
 
-.pick-team {
-	cursor: pointer;
+    .team-selected {
+        color: rgb(68,150,139);
+        font-weight: 600;
+    }
+
+    .select-team {
+        cursor: pointer;
+    }
 }

@@ -1,15 +1,31 @@
 class Game extends React.Component {
     render () {
+        var home_team = this.props.game.home_team;
+        var away_team = this.props.game.away_team;
         return (
-            <tr className={this.getPickedTeamLocation()} onClick={this.handlePickSelect.bind(this)}>
+            <tr className={this.getGamePickedClass()} onClick={this.handlePickSelect.bind(this)}>
                 <td></td>
-                <td data-team-id={this.props.game.home_team.id}> {this.props.game.home_team.name} </td>
-                <td> {this.getSpreadPretty(true)} </td>
-                <td data-team-id={this.props.game.away_team.id}> {this.props.game.away_team.name} </td>
-                <td> {this.getSpreadPretty(false)} </td>
+                <td className={this.getTeamSelectedClass(home_team.id) + " select-team"} data-team-id={home_team.id}> {home_team.name} </td>
+                <td className={this.getTeamSelectedClass(home_team.id)}> {this.getSpreadPretty(true)} </td>
+                <td className={this.getTeamSelectedClass(away_team.id) + " select-team"} data-team-id={away_team.id}> {away_team.name} </td>
+                <td className={this.getTeamSelectedClass(away_team.id)}> {this.getSpreadPretty(false)} </td>
                 <td> {this.getDatePretty()} </td>
             </tr>
         );
+    }
+
+    getTeamSelectedClass (winner_id) {
+        if (winner_id === this.props.game.winner_id) {
+            return 'team-selected';
+        }
+
+        return '';
+    }
+
+    getGamePickedClass () {
+        if (this.props.game.winner_id) {
+            return 'pick-active';
+        }
     }
 
     getDatePretty () {
@@ -25,18 +41,6 @@ class Game extends React.Component {
             return "+" + spread;
         }
         return spread;
-    }
-
-    getPickedTeamLocation () {
-        if (!this.props.game.winner_id) {
-            return '';
-        }
-
-        if (this.props.game.home_team.id == this.props.game.winner_id) {
-            return 'home';
-        } else {
-            return 'away';
-        }
     }
 
     handlePickSelect (e) {

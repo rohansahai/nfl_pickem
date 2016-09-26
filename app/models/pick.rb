@@ -13,7 +13,7 @@ class Pick < ApplicationRecord
   private
 
   def max_picks
-    if self.user.picks.length > MAX_PICKS
+    if self.user.picks.length + 1 > MAX_PICKS
       errors.add(:pick, "Already reached 5 picks")
     end
   end
