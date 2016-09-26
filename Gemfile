@@ -54,3 +54,5 @@ gem "omniauth-google-oauth2"
 gem 'dotenv-rails'
 
 gem 'react-rails', '~> 1.5'
+
+gem 'nokogiri'
