@@ -11,7 +11,7 @@ class Game extends React.Component {
     }
 
     getDatePretty () {
-        var days_map = {1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday', 7: 'Sunday'};
+        var days_map = {0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday'};
         var date = new Date(this.props.game.time);
         var day = days_map[date.getDay()];
         return day + " " + date.toLocaleTimeString();
