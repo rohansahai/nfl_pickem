@@ -5,7 +5,14 @@ class GameList extends React.Component {
     }
 
     addNewPick (new_pick) {
-        var request_type = (new_pick.id) ? 'PUT' : 'POST';
+        // TODO: make this not hacky af
+        var existing_pick = _.findWhere(this.state.picks, {game_id: new_pick.game_id})
+        var request_type = 'POST';
+
+        if (existing_pick) {
+            new_pick.id = existing_pick.id;
+            var request_type = 'PUT';
+        }
 
         var _this = this;
         this.sendPickRequest(new_pick, request_type, function(pick){

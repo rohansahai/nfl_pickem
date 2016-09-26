@@ -5,6 +5,8 @@ class Pick < ApplicationRecord
 
   validate :pick_locked, :on => [:create, :update]
   validate :max_picks, :on => :create
+  validates :game_id, uniqueness: { scope: :user_id,
+    message: "should only exist once per user" }
 
   MAX_PICKS = 5
 
