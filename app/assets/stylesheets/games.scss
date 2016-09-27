@@ -30,3 +30,17 @@
         cursor: pointer;
     }
 }
+
+#sidebar {
+    margin-top: 40px;
+
+    li {
+        margin: 10px;
+
+        span {
+            margin-left: 10px;
+            position: relative;
+            top: -6px;
+        }
+    }
+}
