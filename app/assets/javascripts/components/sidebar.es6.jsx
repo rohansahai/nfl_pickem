@@ -3,9 +3,9 @@ class Sidebar extends React.Component {
         return (
             <div id="sidebar">
                 <ul>
-                    <li>
+                    <li className="active">
                         <i className="material-icons">schedule</i>
-                        <span>This weeks picks</span>
+                        <span>This Week's Picks</span>
                     </li>
                     <li>
                         <i className="material-icons">skip_previous</i>

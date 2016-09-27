@@ -15,3 +15,14 @@
  */
 
 @import "materialize";
+
+$navy: rgb(102,124,137);
+
+nav {
+	background-color: $navy;
+
+	.title {
+		margin-left: 24px;
+		font-size: 22px;
+	}
+}
