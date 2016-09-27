@@ -76,22 +76,23 @@ class GameList extends React.Component {
     handleErrors (errors) {
         var error_message = "";
         _.each(errors, function(val, key){
-            error_message += "Errors with " + key + ":\n";
             _.each(val, function(msg){
-                error_message +=  "  -" + msg + "\n";
+                error_message +=  msg + "<br>";
             })
         })
 
-        alert(error_message);
+        Materialize.toast(error_message, 4000);
     }
 
     render () {
         var _this = this;
+
         var gameNodes = this.state.games.map(function(game) {
             return (
                 <Game key={game.id} game={game} addNewPick={_this.addNewPick.bind(_this)} removePick={_this.removePick.bind(_this)} />
             );
-        })
+        });
+
         return (
             <div className="card weekly-picks-card">
                 <div className="card-content">
