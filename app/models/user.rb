@@ -11,4 +11,16 @@ class User < ApplicationRecord
       user.save!
     end
   end
+
+  def wins
+    picks.where(:result => 'win').count
+  end
+
+  def losses
+    picks.where(:result => 'loss').count
+  end
+
+  def draws
+    picks.where(:result => 'draw').count
+  end
 end
