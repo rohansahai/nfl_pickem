@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get 'auth/failure', to: redirect('/')
   get 'signout', to: 'sessions#destroy', as: 'signout'
 
+  get 'picks', to: 'games#index'
+
   resources :sessions, only: [:create, :destroy]
   resource :home, only: [:show]
   resources :weeks, only: [:index] do
@@ -10,5 +12,5 @@ Rails.application.routes.draw do
     resources :picks, only: [:create, :update, :destroy]
   end
 
-  root to: redirect('/weeks')
+  root to: redirect('/picks')
 end

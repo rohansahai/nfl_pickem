@@ -29,6 +29,7 @@ class PicksController < ApplicationController
     render json: pick, status: 200 
   end
 
+  private
   def pick_params
     params.require(:pick).permit(:id, :game_id, :winner_id, :week)
   end
