@@ -19,8 +19,10 @@
     <%= react_component('Topbar', {
       current_user: current_user,
     }) %>
-    <div>
-    <%= yield %>
+    <div class="row">
+      <%= react_component('Sidebar', {}, {class: 'col s2'}) %>
+
+      <%= yield %>
     </div>
   </body>
 </html>
