@@ -29,6 +29,10 @@ class PicksController < ApplicationController
     render json: pick, status: 200 
   end
 
+  def standings
+    @users = User.all.to_json(:methods => [:wins, :losses, :draws])
+  end
+
   private
   def pick_params
     params.require(:pick).permit(:id, :game_id, :winner_id, :week)
