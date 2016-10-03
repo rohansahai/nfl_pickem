@@ -44,23 +44,20 @@ class Game extends React.Component {
     }
 
     getGamePickedClass () {
-        var class_name = '';
-        if (this.props.game.winner_id) {
-            class_name = 'pick-active';
-        }
-
         var result = this.props.game.result;
         if (result) {
             if (result === 'win') {
-                class_name += ' pick-win';
+                return 'pick-win';
             } else if (result === 'loss') {
-                class_name += ' pick-loss';
+                return 'pick-loss';
             } else {
-                class_name += ' pick-draw';
+                return 'pick-draw';
             }
         }
 
-        return class_name;
+        if (this.props.game.winner_id) {
+            return 'pick-active';
+        }
     }
 
     getDatePretty () {
