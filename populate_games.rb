@@ -11,7 +11,11 @@ nodes.each do |node|
   game_data[:week] = 5
 
   begin
-    game_data[:spread] = node.periods.period.spread.spread_home.text
+    if defined? node.periods.period.length
+      game_data[:spread] = node.periods.period.first.spread.spread_home.text
+    else
+      game_data[:spread] = node.periods.period.spread.spread_home.text
+    end
   rescue Exception => e
     puts "unable to pull spread for game with following data:"
     puts "#{node.participants.participant[0].participant_name.text} vs #{node.participants.participant[1].participant_name.text}"
