@@ -60,3 +60,5 @@ gem 'react-rails', '~> 1.5'
 gem 'nokogiri'
 
 gem 'materialize-sass'
+
+ruby "2.2.2"
