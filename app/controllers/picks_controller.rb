@@ -1,4 +1,6 @@
 class PicksController < ApplicationController
+  before_action :is_user_logged_in
+
   def create
     pick = current_user.picks.create({
       :game_id => pick_params[:game_id],

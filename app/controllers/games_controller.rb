@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  before_action :is_user_logged_in
+
   def index
     @week = current_week
     @games = Game.where(:week => @week)
