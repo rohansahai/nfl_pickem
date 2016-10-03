@@ -32,10 +32,18 @@ $teal: rgb(68,150,139);
         cursor: pointer;
     }
 
-    .lock-icon {
+    .game-icon {
         font-size: 18px;
         top: 2px;
         position: relative;
         margin-left: 10px;
+    }
+
+    .pick-win .game-icon {
+        color: #4caf50;
+    }
+
+    .pick-loss .game-icon {
+        color: #e53935;
     }
 }

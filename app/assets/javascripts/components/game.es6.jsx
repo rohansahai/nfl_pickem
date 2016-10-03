@@ -4,7 +4,7 @@ class Game extends React.Component {
         var away_team = this.props.game.away_team;
         return (
             <tr className={this.getGamePickedClass()} onClick={this.handlePickSelect.bind(this)}>
-                <td><i className="lock-icon material-icons">{(this.hasGameStarted()) ? 'lock_outline' : 'lock_open'}</i></td>
+                <td><i className="game-icon material-icons">{this.getIcon()}</i></td>
                 <td className={this.getTeamSelectedClass(home_team.id) + " select-team"} data-team-id={home_team.id}> {home_team.name} </td>
                 <td className={this.getTeamSelectedClass(home_team.id)}> {this.getSpreadPretty(true)} </td>
                 <td className={this.getTeamSelectedClass(away_team.id) + " select-team"} data-team-id={away_team.id}> {away_team.name} </td>
@@ -12,6 +12,20 @@ class Game extends React.Component {
                 <td> {this.getDatePretty()} </td>
             </tr>
         );
+    }
+
+    getIcon () {
+        var result = this.props.game.result;
+        if (result) {
+            if (result === 'win') {
+                return 'thumb_up';
+            } else if (result === 'loss') {
+                return 'thumb_down';
+            } else {
+                return 'thumbs_up_down';
+            }
+        }
+        return (this.hasGameStarted()) ? 'lock_outline' : 'lock_open';
     }
 
     hasGameStarted () {
@@ -30,9 +44,23 @@ class Game extends React.Component {
     }
 
     getGamePickedClass () {
+        var class_name = '';
         if (this.props.game.winner_id) {
-            return 'pick-active';
+            class_name = 'pick-active';
         }
+
+        var result = this.props.game.result;
+        if (result) {
+            if (result === 'win') {
+                class_name += ' pick-win';
+            } else if (result === 'loss') {
+                class_name += ' pick-loss';
+            } else {
+                class_name += ' pick-draw';
+            }
+        }
+
+        return class_name;
     }
 
     getDatePretty () {

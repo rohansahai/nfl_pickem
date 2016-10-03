@@ -27,8 +27,12 @@ class PicksController < ApplicationController
 
   def destroy
     pick = current_user.picks.find(pick_params[:id])
-    pick.destroy
-    render json: pick, status: 200 
+    if pick.valid?
+      pick.destroy
+      render json: pick, status: 200 
+    else
+      render json: {:errors => pick.errors}, status: 400
+    end
   end
 
   def standings

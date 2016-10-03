@@ -3,7 +3,7 @@ class Pick < ApplicationRecord
   belongs_to :game
   belongs_to :winner, class_name: "Team"
 
-  validate :pick_locked, :on => [:create, :update]
+  validate :pick_locked, :on => [:create, :update, :destroy]
   validate :max_picks, :on => :create
   validates :game_id, uniqueness: { scope: :user_id,
     message: "should only exist once per user" }
