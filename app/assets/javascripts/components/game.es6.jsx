@@ -4,7 +4,7 @@ class Game extends React.Component {
         var away_team = this.props.game.away_team;
         return (
             <tr className={this.getGamePickedClass()} onClick={this.handlePickSelect.bind(this)}>
-                <td></td>
+                <td><i className="lock-icon material-icons">{(this.hasGameStarted()) ? 'lock_outline' : 'lock_open'}</i></td>
                 <td className={this.getTeamSelectedClass(home_team.id) + " select-team"} data-team-id={home_team.id}> {home_team.name} </td>
                 <td className={this.getTeamSelectedClass(home_team.id)}> {this.getSpreadPretty(true)} </td>
                 <td className={this.getTeamSelectedClass(away_team.id) + " select-team"} data-team-id={away_team.id}> {away_team.name} </td>
@@ -12,6 +12,13 @@ class Game extends React.Component {
                 <td> {this.getDatePretty()} </td>
             </tr>
         );
+    }
+
+    hasGameStarted () {
+        var game_date = new Date(this.props.game.time);
+        var now = new Date();
+
+        return ((now - game_date) > 0) ? true : false;
     }
 
     getTeamSelectedClass (winner_id) {
