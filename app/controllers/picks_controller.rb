@@ -1,6 +1,11 @@
 class PicksController < ApplicationController
   before_action :is_user_logged_in
 
+  def index
+    @picks = current_user.picks.includes([:game])
+    @weeks = (1...current_week).to_a
+  end
+
   def create
     pick = current_user.picks.create({
       :game_id => pick_params[:game_id],

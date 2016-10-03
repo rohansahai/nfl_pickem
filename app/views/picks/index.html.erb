@@ -1,0 +1,8 @@
+<div class="col s9">
+	<% @weeks.each do |week| %>
+		<%= react_component('GameList', {
+			games: @picks.where(:week => week).map {|pick| pick.game },
+			week: week
+		}) %>
+	<% end %>
+</div>

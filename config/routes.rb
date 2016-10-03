@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get 'picks', to: 'games#index'
   get 'standings', to: 'picks#standings'
+  get 'previous', to: 'picks#index'
 
   resources :sessions, only: [:create, :destroy]
   resource :home, only: [:show]
