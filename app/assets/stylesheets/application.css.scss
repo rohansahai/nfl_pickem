@@ -17,12 +17,41 @@
 @import "materialize";
 
 $navy: rgb(102,124,137);
+$teal: rgb(68,150,139);
 
 nav {
-	background-color: $navy;
+    background-color: $navy;
 
-	.title {
-		margin-left: 24px;
-		font-size: 22px;
-	}
+    .title {
+        margin-left: 24px;
+        font-size: 22px;
+    }
+}
+
+#sidebar {
+    margin-top: 50px;
+
+    a {
+        color: inherit;
+    }
+
+    a:visited {
+        color: inherit;
+    }
+
+    li {
+        cursor: pointer;
+        margin: 10px;
+        margin-right: 0px;
+
+        span {
+            margin-left: 15px;
+            position: relative;
+            top: -6px;
+        }
+    }
+
+    .active {
+        color: $teal;
+    }
 }

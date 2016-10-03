@@ -32,21 +32,3 @@ $teal: rgb(68,150,139);
         cursor: pointer;
     }
 }
-
-#sidebar {
-    margin-top: 50px;
-
-    li {
-        margin: 10px;
-
-        span {
-            margin-left: 30px;
-            position: relative;
-            top: -6px;
-        }
-    }
-
-    .active {
-        color: $teal;
-    }
-}
