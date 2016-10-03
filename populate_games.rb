@@ -8,7 +8,7 @@ nodes = doc.xpath("//event")
 nodes.each do |node|
   game_data = {}
   game_data[:time] = node.event_datetimegmt.children.text
-  game_data[:week] = 4
+  game_data[:week] = 5
 
   begin
     game_data[:spread] = node.periods.period.spread.spread_home.text

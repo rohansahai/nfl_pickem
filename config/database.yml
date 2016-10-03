@@ -22,4 +22,8 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  host: <%= ENV['PRODUCTION_DB_HOST'] %>
+  database: <%= ENV['PRODUCTION_DB_NAME'] %>
+  user: <%= ENV['PRODUCTION_DB_USER'] %>
+  password: <%= ENV['PRODUCTION_DB_PWD'] %>
+  port: 5432
