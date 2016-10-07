@@ -7,13 +7,9 @@ class UserRecord extends React.Component {
                 <td> {this.props.user.wins} </td>
                 <td> {this.props.user.losses} </td>
                 <td> {this.props.user.draws} </td>
-                <td> {this.getPoints()} </td>
+                <td> {this.props.user.points} </td>
             </tr>
         );
-    }
-
-    getPoints () {
-        return (this.props.user.wins * 3) + (this.props.user.draws * .5);
     }
 }
 

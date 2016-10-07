@@ -23,7 +23,7 @@ class Standings extends React.Component {
                                 <th>Name</th>
                                 <th>Wins</th>
                                 <th>Losses</th>
-                                <th>Draws</th>
+                                <th>Pushes</th>
                                 <th>Points</th>
                             </tr>
                             {userRecordNodes}

@@ -14,7 +14,8 @@ nflteams = [
 "Houston Texans",                    
 "Indianapolis Colts", 
 "Jacksonville Jaguars",              
-"Kansas City Chiefs", 
+"Kansas City Chiefs",
+"Los Angeles Rams",
 "Miami Dolphins",                    
 "Minnesota Vikings", 
 "New England Patriots",              
@@ -26,13 +27,12 @@ nflteams = [
 "Pittsburgh Steelers",               
 "San Diego Chargers", 
 "San Francisco 49ers",  
-"Seattle Seahawks", 
-"St Louis Rams",                     
+"Seattle Seahawks",                
 "Tampa Bay Buccaneers", 
 "Tennessee Titans",                  
 "Washington Redskins"
 ]
 
-nflteams.each do|team|
-  Team.create(name: team)
+nflteams.each_with_index do|team, index|
+  Team.create(name: team, id: index + 1)
 end

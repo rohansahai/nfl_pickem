@@ -23,4 +23,8 @@ class User < ApplicationRecord
   def draws
     picks.where(:result => 'draw').count
   end
+
+  def points
+    (wins * 1) + (draws * 0.5)
+  end
 end

@@ -68,7 +68,7 @@ class Game extends React.Component {
     }
 
     getSpreadPretty (home) {
-        var spread = (home) ? this.props.game.spread : this.props.game.spread * -1;
+        var spread = (home) ? this.props.game.home_spread : this.props.game.home_spread * -1;
         if (spread > 0) {
             return "+" + spread;
         }
