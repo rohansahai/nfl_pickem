@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   def current_week
     # get the earliest game with no result, that should be the active week
     # otherwise return the last completed game's week
-    unfinished_games = Game.where(:result => nil)
+    unfinished_games = Game.where(:spread_winner_id => nil)
     if (unfinished_games)
       return unfinished_games.order("time ASC").limit(1).first.week
     else
