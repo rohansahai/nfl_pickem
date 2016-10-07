@@ -2,8 +2,10 @@ class PicksController < ApplicationController
   before_action :is_user_logged_in
 
   def index
-    @picks = current_user.picks.includes([:game])
-    @weeks = (1...current_week).to_a
+    @picks = current_user
+              .picks
+              .includes([:game => [:home_team, :away_team]])
+    @weeks = (1...current_week).to_a.reverse
   end
 
   def create
