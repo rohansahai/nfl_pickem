@@ -43,7 +43,7 @@ class PicksController < ApplicationController
   end
 
   def standings
-    @users = User.all.to_json(:methods => [:wins, :losses, :draws, :points])
+    @users = User.all.to_a.sort_by(&:points).reverse.to_json(:methods => [:wins, :losses, :draws, :points])
   end
 
   private
