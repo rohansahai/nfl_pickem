@@ -132,13 +132,22 @@ def get_weekly_scores(tables, week):
     return nfl_scores_df.drop('spread_winner', axis=1)
 
 
+def build_yearly_scores():
+
+    weekly_scores = []
+    current_week = get_nfl_week_num()
+    for week in list(range(1, current_week + 1)):
+        url = 'https://fantasysupercontest.com/nfl-lines-2016-week-{}'.format(week)
+        tables = get_xml(url)
+        weekly_scores.append(get_weekly_scores(tables, week))
+
+    return pd.concat(weekly_scores).dropna()
+
+
 def main():
 
-    week = get_nfl_week_num()
-    url = 'https://fantasysupercontest.com/nfl-lines-2016-week-{}'.format(week)
-    tables = get_xml(url)
-    nfl_scores_df = get_weekly_scores(tables, week)
-    nfl_scores_df.to_csv('/Users/shaunchaudhary/desktop/nfl_scores_week_{}'.format(week), index=False)
+    yearly_scores_df = build_yearly_scores()
+    yearly_scores_df.to_csv('../../tmp/nfl_scores.csv', index=False)
 
 
 if __name__ == '__main__':
