@@ -41,7 +41,7 @@ class PicksController < ApplicationController
   end
 
   def standings
-    @users = User.all.to_json(:methods => [:wins, :losses, :draws])
+    @users = User.all.to_json(:methods => [:wins, :losses, :draws, :points])
   end
 
   private
