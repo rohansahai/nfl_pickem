@@ -135,7 +135,8 @@ def get_weekly_scores(tables, week):
 def build_yearly_scores():
 
     weekly_scores = []
-    for week in list(range(1, get_nfl_week_num() + 1)):
+    current_week = get_nfl_week_num()
+    for week in list(range(1, current_week + 1)):
         url = 'https://fantasysupercontest.com/nfl-lines-2016-week-{}'.format(week)
         tables = get_xml(url)
         weekly_scores.append(get_weekly_scores(tables, week))
@@ -146,8 +147,7 @@ def build_yearly_scores():
 def main():
 
     yearly_scores_df = build_yearly_scores()
-    print(yearly_scores_df.tail())
-    yearly_scores_df.to_csv('/Users/shaunchaudhary/desktop/nfl_scores_week_{}'.format(week), index=False)
+    yearly_scores_df.to_csv('/Users/shaunchaudhary/desktop/nfl_scores', index=False)
 
 
 if __name__ == '__main__':
