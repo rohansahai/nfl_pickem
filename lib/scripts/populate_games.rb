@@ -12,9 +12,9 @@ nodes.each do |node|
 
   begin
     if defined? node.periods.period.length
-      game_data[:spread] = node.periods.period.first.spread.spread_home.text
+      game_data[:home_spread] = node.periods.period.first.spread.spread_home.text
     else
-      game_data[:spread] = node.periods.period.spread.spread_home.text
+      game_data[:home_spread] = node.periods.period.spread.spread_home.text
     end
   rescue Exception => e
     puts "unable to pull spread for game with following data:"

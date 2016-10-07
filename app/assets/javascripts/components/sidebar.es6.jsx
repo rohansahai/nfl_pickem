@@ -10,7 +10,7 @@ class Sidebar extends React.Component {
                         </a>
                     </li>
                     <li className={this.isActive('previous') && "active"}>
-                        <a href="#">
+                        <a href="/previous">
                             <i className="material-icons">skip_previous</i>
                             <span>Previous Picks</span>
                         </a>
