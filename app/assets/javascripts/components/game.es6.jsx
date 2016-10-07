@@ -15,14 +15,15 @@ class Game extends React.Component {
     }
 
     getIcon () {
-        var result = this.props.game.result;
-        if (result) {
-            if (result === 'win') {
-                return 'thumb_up';
-            } else if (result === 'loss') {
-                return 'thumb_down';
-            } else {
+        var game_winner_id = this.props.game.spread_winner_id;
+        if (game_winner_id && this.props.game.pick) {
+            var user_winner_id = this.props.game.pick.winner_id;
+            if (this.props.game.push) {
                 return 'thumbs_up_down';
+            } else if (game_winner_id === user_winner_id) {
+                return 'thumb_up';
+            } else {
+                return 'thumb_down';
             }
         }
         return (this.hasGameStarted()) ? 'lock_outline' : 'lock_open';
@@ -36,7 +37,7 @@ class Game extends React.Component {
     }
 
     getTeamSelectedClass (winner_id) {
-        if (winner_id === this.props.game.winner_id) {
+        if (this.props.game.pick && winner_id === this.props.game.pick.winner_id) {
             return 'team-selected';
         }
 
@@ -44,14 +45,15 @@ class Game extends React.Component {
     }
 
     getGamePickedClass () {
-        var result = this.props.game.result;
-        if (result) {
-            if (result === 'win') {
-                return 'pick-win';
-            } else if (result === 'loss') {
-                return 'pick-loss';
-            } else {
+        var game_winner_id = this.props.game.spread_winner_id;
+        if (game_winner_id && this.props.game.pick) {
+            var user_winner_id = this.props.game.pick.winner_id;
+            if (this.props.game.push) {
                 return 'pick-draw';
+            } else if (game_winner_id === user_winner_id) {
+                return 'pick-win';
+            } else {
+                return 'pick-loss';
             }
         }
 

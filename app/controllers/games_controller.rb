@@ -13,8 +13,7 @@ class GamesController < ApplicationController
     @games.each do |game|
       pick = @picks.find_by(:game_id => game['id'])
       if (pick)
-        game['winner_id'] = pick['winner_id']
-        game['result'] = pick['result']
+        game['pick'] = pick
       end
     end
   end
