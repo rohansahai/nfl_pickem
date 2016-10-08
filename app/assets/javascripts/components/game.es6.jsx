@@ -81,7 +81,7 @@ class Game extends React.Component {
         var winner_id = $(e.target).data('team-id');
 
         // check if they are deselecting
-        if (this.props.game.winner_id == winner_id) {
+        if (this.props.game.pick && this.props.game.pick.winner_id == winner_id) {
             this.props.removePick(this.props.game.id);
             return;
         }

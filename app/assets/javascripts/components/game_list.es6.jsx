@@ -24,7 +24,7 @@ class GameList extends React.Component {
             }
 
             var games = _this.state.games;
-            _.findWhere(games, {id: pick.game_id}).winner_id = pick.winner_id;
+            _.findWhere(games, {id: pick.game_id}).pick = pick;
             _this.setState({picks: picks, games: games})
         })
     }
@@ -44,7 +44,8 @@ class GameList extends React.Component {
     handleDeletePick (pick) {
         var picks = _.without(this.state.picks, pick);
         var games = this.state.games;
-        _.findWhere(games, {id: pick.game_id}).winner_id = null;
+        var game = _.findWhere(games, {id: pick.game_id});
+        delete game.pick;
 
         this.setState({picks: picks, games: games});
     }
