@@ -2,7 +2,7 @@ class UserRecord extends React.Component {
     render () {
         return (
             <tr>
-                <td></td>
+                <td> {this.props.user.rank} </td>
                 <td> {this.props.user.name} </td>
                 <td> {this.props.user.wins} </td>
                 <td> {this.props.user.losses} </td>

@@ -1,13 +1,7 @@
 class Standings extends React.Component {
     render () {
         var _this = this;
-
-        var users = JSON.parse(this.props.users);
-        var userRecordNodes = users.map(function(user) {
-            return (
-                <UserRecord key={user.id} user={user} />
-            );
-        });
+        var userRecordNodes = this.getUserRecordNodes(JSON.parse(this.props.users));
 
         return (
             <div className="card weekly-picks-card">
@@ -32,5 +26,24 @@ class Standings extends React.Component {
                 </div>
             </div>
         );
+    }
+
+    getUserRecordNodes (users) {
+        var last_rank_points = users[0].points;
+        var last_rank = 1;
+
+        return users.map(function(user, index) {
+            if (last_rank_points === user.points ) {
+                user.rank = last_rank;
+            } else {
+                user.rank = index + 1;
+                last_rank_points = user.points;
+                last_rank = index + 1;
+            }
+
+            return (
+                <UserRecord key={user.id} user={user} />
+            );
+        });
     }
 }
