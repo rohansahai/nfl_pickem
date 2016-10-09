@@ -147,7 +147,7 @@ def build_yearly_scores():
 def main():
 
     yearly_scores_df = build_yearly_scores()
-    yearly_scores_df.to_csv('../../tmp/nfl_scores.csv', index=False)
+    yearly_scores_df.to_csv('tmp/nfl_scores.csv', index=False)
 
 
 if __name__ == '__main__':
