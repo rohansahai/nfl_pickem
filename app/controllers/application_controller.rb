@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     # otherwise return the last completed game's week
     unfinished_games = Game.where(:spread_winner_id => nil)
     if (unfinished_games)
-      return unfinished_games.order("time ASC").limit(1).first.week
+      return unfinished_games.order("time DESC").limit(1).first.week
     else
       return Game.order("time DESC").limit(1).first.week
     end
