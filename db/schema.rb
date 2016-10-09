@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006215711) do
+ActiveRecord::Schema.define(version: 20161009002737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "games", force: :cascade do |t|
-    t.integer  "week",                null: false
-    t.integer  "home_team_id",        null: false
-    t.integer  "away_team_id",        null: false
-    t.integer  "home_spread",         null: false
-    t.datetime "time",                null: false
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.integer  "week",                                        null: false
+    t.integer  "home_team_id",                                null: false
+    t.integer  "away_team_id",                                null: false
+    t.decimal  "home_spread",         precision: 3, scale: 1, null: false
+    t.datetime "time",                                        null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.integer  "spread_winner_id"
     t.integer  "moneyline_winner_id"
     t.boolean  "push"
