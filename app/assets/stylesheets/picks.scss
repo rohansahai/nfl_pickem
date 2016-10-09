@@ -1,3 +1,12 @@
-// Place all the styles related to the Picks controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$teal: rgb(68,150,139);
+
+.user-ranking {
+	text-align: center;
+	width: 50px;
+	font-weight: 500;
+}
+
+.current-user {
+	color: $teal;
+	font-weight: 700;
+}
