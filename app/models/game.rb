@@ -16,21 +16,29 @@ class Game < ApplicationRecord
         next if row[0] == 'away_team_id'
         away_team_id = row[0].to_i
         home_team_id = row[2].to_i
+        next if row[5].to_i < 5
         game = Game.find_by("(home_team_id = ? or away_team_id = ?) and week = ?", home_team_id, away_team_id, row[5])
-
-        if (game.spread_winner_id.nil? || game.moneyline_winner_id.nil? || game.home_team_score.nil? || game.away_team_score.nil?)
+        if (game && (game.spread_winner_id.nil? || game.moneyline_winner_id.nil?))
           away_team_score = row[1].to_i
           home_team_score = row[3].to_i
 
           winner_id, push = game.get_spread_winner(away_team_score, home_team_score, away_team_id, home_team_id)
-          game.update(
+          game.assign_attributes(
             :away_team_score => away_team_score,
-            :home_team_score => home_team_score,
-            :spread_winner_id => winner_id,
-            :moneyline_winner_id => row[4].to_i,
-            :push => push
+            :home_team_score => home_team_score
           )
 
+          # update only if game is over - this is hacky
+          if ((Time.now - game.time)/60) > 240
+            game.assign_attributes(
+              :spread_winner_id => winner_id,
+              :moneyline_winner_id => row[4].to_i,
+              :push => push
+            )
+          end
+
+          puts "Updating #{home_team_id} vs #{away_team_id}"
+          game.save
           game.update_related_picks
         end
       end
