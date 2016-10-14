@@ -61,4 +61,6 @@ gem 'nokogiri'
 
 gem 'materialize-sass'
 
+gem 'yaml_db'
+
 ruby "2.2.2"
