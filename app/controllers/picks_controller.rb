@@ -46,6 +46,14 @@ class PicksController < ApplicationController
     @users = User.all.to_a.sort_by(&:points).reverse.to_json(:methods => [:wins, :losses, :draws, :points])
   end
 
+  def distribution
+    @distribution_hash = {}
+    (1..current_week).each do |week|
+      weekly_distro = Pick.where(:week => week).group(:game_id, :winner_id).count.sort_by {|k, v| v}.reverse.to_h
+      @distribution_hash[week] = weekly_distro 
+    end
+  end
+
   private
   def pick_params
     params.require(:pick).permit(:id, :game_id, :winner_id, :week)
