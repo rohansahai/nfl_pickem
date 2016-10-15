@@ -1,13 +1,13 @@
 <div class="col s9">
     <% @distribution_hash.each do |week, distros| %>
-    <div class="card">
+    <div class="card distribution-card">
         <div class="card-content">
             <div class="row title-row">
                 <span class="card-title">
                     Week <%= week %> Distribution
                 </span>
             </div>
-            <table className="bordered">
+            <table class="bordered">
                 <tbody>
                     <tr>
                         <th>Pick</th>
@@ -21,7 +21,7 @@
                         <tr>
                             <td><%= pick[:winner].name %></td>
                             <td><%= pick[:opponent].name %></td>
-                            <td><%= pick[:game].home_spread %></td>
+                            <td><%= pick[:spread] %></td>
                             <td> <%= pick[:result] %> </td>
                             <td> <%= pick[:count] %> </td>
                         </tr>

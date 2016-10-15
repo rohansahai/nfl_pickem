@@ -54,13 +54,21 @@ class PicksController < ApplicationController
       weekly_distro.each do |key, pick_count|
         pick = Pick.find_by(:week => week, :winner_id => key[1])
         game = Game.find(key[0])
-        opponent_id = (game.home_team_id == pick.winner_id) ? game.away_team_id : game.home_team_id
+
+        if game.home_team_id == pick.winner_id
+          opponent_id = game.away_team_id
+          spread = game.home_spread
+        else
+          opponent_id = game.home_team_id
+          spread = game.home_spread * -1
+        end
         @distribution_hash[week].push({
           :count => pick_count,
           :winner => Team.find(key[1]),
           :opponent => Team.find(opponent_id),
           :result => pick.result,
-          :game => game
+          :game => game,
+          :spread => spread
         })
       end
     end
