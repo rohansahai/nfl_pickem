@@ -6,25 +6,25 @@ class Sidebar extends React.Component {
                     <li className={this.isActive('picks') && "active"}>
                         <a href="/picks">
                             <i className="material-icons">schedule</i>
-                            <span>This Week's Picks</span>
+                            <span>Active Picks</span>
                         </a>
                     </li>
                     <li className={this.isActive('previous') && "active"}>
                         <a href="/previous">
                             <i className="material-icons">skip_previous</i>
-                            <span>Previous Picks</span>
+                            <span>History</span>
                         </a>
                     </li>
                     <li className={this.isActive('standings') && "active"}> 
                         <a href="/standings">
                             <i className="material-icons">star</i>
-                            <span>League Standings</span>
+                            <span>Standings</span>
                         </a>
                     </li>
                     <li className={this.isActive('standings') && "active"}> 
                         <a href="/distribution">
                             <i className="material-icons">equalizer</i>
-                            <span>Weekly Distributions</span>
+                            <span>Distributions</span>
                         </a>
                     </li>
                 </ul>
