@@ -21,6 +21,12 @@ class Sidebar extends React.Component {
                             <span>League Standings</span>
                         </a>
                     </li>
+                    <li className={this.isActive('standings') && "active"}> 
+                        <a href="/distribution">
+                            <i className="material-icons">equalizer</i>
+                            <span>Weekly Distributions</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         );
