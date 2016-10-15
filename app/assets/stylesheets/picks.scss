@@ -9,6 +9,10 @@ $teal: rgb(68,150,139);
 .current-user {
 	color: $teal;
 	font-weight: 700;
+
+	a {
+		color: $teal;
+	}
 }
 
 .card.distribution-card {
