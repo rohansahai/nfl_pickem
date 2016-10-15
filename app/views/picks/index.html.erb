@@ -1,8 +1,6 @@
 <div class="col s9">
 	<% if @user %>
 	<span id="user-picks-name"> Viewing <b> <%= @user.name %>'s </b> picks</span>
-	<% else %>
-	<span id="user-picks-name"> Viewing <b> your </b> picks </span>
 	<% end %>
 	<% @weeks.each do |week| %>
 		<%= react_component('GameList', {
