@@ -1,4 +1,5 @@
 require 'open-uri'
+Rails.application.eager_load!
 url = "http://xml.pinnaclesports.com/pinnaclefeed.aspx?sporttype=Football&sportsubtype=nfl"
 
 team_names = Team.all.map { |team| team.name }
@@ -8,7 +9,7 @@ nodes = doc.xpath("//event")
 nodes.each do |node|
   game_data = {}
   game_data[:time] = node.event_datetimegmt.children.text
-  game_data[:week] = 5
+  game_data[:week] = 6
 
   begin
     if defined? node.periods.period.length

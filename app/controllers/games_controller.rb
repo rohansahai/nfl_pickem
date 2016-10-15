@@ -4,6 +4,7 @@ class GamesController < ApplicationController
   def index
     @week = current_week
     @games = Game.where(:week => @week)
+                 .order(:time)
                  .includes([:home_team, :away_team])
                  .as_json(:include => [:home_team, :away_team])
 

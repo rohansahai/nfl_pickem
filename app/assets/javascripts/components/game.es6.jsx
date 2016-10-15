@@ -57,7 +57,7 @@ class Game extends React.Component {
             }
         }
 
-        if (this.props.game.winner_id) {
+        if (this.props.game.pick && this.props.game.pick.winner_id) {
             return 'pick-active';
         }
     }
