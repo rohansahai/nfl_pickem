@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   get 'picks', to: 'games#index'
   get 'standings', to: 'picks#standings'
-  get 'previous', to: 'picks#index'
+  get 'previous', to: 'picks#previous'
   get 'distribution', to: 'picks#distribution'
 
   resources :sessions, only: [:create, :destroy]
@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   resources :weeks, only: [:index] do
     resources :games, only: [:index]
     resources :picks, only: [:create, :update, :destroy]
+  end
+
+  resources :users, only: [] do
+    resources :picks, only: :index
   end
 
   root to: redirect('/picks')

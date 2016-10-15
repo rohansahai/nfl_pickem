@@ -2,7 +2,8 @@ class PicksController < ApplicationController
   before_action :is_user_logged_in
 
   def index
-    @picks = current_user
+    user = User.find(params[:user_id])
+    @picks = user
               .picks
               .includes([:game => [:home_team, :away_team]])
     @weeks = (1...current_week).to_a.reverse
@@ -40,6 +41,14 @@ class PicksController < ApplicationController
     else
       render json: {:errors => pick.errors}, status: 400
     end
+  end
+
+  def previous
+    @picks = current_user
+              .picks
+              .includes([:game => [:home_team, :away_team]])
+    @weeks = (1...current_week).to_a.reverse
+    render "index"
   end
 
   def standings
