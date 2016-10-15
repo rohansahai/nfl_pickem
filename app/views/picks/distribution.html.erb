@@ -1,26 +1,35 @@
-<table className="bordered">
-    <tbody>
-        <tr>
-            <th>Pick</th>
-            <th>Opponent</th>
-            <th>Spread</th>
-            <th>Result</th>
-            <th>Number of Picks</th>
-        </tr>
+<div class="col s9">
+    <% @distribution_hash.each do |week, distros| %>
+    <div class="card">
+        <div class="card-content">
+            <div class="row title-row">
+                <span class="card-title">
+                    Week <%= week %> Distribution
+                </span>
+            </div>
+            <table className="bordered">
+                <tbody>
+                    <tr>
+                        <th>Pick</th>
+                        <th>Opponent</th>
+                        <th>Spread</th>
+                        <th>Result</th>
+                        <th>Number of Picks</th>
+                    </tr>
 
-		<% @distribution_hash.each do |week, distros| %>
-			<% distros.each do |key, count| %>
-				<% game = Game.find(key[0]) %>
-				<% picked_team = Team.find(key[1]) %>
-				<tr>
-					<td><%= picked_team.name %></td>
-					<td><%= picked_team.name %></td>
-					<td><%= game.home_spread %></td>
-					<td> win </td>
-					<td> <%= count %> </td>
-				</tr>
-			<% end %>
-		<% end %>
+                    <% distros.each do |pick| %>
+                        <tr>
+                            <td><%= pick[:winner].name %></td>
+                            <td><%= pick[:opponent].name %></td>
+                            <td><%= pick[:game].home_spread %></td>
+                            <td> <%= pick[:result] %> </td>
+                            <td> <%= pick[:count] %> </td>
+                        </tr>
+                    <% end %>
 
-	</tbody>
-</table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <% end %>
+</div>
