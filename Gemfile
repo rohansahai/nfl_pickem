@@ -63,4 +63,6 @@ gem 'materialize-sass'
 
 gem 'yaml_db'
 
+gem 'momentjs-rails'
+
 ruby "2.2.2"
