@@ -20,11 +20,11 @@ class User < ApplicationRecord
     picks.where(:result => 'loss').count
   end
 
-  def draws
-    picks.where(:result => 'draw').count
+  def pushes
+    picks.where(:result => 'push').count
   end
 
   def points
-    (wins * 1) + (draws * 0.5)
+    (wins * 1) + (pushes * 0.5)
   end
 end

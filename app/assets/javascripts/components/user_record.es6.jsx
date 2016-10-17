@@ -7,7 +7,7 @@ class UserRecord extends React.Component {
                 <td> <a href={previous_picks_url}> {this.props.user.name} </a> </td>
                 <td> {this.props.user.wins} </td>
                 <td> {this.props.user.losses} </td>
-                <td> {this.props.user.draws} </td>
+                <td> {this.props.user.pushes} </td>
                 <td> {this.props.user.points} </td>
             </tr>
         );
