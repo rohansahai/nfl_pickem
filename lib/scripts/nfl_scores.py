@@ -52,8 +52,10 @@ def create_score_row(tds):
                 else:
                     ind_game_data.extend([team, score, away_home[2][0].img['alt']])
             except (ValueError, TypeError):
-                ind_game_data = []
-
+                if away_home[2][0].text.strip() == 'PUSH':
+                    ind_game_data.extend([team, score, 'PUSH'])
+                else:
+                    ind_game_data = []
         scores.append(ind_game_data)
 
     return scores
