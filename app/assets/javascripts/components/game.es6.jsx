@@ -5,10 +5,9 @@ class Game extends React.Component {
         return (
             <tr className={this.getGamePickedClass()} onClick={this.handlePickSelect.bind(this)}>
                 <td><i className="game-icon material-icons">{this.getIcon()}</i></td>
-                <td className={this.getTeamSelectedClass(home_team.id) + " select-team"} data-team-id={home_team.id}> {home_team.name} </td>
                 <td className={this.getTeamSelectedClass(home_team.id)}> {this.getSpreadPretty(true)} </td>
+                <td className={this.getTeamSelectedClass(home_team.id) + " select-team"} data-team-id={home_team.id}> {home_team.name} </td>
                 <td className={this.getTeamSelectedClass(away_team.id) + " select-team"} data-team-id={away_team.id}> {away_team.name} </td>
-                <td className={this.getTeamSelectedClass(away_team.id)}> {this.getSpreadPretty(false)} </td>
                 <td> {this.getDatePretty()} </td>
             </tr>
         );

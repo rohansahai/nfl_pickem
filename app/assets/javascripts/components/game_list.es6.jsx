@@ -105,10 +105,9 @@ class GameList extends React.Component {
                         <tbody>
                             <tr>
                                 <th data-id="locked"></th>
-                                <th>Home Team</th>
                                 <th>Home Spread</th>
+                                <th>Home Team</th>
                                 <th>Visiting Team</th>
-                                <th>Visiting Spread</th>
                                 <th>Game Time</th>
                             </tr>
                             {gameNodes}
