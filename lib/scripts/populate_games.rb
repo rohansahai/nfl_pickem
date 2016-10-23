@@ -9,7 +9,7 @@ nodes = doc.xpath("//event")
 nodes.each do |node|
   game_data = {}
   game_data[:time] = node.event_datetimegmt.children.text
-  game_data[:week] = 6
+  game_data[:week] = 7
 
   begin
     if defined? node.periods.period.length
@@ -24,12 +24,18 @@ nodes.each do |node|
   end
 
   node.participants.participant.each do |team|
-    next if !team_names.include? team.participant_name.text
+    if team.participant_name.text == 'Los Angeles Rams (n)'
+      team_name = 'Los Angeles Rams'
+    else
+      team_name = team.participant_name.text
+    end
+
+    next if !team_names.include? team_name
 
     if (team.visiting_home_draw.text == 'Home')
-      game_data[:home_team_id] = Team.find_by(:name => team.participant_name.text).id
+      game_data[:home_team_id] = Team.find_by(:name => team_name).id
     else
-      game_data[:away_team_id] = Team.find_by(:name => team.participant_name.text).id
+      game_data[:away_team_id] = Team.find_by(:name => team_name).id
     end
   end
 

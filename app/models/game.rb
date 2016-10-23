@@ -8,7 +8,7 @@ class Game < ApplicationRecord
   validates :week, uniqueness: { scope: :away_team_id,
     message: "should only exist once per week" }
 
-  def self.get_game_results_and_update_picks
+  def self.get_game_results_and_update_picks(week)
     ActiveRecord::Base.transaction do
       require 'csv'
       self.create_game_results_csv
@@ -16,7 +16,7 @@ class Game < ApplicationRecord
         next if row[0] == 'away_team_id'
         away_team_id = row[0].to_i
         home_team_id = row[2].to_i
-        next if row[5].to_i < 5
+        next if row[5].to_i < week
         game = Game.find_by("(home_team_id = ? or away_team_id = ?) and week = ?", home_team_id, away_team_id, row[5])
         if (game && (game.spread_winner_id.nil? || game.moneyline_winner_id.nil?))
           away_team_score = row[1].to_i
@@ -35,11 +35,13 @@ class Game < ApplicationRecord
               :moneyline_winner_id => row[4].to_i,
               :push => push
             )
+            game.save
+            game.update_related_picks
+          else
+            game.save
           end
 
           puts "Updating #{home_team_id} vs #{away_team_id}"
-          game.save
-          game.update_related_picks
         end
       end
     end
