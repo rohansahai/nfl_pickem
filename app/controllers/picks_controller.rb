@@ -59,7 +59,8 @@ class PicksController < ApplicationController
     @distribution_hash = {}
     current_week.downto(1).each do |week|
       @distribution_hash[week] = []
-      weekly_distro = Pick.where(:week => week).where.not(:result => nil).group(:game_id, :winner_id).count.sort_by {|k, v| v}.reverse.to_h
+      picks = Pick.joins(:game).where(:week => week).where("games.time < ?", Time.now)
+      weekly_distro = picks.group(:game_id, :winner_id).count.sort_by {|k, v| v}.reverse.to_h
       weekly_distro.each do |key, pick_count|
         pick = Pick.find_by(:week => week, :winner_id => key[1])
         game = Game.find(key[0])
