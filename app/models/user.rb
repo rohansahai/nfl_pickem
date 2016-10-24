@@ -27,4 +27,8 @@ class User < ApplicationRecord
   def points
     (wins * 1) + (pushes * 0.5)
   end
+
+  def get_picks_summary
+    
+  end
 end

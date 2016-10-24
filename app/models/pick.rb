@@ -26,6 +26,26 @@ class Pick < ApplicationRecord
     end
   end
 
+  def self.parse_mobile_picks(user, week, text_body)
+    picks = []
+    teams = Team.get_teams_from_text text_body
+    teams.each do |team|
+      game = Game.find_by_team_and_week(team, week)
+      raise "Game with team #{team.name} not found for week #{week}" if game.nil?
+
+      pick = user.picks.create({
+        :game_id => game.id,
+        :winner_id => team.id,
+        :week => week
+      })
+
+      raise "Pick with #{team.name} is invalid: #{pick.errors}" if !pick.valid?
+      picks.push pick
+    end
+
+    picks
+  end
+
   private
 
   def max_picks

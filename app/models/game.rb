@@ -52,6 +52,10 @@ class Game < ApplicationRecord
     `python3 lib/scripts/nfl_scores.py`
   end
 
+  def self.find_by_team_and_week(team, week)
+    Game.find_by("home_team_id = ? OR away_team_id = ? AND week = ?", team.id, team.id, week)
+  end
+
   def get_spread_winner(away_team_score, home_team_score, away_team_id, home_team_id)
     score_diff = away_team_score - home_team_score
     push = false
