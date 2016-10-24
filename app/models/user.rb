@@ -45,4 +45,17 @@ class User < ApplicationRecord
       text += "\n You have #{picks_remaining} picks remaining"
     end
   end
+
+  def send_text(body)
+    begin
+      twilio_client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']
+      twilio_client.messages.create(
+        from: ENV['TWILIO_PHONE_NUMBER'],
+        to: phone_number,
+        body: body
+      )
+    rescue Twilio::REST::RequestError => e
+      logger.error("Error sending twilio message to user #{name}")
+    end
+  end
 end
