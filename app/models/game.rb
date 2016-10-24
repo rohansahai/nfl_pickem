@@ -56,6 +56,17 @@ class Game < ApplicationRecord
     Game.find_by("home_team_id = ? OR away_team_id = ? AND week = ?", team.id, team.id, week)
   end
 
+  def self.get_weekly_summary(week)
+    games = Game.where(:week => week)
+    text = "The spreads are in! Here is the breakdown for this week (home teams first): \n\n"
+    games.each do |game|
+      spread_pretty = game.get_spread_pretty(game.home_team_id)
+      text += "#{game.home_team.name} #{spread_pretty} vs #{game.away_team.name}\n"
+    end
+
+    text+="\n\n Make your picks by replying to this text with space separated teams. I.E. 'jets panthers cardinals bills giants'"
+  end
+
   def get_spread_winner(away_team_score, home_team_score, away_team_id, home_team_id)
     score_diff = away_team_score - home_team_score
     push = false
