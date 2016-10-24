@@ -61,7 +61,7 @@ class Game < ApplicationRecord
     text = "The spreads are in! Here is the breakdown for this week (home teams first): \n\n"
     games.each do |game|
       spread_pretty = game.get_spread_pretty(game.home_team_id)
-      text += "#{game.home_team.name} #{spread_pretty} vs #{game.away_team.name}\n"
+      text += "#{game.home_team.name} #{spread_pretty} vs #{game.away_team.name}\n\n"
     end
 
     text+="\n\n Make your picks by replying to this text with space separated teams. I.E. 'jets panthers cardinals bills giants'"

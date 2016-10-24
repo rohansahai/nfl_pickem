@@ -48,7 +48,7 @@ class User < ApplicationRecord
 
   def send_text(body)
     begin
-      twilio_client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']
+      twilio_client = Twilio::REST::Client.new ENV['TWILIO_SID'], ENV['TWILIO_AUTH_TOKEN']
       twilio_client.messages.create(
         from: ENV['TWILIO_PHONE_NUMBER'],
         to: phone_number,
