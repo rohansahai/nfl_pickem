@@ -28,7 +28,21 @@ class User < ApplicationRecord
     (wins * 1) + (pushes * 0.5)
   end
 
-  def get_picks_summary
-    
+  def get_picks_summary(week)
+    weekly_picks = picks.where(:week => week)
+    if weekly_picks.count < 1
+      "You haven't made any picks yet for week #{week}. Text space separated team names to make picks for this week."
+    else
+      text = "You're current picks for this week are: \n"
+      weekly_picks.each do |pick|
+        spread = pick.game.get_spread_pretty(pick.winner.id)
+
+
+        text += "#{pick.winner.name} #{spread} #{pick.location} vs the #{pick.opponent.name}\n"
+      end
+
+      picks_remaining = 5 - weekly_picks.count
+      text += "\n You have #{picks_remaining} picks remaining"
+    end
   end
 end

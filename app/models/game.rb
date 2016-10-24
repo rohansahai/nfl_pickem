@@ -71,6 +71,16 @@ class Game < ApplicationRecord
     [winner_id, push]
   end
 
+  def get_spread_pretty(winner_pick_id)
+    if winner_pick_id == home_team_id
+      spread_pretty = home_spread
+    else
+      spread_pretty = home_spread * -1
+    end
+
+    (spread_pretty > 0) ? "+#{spread_pretty}" : spread_pretty
+  end
+
   def update_related_picks
     picks.where(:result => nil).each do |pick|
       if push

@@ -46,6 +46,14 @@ class Pick < ApplicationRecord
     picks
   end
 
+  def opponent
+    (game.home_team_id == winner.id) ? game.away_team : game.home_team
+  end
+
+  def location
+    (game.home_team_id == winner.id) ? "HOME" : "AWAY"
+  end
+
   private
 
   def max_picks
