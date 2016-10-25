@@ -38,25 +38,16 @@ def create_score_row(tds):
     returns: Loop through each "td" break in the tables that we've identified in the xml.
     Parse out the team, score, and against spread winner and return a list of lists.
     """
-    games = [tds[i:i + 8] for i in range(0, len(tds), 8)]
+    games = [tds[i:i + 18] for i in range(0, len(tds), 18)]
     scores = []
-    for xml in games:
-        ind_game_data = []
-        away_home = [xml[i:i + 3] for i in range(0, len(xml), 3)]
-        for i, game in enumerate(away_home[:-1]):
-            try:
-                team = game[0].img['alt']
-                score = int([score.strip() for score in game[1]][0])
-                if i == 0:
-                    ind_game_data.extend([team, score])
-                else:
-                    ind_game_data.extend([team, score, away_home[2][0].img['alt']])
-            except (ValueError, TypeError):
-                if away_home[2][0].text.strip() == 'PUSH':
-                    ind_game_data.extend([team, score, 'PUSH'])
-                else:
-                    ind_game_data = []
-        scores.append(ind_game_data)
+    for game in games:
+        game_row = []
+        for i, td in enumerate([game[2:8], game[10:16], game[-1]]):
+            if i < 2:
+                game_row.extend([td[0].contents[0].strip()] + [x.text.strip() for x in td[1:]])
+            else:
+                game_row.extend([td.small.contents[0].text.strip().replace(u'\xa0', u' ')])
+        scores.append(game_row)
 
     return scores
 
@@ -65,7 +56,7 @@ def get_ml_winner(row):
     """
     returns: Identify winner of each game.
     """
-    if row['home_score'] > row['away_score']:
+    if row['home_team_score'] > row['away_team_score']:
         return row['home_team_id']
     else:
         return row['away_team_id']
@@ -76,38 +67,38 @@ def build_team_id_mapping():
     returns: Map sorted teams (descending) to id.
     """
     teams = [
-        'Arizona Cardinals',
-        'Atlanta Falcons',
-        'Baltimore Ravens',
-        'Buffalo Bills',
-        'Carolina Panthers',
-        'Chicago Bears',
-        'Cincinnati Bengals',
-        'Cleveland Browns',
-        'Dallas Cowboys',
-        'Denver Broncos',
-        'Detroit Lions',
-        'Green Bay Packers',
-        'Houston Texans',
-        'Indianapolis Colts',
-        'Jacksonville Jaguars',
-        'Kansas City Chiefs',
-        'Los Angeles Rams',
-        'Miami Dolphins',
-        'Minnesota Vikings',
-        'New England Patriots',
-        'New Orleans Saints',
-        'New York Giants',
-        'New York Jets',
-        'Oakland Raiders',
-        'Philadelphia Eagles',
-        'Pittsburgh Steelers',
-        'San Diego Chargers',
-        'San Francisco 49ers',
-        'Seattle Seahawks',
-        'Tampa Bay Buccaneers',
-        'Tennessee Titans',
-        'Washington Redskins']
+         'Cardinals',
+         'Falcons',
+         'Ravens',
+         'Bills',
+         'Panthers',
+         'Bears',
+         'Bengals',
+         'Browns',
+         'Cowboys',
+         'Broncos',
+         'Lions',
+         'Packers',
+         'Texans',
+         'Colts',
+         'Jaguars',
+         'Chiefs',
+         'Rams',
+         'Dolphins',
+         'Vikings',
+         'Patriots',
+         'Saints',
+         'Giants',
+         'Jets',
+         'Raiders',
+         'Eagles',
+         'Steelers',
+         'Chargers',
+         '49ers',
+         'Seahawks',
+         'Buccaneers',
+         'Titans',
+         'Redskins']
 
     return {team: i+1 for i, team in enumerate(teams)}
 
@@ -118,28 +109,49 @@ def get_weekly_scores(tables, week):
     winner.
     """
     scores = []
-    for table in tables[:-1]:
+    for i, table in enumerate(tables):
         tds = table.find_all('td')
         scores.extend(create_score_row(tds))
 
     team_id_mapping = build_team_id_mapping()
-    nfl_score_cols = ['away_team_id', 'away_score', 'home_team_id', 'home_score', 'spread_winner']
+    nfl_score_cols = ['away_team_id', 'away_first', 'away_second', 'away_third', 'away_fourth', 'away_ot',
+                      'home_team_id', 'home_first', 'home_second', 'home_third', 'home_fourth', 'home_ot', 'game_status']
     nfl_scores_df = pd.DataFrame(scores, columns=nfl_score_cols)
-    nfl_scores_df['ml_winner'] = nfl_scores_df.apply(get_ml_winner, axis=1)
 
-    for col in ['away_team_id', 'home_team_id', 'ml_winner']:
+    away_cols = ['away_first', 'away_second', 'away_third', 'away_fourth', 'away_ot']
+    home_cols = ['home_first', 'home_second', 'home_third', 'home_fourth', 'home_ot']
+
+    for col in ['away_ot', 'home_ot']:
+        nfl_scores_df[col] = nfl_scores_df[col].apply(lambda x: 0 if x == '' else x)
+
+    for col in away_cols + home_cols:
+        nfl_scores_df[col] = nfl_scores_df[col].astype(int)
+
+    for dir, cols in zip(['away', 'home'], [away_cols, home_cols]):
+        nfl_scores_df['{}_team_score'.format(dir)] = nfl_scores_df[cols].sum(axis=1)
+
+    nfl_scores_df['moneyline_winner_id'] = nfl_scores_df.apply(get_ml_winner, axis=1)
+
+    for col in ['away_team_id', 'home_team_id', 'moneyline_winner_id']:
         nfl_scores_df[col] = nfl_scores_df[col].map(team_id_mapping)
-    nfl_scores_df['week'] = week
 
-    return nfl_scores_df.drop('spread_winner', axis=1)
+    nfl_scores_df['week'] = week
+    nfl_scores_df['game_live'] = nfl_scores_df['game_status'].apply(lambda x: 0 if x == 'Final' or x == 'OT' else 1)
+    keep_cols = ['week', 'home_team_id', 'home_first', 'home_second', 'home_third', 'home_fourth', 'home_ot',
+                 'home_team_score', 'away_team_id', 'away_first', 'away_second', 'away_third', 'away_fourth',
+                 'away_ot', 'away_team_score', 'moneyline_winner_id', 'game_status', 'game_live']
+
+    return nfl_scores_df[keep_cols]
 
 
 def build_yearly_scores():
-
+    """
+    :return: Scrape from fleaflicker.com to get scores by quarter and current game time.
+    """
     weekly_scores = []
     current_week = get_nfl_week_num()
     for week in list(range(1, current_week + 1)):
-        url = 'https://fantasysupercontest.com/nfl-lines-2016-week-{}'.format(week)
+        url = 'http://www.fleaflicker.com/nfl/scores?week={}'.format(week)
         tables = get_xml(url)
         weekly_scores.append(get_weekly_scores(tables, week))
 
