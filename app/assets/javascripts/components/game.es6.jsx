@@ -15,7 +15,7 @@ class Game extends React.Component {
 
     getIcon () {
         var game_winner_id = this.props.game.spread_winner_id;
-        if (game_winner_id && this.props.game.pick) {
+        if ((game_winner_id || this.props.game.push) && this.props.game.pick) {
             var user_winner_id = this.props.game.pick.winner_id;
             if (this.props.game.push) {
                 return 'thumbs_up_down';
@@ -45,7 +45,7 @@ class Game extends React.Component {
 
     getGamePickedClass () {
         var game_winner_id = this.props.game.spread_winner_id;
-        if (game_winner_id && this.props.game.pick) {
+        if ((game_winner_id || this.props.game.push) && this.props.game.pick) {
             var user_winner_id = this.props.game.pick.winner_id;
             if (this.props.game.push) {
                 return 'pick-draw';

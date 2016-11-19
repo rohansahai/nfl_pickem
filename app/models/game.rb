@@ -8,7 +8,8 @@ class Game < ApplicationRecord
   validates :week, uniqueness: { scope: :away_team_id,
     message: "should only exist once per week" }
 
-  def self.get_game_results_and_update_picks(week)
+  def self.get_game_results_and_update_picks()
+    week = self.get_week
     ActiveRecord::Base.transaction do
       require 'csv'
       self.create_game_results_csv
@@ -45,6 +46,28 @@ class Game < ApplicationRecord
         end
       end
     end
+  end
+
+  def self.get_week
+    end_times = {
+      11 => '2016-11-21',
+      12 => '2016-11-28',
+      13 => '2016-12-05',
+      14 => '2016-12-12',
+      15 => '2016-12-19',
+      16 => '2016-12-26',
+      17 => '2017-01-01'
+    }
+
+    active_week = false
+    end_times.each do |week, end_date|
+      if Date.today < Date.parse(end_date)
+        active_week = week
+        break
+      end
+    end
+
+    active_week
   end
 
   def self.create_game_results_csv

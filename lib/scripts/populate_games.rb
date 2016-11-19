@@ -9,7 +9,7 @@ nodes = doc.xpath("//event")
 nodes.each do |node|
   game_data = {}
   game_data[:time] = node.event_datetimegmt.children.text
-  game_data[:week] = 7
+  game_data[:week] = 11
 
   begin
     if defined? node.periods.period.length
@@ -24,9 +24,16 @@ nodes.each do |node|
   end
 
   node.participants.participant.each do |team|
-    if team.participant_name.text == 'Los Angeles Rams (n)'
-      team_name = 'Los Angeles Rams'
+    if team.participant_name.text.include?("(n)")
+      puts team.participant_name.text
+      puts "LONDON"
+      team_name = 'Oakland Raiders'
     else
+    # if team.participant_name.text == 'Cincinnati Bengals (n)'
+    #   team_name = 'Cincinnati Bengals'
+    # else
+    #   team_name = team.participant_name.text
+    # end
       team_name = team.participant_name.text
     end
 
