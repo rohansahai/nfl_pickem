@@ -13,6 +13,24 @@ class User < ApplicationRecord
     end
   end
 
+  def self.send_initial_picks_texts
+    url = "http://ancient-wildwood-19051.herokuapp.com/picks"
+    body = "Spreads are in! Reminder: 3 games tomorrow. Pick here - #{url} ."
+    User.all.each {|user| user.send_text(body)}
+  end
+
+  def self.send_picks_reminder_texts
+    url = "http://ancient-wildwood-19051.herokuapp.com/picks"
+    week = Game.get_week
+    User.all.each do |user|
+      picks = user.picks.where(:week => week)
+      if picks.count < 5
+        body = "You've made #{picks.count}/5 picks for this week. Get your picks in here: #{url} ."
+      end
+      user.send_text(body)
+    end
+  end
+
   def wins
     picks.where(:result => 'win').count
   end
