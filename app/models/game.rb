@@ -72,7 +72,7 @@ class Game < ApplicationRecord
 
   def self.create_game_results_csv
     # this creates a csv at tmp/nfl_scores.csv
-    `python3 lib/scripts/nfl_scores.py`
+    `#{ENV['PYTHON_EXEC']} lib/scripts/nfl_scores.py`
   end
 
   def get_spread_winner(away_team_score, home_team_score, away_team_id, home_team_id)
