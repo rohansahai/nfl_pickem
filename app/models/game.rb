@@ -9,7 +9,7 @@ class Game < ApplicationRecord
     message: "should only exist once per week" }
 
   def self.get_game_results_and_update_picks()
-    week = self.get_week
+    week = self.get_last_week_with_no_results
     ActiveRecord::Base.transaction do
       require 'csv'
       self.create_game_results_csv
@@ -68,6 +68,20 @@ class Game < ApplicationRecord
     end
 
     active_week
+  end
+
+  def self.get_last_week_with_no_results
+    last_week_with_no_results = self.get_week
+    last_week = last_week_with_no_results - 1
+
+    Game.where(:week => last_week).each do |game|
+      if game.spread_winner_id.nil? && !game.push
+        last_week_with_no_results = last_week
+        break
+      end
+    end
+
+    last_week_with_no_results
   end
 
   def self.create_game_results_csv
