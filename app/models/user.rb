@@ -15,7 +15,7 @@ class User < ApplicationRecord
 
   def self.send_initial_picks_texts
     url = "http://ancient-wildwood-19051.herokuapp.com/picks"
-    body = "Spreads are in! Reminder: 3 games tomorrow. Pick here - #{url} ."
+    body = "Spreads are in! Pick here - #{url} ."
     User.all.each {|user| user.send_text(body)}
   end
 
