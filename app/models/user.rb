@@ -13,6 +13,24 @@ class User < ApplicationRecord
     end
   end
 
+  def self.send_initial_picks_texts
+    url = "http://ancient-wildwood-19051.herokuapp.com/picks"
+    body = "Spreads are in! Pick here - #{url} ."
+    User.all.each {|user| user.send_text(body)}
+  end
+
+  def self.send_picks_reminder_texts
+    url = "http://ancient-wildwood-19051.herokuapp.com/picks"
+    week = Game.get_week
+    User.all.each do |user|
+      picks = user.picks.where(:week => week)
+      if picks.count < 5
+        body = "You've made #{picks.count}/5 picks for this week. Get your picks in here: #{url} ."
+      end
+      user.send_text(body)
+    end
+  end
+
   def wins
     picks.where(:result => 'win').count
   end
@@ -27,5 +45,36 @@ class User < ApplicationRecord
 
   def points
     (wins * 1) + (pushes * 0.5)
+  end
+
+  def get_picks_summary(week)
+    weekly_picks = picks.where(:week => week)
+    if weekly_picks.count < 1
+      "You haven't made any picks yet for week #{week}. Text space separated team names to make picks for this week."
+    else
+      text = "You're current picks for this week are: \n"
+      weekly_picks.each do |pick|
+        spread = pick.game.get_spread_pretty(pick.winner.id)
+
+
+        text += "#{pick.winner.name} #{spread} #{pick.location} vs the #{pick.opponent.name}\n"
+      end
+
+      picks_remaining = 5 - weekly_picks.count
+      text += "\n You have #{picks_remaining} picks remaining"
+    end
+  end
+
+  def send_text(body)
+    begin
+      twilio_client = Twilio::REST::Client.new ENV['TWILIO_SID'], ENV['TWILIO_AUTH_TOKEN']
+      twilio_client.messages.create(
+        from: ENV['TWILIO_PHONE_NUMBER'],
+        to: phone_number,
+        body: body
+      )
+    rescue Twilio::REST::RequestError => e
+      logger.error("Error sending twilio message to user #{name}")
+    end
   end
 end

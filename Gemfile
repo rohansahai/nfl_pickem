@@ -65,4 +65,6 @@ gem 'yaml_db'
 
 gem 'momentjs-rails'
 
+gem 'twilio-ruby', '~> 4.11.1'
+
 ruby "2.2.2"

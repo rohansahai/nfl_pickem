@@ -89,6 +89,21 @@ class Game < ApplicationRecord
     `#{ENV['PYTHON_EXEC']} lib/scripts/nfl_scores.py`
   end
 
+  def self.find_by_team_and_week(team, week)
+    Game.find_by("home_team_id = ? OR away_team_id = ? AND week = ?", team.id, team.id, week)
+  end
+
+  def self.get_weekly_summary(week)
+    games = Game.where(:week => week)
+    text = "The spreads are in! Here is the breakdown for this week (home teams first): \n\n"
+    games.each do |game|
+      spread_pretty = game.get_spread_pretty(game.home_team_id)
+      text += "#{game.home_team.name} #{spread_pretty} vs #{game.away_team.name}\n\n"
+    end
+
+    text+="\n\n Make your picks by replying to this text with space separated teams. I.E. 'jets panthers cardinals bills giants'"
+  end
+
   def get_spread_winner(away_team_score, home_team_score, away_team_id, home_team_id)
     score_diff = away_team_score - home_team_score
     push = false
@@ -102,6 +117,16 @@ class Game < ApplicationRecord
     end
 
     [winner_id, push]
+  end
+
+  def get_spread_pretty(winner_pick_id)
+    if winner_pick_id == home_team_id
+      spread_pretty = home_spread
+    else
+      spread_pretty = home_spread * -1
+    end
+
+    (spread_pretty > 0) ? "+#{spread_pretty}" : spread_pretty
   end
 
   def update_related_picks
