@@ -13,15 +13,24 @@ class Game < ApplicationRecord
     ActiveRecord::Base.transaction do
       require 'csv'
       self.create_game_results_csv
+      column_map = {}
       CSV.foreach("tmp/nfl_scores.csv") do |row|
-        next if row[0] == 'away_team_id'
-        away_team_id = row[0].to_i
-        home_team_id = row[2].to_i
-        next if row[5].to_i < week
-        game = Game.find_by("(home_team_id = ? or away_team_id = ?) and week = ?", home_team_id, away_team_id, row[5])
+        if row[0] == 'week'
+          row.each_with_index do |col, idx|
+            column_map[col] = idx
+          end
+          next
+        end
+
+        game_week = row[column_map['week']].to_i
+        next if game_week < week
+
+        away_team_id = row[column_map['away_team_id']].to_i
+        home_team_id = row[column_map['home_team_id']].to_i
+        game = Game.find_by("(home_team_id = ? or away_team_id = ?) and week = ?", home_team_id, away_team_id, game_week)
         if (game && (game.spread_winner_id.nil? || game.moneyline_winner_id.nil?))
-          away_team_score = row[1].to_i
-          home_team_score = row[3].to_i
+          away_team_score = row[column_map['away_team_score']].to_i
+          home_team_score = row[column_map['home_team_score']].to_i
 
           winner_id, push = game.get_spread_winner(away_team_score, home_team_score, away_team_id, home_team_id)
           game.assign_attributes(
@@ -29,11 +38,10 @@ class Game < ApplicationRecord
             :home_team_score => home_team_score
           )
 
-          # update only if game is over - this is hacky
-          if ((Time.now - game.time)/60) > 240
+          if row[column_map['game_status']] == 'Final'
             game.assign_attributes(
               :spread_winner_id => winner_id,
-              :moneyline_winner_id => row[4].to_i,
+              :moneyline_winner_id => row[column_map['moneyline_winner_id']].to_i,
               :push => push
             )
             game.save
