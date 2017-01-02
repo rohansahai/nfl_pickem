@@ -75,6 +75,10 @@ class Game < ApplicationRecord
       end
     end
 
+    if active_week == false
+      active_week = 17
+    end
+
     active_week
   end
 
