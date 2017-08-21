@@ -6,13 +6,13 @@ from datetime import datetime as dt
 
 def get_nfl_week_num():
     """
-    returns: Use beginning and end dates of 2016 nfl season to map weeks to date ranges.
+    returns: Use beginning and end dates of 2017 nfl season to map weeks to date ranges.
     Use today's date to determine what week of the season we fall under. Return week (int).
     """
-    week_begin = pd.date_range(start='2016-09-15', end='2016-12-29', freq='7D')
-    week_end = pd.date_range(start='2016-09-21', end='2017-01-02', freq='7D')
+    week_begin = pd.date_range(start='2017-09-07', end='2017-12-28', freq='7D')
+    week_end = pd.date_range(start='2017-09-13', end='2018-01-03', freq='7D')
     week_nums = list(range(2, 18))
-    week_lol = [[dt(2016, 8, 1), dt(2016, 9, 14), 1]] + [[week_b, week_e, num] for week_b, week_e, num in
+    week_lol = [[dt(2017, 8, 1), dt(2017, 9, 13), 1]] + [[week_b, week_e, num] for week_b, week_e, num in
                                                          zip(week_begin, week_end, week_nums)]
 
     today = dt(dt.today().year, dt.today().month, dt.today().day)
