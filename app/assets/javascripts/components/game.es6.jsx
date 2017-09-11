@@ -62,7 +62,7 @@ class Game extends React.Component {
     }
 
     getDatePretty () {
-        return moment(this.props.game.time).calendar();
+        return moment(this.props.game.time).format('ddd. MMM. DD h:mm A');
     }
 
     getSpreadPretty (home) {

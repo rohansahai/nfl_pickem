@@ -4,7 +4,7 @@
 	<% end %>
 	<% @weeks.each do |week| %>
 		<%= react_component('GameList', {
-			games: @picks.where(:week => week).map { |pick| 
+			games: @picks.where.not(:result => nil).map { |pick|
 				game = pick.game.as_json({:include => [:home_team, :away_team]})
 				game['pick'] = pick.as_json
 				game

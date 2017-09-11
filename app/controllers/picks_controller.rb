@@ -6,7 +6,7 @@ class PicksController < ApplicationController
     @picks = @user
               .picks
               .includes([:game => [:home_team, :away_team]])
-    @weeks = (1...current_week).to_a.reverse
+    @weeks = (1...current_week+1).to_a.reverse
   end
 
   def create
@@ -37,7 +37,7 @@ class PicksController < ApplicationController
     pick = current_user.picks.find(pick_params[:id])
     if pick.valid?
       pick.destroy
-      render json: pick, status: 200 
+      render json: pick, status: 200
     else
       render json: {:errors => pick.errors}, status: 400
     end
@@ -52,7 +52,7 @@ class PicksController < ApplicationController
   end
 
   def standings
-    @users = User.all.to_a.sort_by(&:points).reverse.to_json(:methods => [:wins, :losses, :pushes, :points])
+    @users = User.all.to_a.sort_by(&:points).reverse.to_json(:methods => [:wins, :losses, :pushes, :percent, :points])
   end
 
   def distribution

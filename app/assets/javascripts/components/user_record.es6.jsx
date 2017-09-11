@@ -8,6 +8,7 @@ class UserRecord extends React.Component {
                 <td> {this.props.user.wins} </td>
                 <td> {this.props.user.losses} </td>
                 <td> {this.props.user.pushes} </td>
+                <td> {this.props.user.percent} </td>
                 <td> {this.props.user.points} </td>
             </tr>
         );
