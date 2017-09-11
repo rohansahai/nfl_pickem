@@ -18,6 +18,7 @@ class Standings extends React.Component {
                                 <th>Wins</th>
                                 <th>Losses</th>
                                 <th>Pushes</th>
+                                <th>Win Rate (%)</th>
                                 <th>Points</th>
                             </tr>
                             {userRecordNodes}

@@ -44,7 +44,17 @@ class User < ApplicationRecord
   end
 
   def points
-    (wins * 1) + (pushes * 0.5)
+    wins + (pushes * 0.5)
+  end
+
+  def percent
+    total = wins + losses + pushes
+    if total > 0
+      perc = (wins + (pushes * 0.5))  / total * 100
+      perc.round()
+    else
+      return 0
+    end
   end
 
   def get_picks_summary(week)

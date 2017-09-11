@@ -17,5 +17,6 @@ class GamesController < ApplicationController
         game['pick'] = pick
       end
     end
+
   end
 end
