@@ -47,7 +47,7 @@ class PicksController < ApplicationController
     @picks = current_user
               .picks
               .includes([:game => [:home_team, :away_team]])
-    @weeks = (1...current_week).to_a.reverse
+    @weeks = (1...current_week+1).to_a.reverse
     render "index"
   end
 
