@@ -19,6 +19,7 @@
 
                     <% distros.each do |pick| %>
                         <tr>
+                            <td><%= pick[:logo_path] %></td>
                             <td><%= pick[:winner].name %></td>
                             <td><%= pick[:opponent].name %></td>
                             <td><%= pick[:spread] %></td>

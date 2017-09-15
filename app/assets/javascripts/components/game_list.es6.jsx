@@ -106,7 +106,9 @@ class GameList extends React.Component {
                             <tr>
                                 <th data-id="locked"></th>
                                 <th>Home Spread</th>
+                                  <th></th>
                                 <th>Home Team</th>
+                                  <th></th>
                                 <th>Visiting Team</th>
                                 <th>Game Time</th>
                             </tr>

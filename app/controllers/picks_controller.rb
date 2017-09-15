@@ -78,6 +78,7 @@ class PicksController < ApplicationController
           :opponent => Team.find(opponent_id),
           :result => pick.result,
           :game => game,
+          # :logo => game.logo_path,
           :spread => spread
         })
       end
