@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   get 'picks', to: 'games#index'
   get 'standings', to: 'picks#standings'
   get 'previous', to: 'picks#previous'
-  get 'distribution', to: 'picks#distribution'
+  # get 'distribution', to: 'picks#distribution'
   get 'users', to: 'users#index'
-  get 'weeks', to: 'weeks#index'
+  get 'distribution', to: 'weeks#index'
 
   resources :sessions, only: [:create, :destroy]
   resource :home, only: [:show]
