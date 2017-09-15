@@ -14,11 +14,11 @@ class Game extends React.Component {
                 <td><i className="game-icon material-icons">{this.getIcon()}</i></td>
                 <td className={this.getTeamSelectedClass(home_team.id)}> {this.getSpreadPretty(true)} </td>
                 <td id="homeLogo" className={this.getHomeLogoClass(true)}>
-                    <img src={home_team.logo_path} height='25px' width='30px'/>
+                    <img src={home_team.logo_path} className="logos"  />
                 </td>
                 <td className={this.getTeamSelectedClass(home_team.id) + " select-team"} data-team-id={home_team.id}> {home_team.name} </td>
                 <td id="homeLogo" className={this.getAwayLogoClass(true)}>
-                    <img src={away_team.logo_path} height='25px' width='30px'/>
+                    <img src={away_team.logo_path} className="logos" />
                 </td>
                 <td className={this.getTeamSelectedClass(away_team.id) + " select-team"} data-team-id={away_team.id}> {away_team.name} </td>
                 <td> {this.getDatePretty()} </td>
