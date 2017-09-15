@@ -1,7 +1,7 @@
 class ChartsController < ApplicationController
   def distribution
     distribution_hash = {}
-    picks = Pick.joins(:game).where(:week => @current_week).where("games.time < ?", Time.now)
+    picks = Pick.joins(:game).where(:week => current_week).where("games.time < ?", Time.now)
     # results = picks.group(:result).count
     colors = []
     res_colors = {"win" => "green", "loss" => "red", "no result" => "blue"}
