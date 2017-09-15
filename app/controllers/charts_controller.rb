@@ -29,7 +29,7 @@ class ChartsController < ApplicationController
         res = 'no result'
       end
       colors << res_colors[res]
-      distribution_hash[winning_team] = pick_count
+      distribution_hash[labels] = pick_count
     end
     render json: [{name: "Number of Picks", data: distribution_hash, colors: colors}]
   end
