@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require highcharts
+//= require chartkick
 //= require underscore
 //= require turbolinks
 //= require materialize-sprockets

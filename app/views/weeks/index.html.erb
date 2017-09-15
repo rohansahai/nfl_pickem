@@ -1,5 +1,10 @@
-<h1>Holla</h1>
-<% (1..17).each do |num| %>
-	<a href="/weeks/<%= num %>/games">Week <%= num %></a>
-	<br>
-<% end %>
+<div class="col s9">
+	<div class="card distribution-card">
+		<div class="card-content">
+			<span class="card-title">
+					Week <%= @current_week %> Distribution
+				</span>
+				<%= distribution %>
+		</div>
+	</div>
+</div>
