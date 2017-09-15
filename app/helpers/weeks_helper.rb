@@ -4,7 +4,6 @@ module WeeksHelper
     # @current_week).group(:name).count.sort_by {|k, v| v}.reverse.to_h,
     bar_chart distribution_charts_path,
      library: {
-     color: "green",
       yAxis: {
          allowDecimals: false,
       },
