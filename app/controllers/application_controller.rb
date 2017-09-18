@@ -6,11 +6,11 @@ class ApplicationController < ActionController::Base
     return unless session[:user_id]
     @current_user ||= User.find(session[:user_id])
     # @current_user = User.find(2)
-    if @current_user.id == 65 or @current_user.id == 66
-      @current_user = User.find(50)
-    elsif @current_user.id == 64
-      @current_user = User.find(24)
-    end
+    # if @current_user.id == 65 or @current_user.id == 66
+    #   @current_user = User.find(50)
+    # elsif @current_user.id == 64
+    #   @current_user = User.find(24)
+    # end
   end
 
   def is_user_logged_in
