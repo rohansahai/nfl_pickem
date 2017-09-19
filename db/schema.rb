@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20161024065534) do
     t.integer  "week",                                        null: false
     t.integer  "home_team_id",                                null: false
     t.integer  "away_team_id",                                null: false
-    t.decimal  "home_spread",         precision: 3, scale: 1, null: false
+    t.decimal  "home_spread",         precision: 3, scale: 1, null: true
     t.datetime "time",                                        null: false
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20161024065534) do
     t.boolean  "push"
     t.integer  "home_team_score"
     t.integer  "away_team_score"
+    t.string "game_status"
     t.index ["away_team_id"], name: "index_games_on_away_team_id", using: :btree
     t.index ["home_team_id"], name: "index_games_on_home_team_id", using: :btree
   end
