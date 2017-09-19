@@ -6,6 +6,7 @@ $teal: rgb(68,150,139);
   border: 1px solid white;
 }
 
+.center {text-align: center;}
 
 .card.weekly-picks-card {
     margin: 40px;
@@ -53,4 +54,5 @@ $teal: rgb(68,150,139);
     .pick-loss .game-icon {
         color: #e53935;
     }
+
 }

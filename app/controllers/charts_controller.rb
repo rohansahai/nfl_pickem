@@ -5,7 +5,6 @@ class ChartsController < ApplicationController
     results = picks.group(:result).count
     results.each do |res, count|
       results_hash = {}
-      # weekly_distro = picks.where(:result => res)
       weekly_distro = picks.group(:game_id, :winner_id).where(:result => res).count.sort_by {|k, v| v}.reverse.to_h
       weekly_distro.each do |key, pick_count|
         pick = Pick.find_by(:winner_id => key[1])
@@ -32,9 +31,9 @@ class ChartsController < ApplicationController
         distribution_hash[res] = results_hash
       end
     end
-    render json: [
-      {name: "Win", data: distribution_hash["win"]},
-      {name: "Loss", data: distribution_hash["loss"]},
-      {name: "No Result", data: distribution_hash["no result"]}]
+    wins = {name: "Win", data: distribution_hash["win"]}
+    losses = {name: "Loss", data: distribution_hash["loss"]}
+    n_res = {name: "No Result", data: distribution_hash["no result"]}
+    render json: [wins, losses, n_res]
   end
 end

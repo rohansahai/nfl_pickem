@@ -8,6 +8,13 @@ module WeeksHelper
       yAxis: {
          allowDecimals: false,
       },
+#       plotOptions: {
+#    bar: {
+#       dataLabels: {
+#           enabled: true,
+#       }
+#    }
+# },
       tooltip: {
       pointFormat: 'Times Picked: <b>{point.y}</b>'}
     }

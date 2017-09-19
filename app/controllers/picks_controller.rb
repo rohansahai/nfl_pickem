@@ -52,8 +52,8 @@ class PicksController < ApplicationController
   end
 
   def standings
-    skip = [64, 65, 66]
-    @users = User.where.not(id: skip).all.to_a.sort_by(&:points).reverse.to_json(:methods => [:wins, :losses, :pushes, :percent, :points])
+    @users = User.where.not(id: [64, 65, 66]).all.to_a.sort_by(&:points).
+    reverse.to_json(:methods => [:wins, :losses, :pushes, :percent, :points])
   end
 
   def distribution
