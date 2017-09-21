@@ -107,7 +107,7 @@ class Game < ApplicationRecord
     last_week_with_no_results
   end
 
-  def self.create_game_results_csv
+  def self.update_scores_and_picks
     # this creates a csv at tmp/nfl_scores.csv
     `#{ENV['PYTHON_EXEC']} lib/scripts/nfl_scores.py`
   end
