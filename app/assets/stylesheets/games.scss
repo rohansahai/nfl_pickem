@@ -6,7 +6,13 @@ $teal: rgb(68,150,139);
   border: 1px solid white;
 }
 
-.center {text-align: center;}
+.score {
+  text-align: center;
+  padding-right: 40px;
+}
+.scoreTitle {
+  padding-left: 15px;
+}
 
 .card.weekly-picks-card {
     margin: 40px;
