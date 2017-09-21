@@ -1,45 +1,8 @@
 import pandas as pd
 from datetime import datetime as dt
 import numpy as np
-
-
-def convert_tz(x, est_to_utc=False):
-    """
-    :return: Convert utc datetimes to est and remove timezone stamp.
-    """
-    from dateutil import tz
-    if est_to_utc:
-        from_zone = tz.gettz('America/New_York')
-        to_zone = tz.tzutc()
-
-    else:
-        from_zone = tz.tzutc()
-        to_zone = tz.gettz('America/New_York')
-
-    try:
-        ctz = x.replace(tzinfo=from_zone)
-        return ctz.astimezone(to_zone).replace(tzinfo=None)
-    except:
-        return x
-
-
-def get_nfl_week_num():
-    """
-    returns: Use beginning and end dates of 2017 nfl season to map weeks to date ranges.
-    Use today's date to determine what week of the season we fall under. Return week (int).
-    """
-    week_begin = pd.date_range(start='2017-09-14', end='2017-12-29', freq='7D')
-    week_end = pd.date_range(start='2017-09-20', end='2018-01-04', freq='7D')
-    week_nums = list(range(2, 18))
-    week_lol = [[dt(2017, 8, 1), dt(2017, 9, 13), 1]] + [[week_b, week_e, num] for week_b, week_e, num in
-                                                         zip(week_begin, week_end, week_nums)]
-
-    today = dt(dt.today().year, dt.today().month, dt.today().day)
-    week_mapping_df = pd.DataFrame(week_lol, columns=['Week_Begin', 'Week_End', 'Week_Num'])
-    week = week_mapping_df.loc[(week_mapping_df['Week_Begin'] <= today) &
-                               (week_mapping_df['Week_End'] >= today)]['Week_Num'].iloc[0]
-
-    return week
+from util import convert_tz, get_nfl_week_num
+from db import get_vi_url, get_local_str, get_prod_str, update
 
 
 def get_vi_lines(week):
@@ -47,7 +10,7 @@ def get_vi_lines(week):
     :param week:
     :return:
     """
-    url = "http://www.vegasinsider.com/nfl/matchups/matchups.cfm/week/1/season/2017"
+    url = get_vi_url(week)
     dfs = pd.read_html(url)
     good_dfs = []
     for df in dfs:
@@ -56,15 +19,16 @@ def get_vi_lines(week):
             if 'Game Time' in first_val or first_val.startswith('Week {}'.format(week)):
                 good_dfs.append(df)
 
-    spread_df = pd.concat(good_dfs)
-    spread_df.drop_duplicates(inplace=True)
+    if len(good_dfs) > 0:
+        spread_df = pd.concat(good_dfs)
+        spread_df.drop_duplicates(inplace=True)
     for col, val in [['Time', 'Game Time'], ['Date', 'Week {}'.format(week)]]:
         spread_df[col] = spread_df[0].apply(lambda x: x if val in x else np.nan)
         spread_df[col] = spread_df[col].ffill()
         spread_df[col] = spread_df[col].str.replace(val, '')
         spread_df[col] = spread_df[col].str.strip()
 
-    spread_df = spread_df[spread_df[4].notnull()]
+    spread_df = spread_df[spread_df[2].str.startswith('L-') | spread_df[2].str.startswith('W-')]
     spread_df[0] = spread_df[0].str.replace('\d+', '')
     spread_df[0] = spread_df[0].str.strip()
 
@@ -110,20 +74,21 @@ def unpack_game_values(nfl_data, week):
 
     nfl_data.reset_index(inplace=True)
     nfl_data['group_col'] = nfl_data['index'].apply(lambda i: i + 2 if i % 2 == 0 else i + 1)
+    nfl_data['Spread'] = nfl_data['Spread'].str.replace('PK', '0')
     nfl_data['Spread'] = nfl_data['Spread'].astype(float)
-    nfl_data['Spread'] = nfl_data['Spread'].apply(lambda x: x if x < 0 else np.nan)
+    nfl_data['Spread'] = nfl_data['Spread'].apply(lambda x: x if x <= 0 else np.nan)
     nfl_data = nfl_data.groupby('group_col').apply(fill_in_all_spreads)
     nfl_data.Spread.fillna(nfl_data.reverse_spread, inplace=True)
 
     return nfl_data.drop(['index', 'reverse_spread'], axis=1)
 
 
-def add_team_id(nfl_spreads):
+def add_team_id(nfl_spreads, prod_str):
     """
     :param nfl_spreads:
     :return:
     """
-    team_id_df = pd.read_sql("select id, short_name from teams", ENV['ENGINE_STR'])
+    team_id_df = pd.read_sql("select id, short_name from team_mapping", prod_str)
     nfl_spreads = pd.merge(nfl_spreads, team_id_df, how='left', left_on='Teams', right_on='short_name')
     nfl_spreads = nfl_spreads.groupby('group_col').apply(reshape_to_write)
     nfl_spreads = nfl_spreads[['week', 'home_team_id', 'away_team_id', 'home_spread', 'time']].drop_duplicates()
@@ -135,10 +100,36 @@ def add_team_id(nfl_spreads):
     return nfl_spreads
 
 
+def check_if_spreads_exist(nfl_spreads, week, prod_str):
+    """
+    :param nfl_spreads:
+    :param prod_str:
+    :return:
+    """
+    exist_spreads_df = pd.read_sql("select * from games where week = {}".format(week), prod_str)
+    missing_spreads = exist_spreads_df[exist_spreads_df['home_spread'].isnull()]
+    if len(missing_spreads) > 0:
+        spread_data = nfl_spreads[['home_team_id', 'away_team_id', 'home_spread']]
+        update_spreads = pd.merge(missing_spreads, spread_data, how='left', on=['home_team_id', 'away_team_id'])
+        for i, row in update_spreads.iterrows():
+            update_q = "UPDATE games SET home_spread = {0} WHERE id = {1}".format(row['home_spread_y'], row['id'])
+            update(prod_str, update_q)
+    elif len(exist_spreads_df) == 0:
+        nfl_spreads.to_sql('games', prod_str, if_exists='append', index=False)
+    else:
+        pass
+
+
 def main():
 
+    prod_str = ENV['ENGINE_STR']
+    # prod_str = get_local_str()
     week = get_nfl_week_num()
     nfl_data = get_vi_lines(week)
     nfl_spreads = unpack_game_values(nfl_data, week)
-    nfl_spreads = add_team_id(nfl_spreads)
-    nfl_spreads.to_sql('games', ENV['ENGINE_STR'], if_exists='append', index=False)
+    nfl_spreads = add_team_id(nfl_spreads, prod_str)
+    check_if_spreads_exist(nfl_spreads, week, prod_str)
+
+
+if __name__ == '__main__':
+    main()
