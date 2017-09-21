@@ -87,7 +87,6 @@ class GameList extends React.Component {
 
     render () {
         var _this = this;
-        debugger
         var gameNodes = this.state.games.map(function(game) {
             return (
                 <Game key={game.id} game={game} addNewPick={_this.addNewPick.bind(_this)} removePick={_this.removePick.bind(_this)} />
@@ -108,7 +107,7 @@ class GameList extends React.Component {
                                 <th>Home Spread</th>
                                   <th id='homeLogo'></th>
                                 <th>Home Team</th>
-                                <th className="center">Score</th>
+                                <th className="scoreTitle">Score</th>
                                   <th id='awayLogo'></th>
                                 <th>Visiting Team</th>
                                 <th>Status</th>
