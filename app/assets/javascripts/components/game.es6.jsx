@@ -29,20 +29,6 @@ class Game extends React.Component {
     }
 
 ///arthur
-      // whoIsTheHomeTeam(home_team){
-      //       if(home_team.name==='Los Angeles Chargers'){
-      //           console.log('greenBay')
-      //           console.log(home_team.logo_path)
-      //           return home_team.name;
-      //           //React.renderComponent(<Img />, document.querySelector('#homeLogo'));
-      //         //  ReactDOM.render(element,document.getElementById('homeLogo'))
-      //       }else if (home_team.name==='New Orleans Saints') {
-      //       console.log(home_team.name)
-      //         return home_team.name +"NOLA";
-      //       }else {
-      //
-      //       }
-      //     }
   whoIsTheAwayTeam(away_team){
     return away_team.name
   }
