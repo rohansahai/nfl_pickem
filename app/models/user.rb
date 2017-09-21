@@ -57,6 +57,34 @@ class User < ApplicationRecord
     end
   end
 
+  def week_standings(week)
+    week_standings = {}
+    # @weeks_standings = Hash.new
+    week.downto(1).each do |this_week|
+          # @week_standings[this_week] = []
+          wins = picks.where(:result => 'win').where(:week => this_week).count
+          pushes = picks.where(:result => 'push').where(:week => this_week).count
+          losses = picks.where(:result => 'loss').where(:week => this_week).count
+          points = wins + (pushes * 0.5)
+          total = wins + losses + pushes
+          if total > 0
+            perc = points  / total * 100
+            perc.round()
+          else
+            perc = 0
+          end
+
+          week_standings[this_week] = {
+            :wins => wins,
+            :pushes => pushes,
+            :losses => losses,
+            :points => points,
+            :perc => perc
+          }
+    end
+    week_standings
+  end
+
   def get_picks_summary(week)
     weekly_picks = picks.where(:week => week)
     if weekly_picks.count < 1
