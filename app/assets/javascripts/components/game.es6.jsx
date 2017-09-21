@@ -51,6 +51,9 @@ class Game extends React.Component {
       if (spread > 0) {
           return "+" + spread;
       }
+      if (spread == 0) {
+          return "PK"
+      }
       return spread;
   }
   getTeamSelectedClass (winner_id) {
