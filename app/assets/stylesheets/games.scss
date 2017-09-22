@@ -8,12 +8,15 @@ $teal: rgb(68,150,139);
 
 .score {
   text-align: center;
-  padding-right: 40px;
+  // padding-right: 40px;
 }
 .scoreTitle {
-  padding-left: 8px;
+  // padding-left: 8px;
+  text-align: center;
 }
-
+.blankColumn{
+  width: 30px;
+}
 .card.weekly-picks-card {
     margin: 40px;
 

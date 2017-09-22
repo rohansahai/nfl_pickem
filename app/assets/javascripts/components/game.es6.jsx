@@ -19,6 +19,7 @@ class Game extends React.Component {
                 </td>
                 <td className={this.getTeamSelectedClass(home_team.id) + " select-team"} data-team-id={home_team.id}> {home_team.name} </td>
                 <td className="score">{this.getScorePretty()}</td>
+                <td id='blank' className='blankColumn'></td>
                 <td id="awayLogo" className={this.getAwayLogoClass(true)}>
                     <img src={away_team.logo_path} className="logos" />
                 </td>
