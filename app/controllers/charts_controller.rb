@@ -34,6 +34,7 @@ class ChartsController < ApplicationController
     wins = {name: "Win", data: distribution_hash["win"]}
     losses = {name: "Loss", data: distribution_hash["loss"]}
     n_res = {name: "No Result", data: distribution_hash["no result"]}
+    pushes = {name: "Push", data: distribution_hash["push"]}
     render json: [wins, losses, n_res]
   end
 end
