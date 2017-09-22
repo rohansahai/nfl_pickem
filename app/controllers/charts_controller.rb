@@ -10,7 +10,9 @@ class ChartsController < ApplicationController
         pick = Pick.find_by(:winner_id => key[1])
         winning_team = Team.find(key[1]).name
         game = Game.find(key[0])
-        if key[1] == game.spread_winner_id
+        if game.push
+          res = "push"
+        elsif key[1] == game.spread_winner_id
           res = "win"
         elsif game.spread_winner_id == nil
           res = "no result"
@@ -35,6 +37,6 @@ class ChartsController < ApplicationController
     losses = {name: "Loss", data: distribution_hash["loss"]}
     n_res = {name: "No Result", data: distribution_hash["no result"]}
     pushes = {name: "Push", data: distribution_hash["push"]}
-    render json: [wins, losses, n_res]
+    render json: [wins, losses, pushes, n_res]
   end
 end
