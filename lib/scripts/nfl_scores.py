@@ -7,11 +7,11 @@ from util import get_nfl_week_num, convert_tz
 import random
 import time
 from datetime import datetime as dt, timedelta as td
+from sqlalchemy.exc import DatabaseError
 
 
 def is_there_game_on(current_week, prod_str):
     """
-    :param prod_str:
     :return:
     """
     games = pd.read_sql("select time from games where week = {} order by time ASC".format(current_week), prod_str)
@@ -62,15 +62,45 @@ def get_ml_winner(row):
         return row['away_team_id']
 
 
-def insert_possession_team(row):
+def identify_live_games(row):
     """
     :return:
     """
-    game_status = row['game_status']
-    down = game_status[10:18]
+    if row['game_status'] == 'Final':
+        game_live = 0
+        game_status = row['game_status']
+    elif row['game_status'] == 'OT':
+        game_live = 0
+        game_status = 'Final (OT)'
+    else:
+        game_live = 1
+        game_status = row['game_status']
 
-    if pd.notnull(row['possession']):
-        return game_status.replace(down, row['possession'] + ' ').replace('  ', ' ')
+    row['game_status'] = game_status
+    row['game_live'] = game_live
+
+    return row
+
+
+def insert_possession_team(row, team_mapping):
+    """
+    :return:
+    """
+    if '&' in row['game_status']:
+        game_status = row['game_status']
+        try:
+            i = game_status.index('at') - 1
+            down = game_status[10:i]
+        except ValueError:
+            pass
+
+        if pd.notnull(row['possession']):
+            new_status = game_status.replace(down, row['possession'] + ' ').replace('  ', ' ')
+            team = new_status.split(' ')[2]
+            team_abr = team_mapping[team]
+            return new_status.replace(team, team_abr)
+    else:
+        return row['game_status']
 
 
 def get_weekly_scores(tables, week, prod_str):
@@ -90,9 +120,18 @@ def get_weekly_scores(tables, week, prod_str):
     for col in ['away_team_id', 'home_team_id']:
         nfl_scores_df['{}_possession'.format(col)] = nfl_scores_df[col].apply(lambda x: x if '•' in x else 0)
         nfl_scores_df[col] = nfl_scores_df[col].str.replace(' •', '')
-    nfl_scores_df['possession'] = nfl_scores_df.apply(lambda row: row['away_team_id_possession']
-    if row['away_team_id_possession'] !=0 else row['home_team_id_possession'], axis=1).str.replace(' •', '')
-    nfl_scores_df['game_status'] = nfl_scores_df.apply(insert_possession_team, axis=1)
+
+    crit = [
+        all(nfl_scores_df['away_team_id_possession'] == 0),
+        all(nfl_scores_df['home_team_id_possession'] == 0)
+    ]
+
+    if not all(crit):
+        nfl_scores_df['possession'] = nfl_scores_df.apply(lambda row: row['away_team_id_possession']
+        if row['away_team_id_possession'] != 0 else row['home_team_id_possession'], axis=1).str.replace(' •', '')
+        team_mapping = pd.read_sql('select team_abr, last_name from team_mapping', prod_str) \
+            .set_index('last_name').to_dict()['team_abr']
+        nfl_scores_df['game_status'] = nfl_scores_df.apply(lambda row: insert_possession_team(row, team_mapping), axis=1)
 
     away_cols = ['away_first', 'away_second', 'away_third', 'away_fourth', 'away_ot']
     home_cols = ['home_first', 'home_second', 'home_third', 'home_fourth', 'home_ot']
@@ -115,7 +154,7 @@ def get_weekly_scores(tables, week, prod_str):
         nfl_scores_df[col] = nfl_scores_df[col].map(team_id_mapping)
 
     nfl_scores_df['week'] = week
-    nfl_scores_df['game_live'] = nfl_scores_df['game_status'].apply(lambda x: 0 if x == 'Final' or x == 'OT' else 1)
+    nfl_scores_df = nfl_scores_df.apply(identify_live_games, axis=1)
     keep_cols = ['week', 'home_team_id', 'home_first', 'home_second', 'home_third', 'home_fourth', 'home_ot',
                  'home_team_score', 'away_team_id', 'away_first', 'away_second', 'away_third', 'away_fourth',
                  'away_ot', 'away_team_score', 'moneyline_winner_id', 'game_status', 'game_live']
@@ -151,7 +190,7 @@ def update_games_with_score(weekly_scores_df, current_week, prod_str):
     """
     exist_games_q = """
     select id, home_team_id, away_team_id, home_spread from games
-    where week = {} and spread_winner_id is NULL;""".format(current_week)
+    where week = {} and game_status not in ('Final', 'Final (OT)');""".format(current_week)
     exist_games_df = pd.read_sql(exist_games_q, prod_str)
     weekly_scores_df = pd.merge(weekly_scores_df, exist_games_df, how='left', on=['home_team_id', 'away_team_id'])
     weekly_scores_df = weekly_scores_df[(weekly_scores_df['home_team_score'].notnull()) &
@@ -160,7 +199,7 @@ def update_games_with_score(weekly_scores_df, current_week, prod_str):
     weekly_scores_df = weekly_scores_df.apply(calc_spread_winner, axis=1)
 
     final_games = weekly_scores_df[weekly_scores_df['game_live'] == 0]
-    live_game = weekly_scores_df[(weekly_scores_df['game_live'] == 1) & (weekly_scores_df['game_status'].notnull())]
+    live_game = weekly_scores_df[(weekly_scores_df['game_live'] == 1)]
     if len(final_games) > 0:
         for i, row in final_games.iterrows():
             update_q = """
@@ -168,10 +207,16 @@ def update_games_with_score(weekly_scores_df, current_week, prod_str):
                 spread_winner_id = {0}, moneyline_winner_id = {1}, push = {2},
                 home_team_score = {3}, away_team_score = {4}, game_status = '{5}'
             WHERE
-                id = {6}""".format(row['spread_winner_id'], row['moneyline_winner_id'],
-                                   row['push'], row['home_team_score'], row['away_team_score'],
-                                   row['game_status'], row['id'])
-            update(prod_str, update_q)
+                id = {6}""".format(row['spread_winner_id'] if pd.notnull(row['spread_winner_id']) else "NULL",
+                                   row['moneyline_winner_id'], row['push'], row['home_team_score'],
+                                   row['away_team_score'], row['game_status'], row['id'])
+            for x in range(0, 2):
+                while True:
+                    try:
+                        update(prod_str, update_q)
+                    except DatabaseError:
+                        continue
+                    break
     elif not live_game.empty:
         for i, row in live_game.iterrows():
             update_q = """
@@ -179,7 +224,13 @@ def update_games_with_score(weekly_scores_df, current_week, prod_str):
                 home_team_score = {0}, away_team_score = {1}, game_status = '{2}'
             WHERE
                 id = {3}""".format(row['home_team_score'], row['away_team_score'], row['game_status'], row['id'])
-            update(prod_str, update_q)
+            for x in range(0, 2):
+                while True:
+                    try:
+                        update(prod_str, update_q)
+                    except DatabaseError:
+                        continue
+                    break
 
 
 def determine_result(row):
@@ -200,20 +251,26 @@ def update_picks_table_with_result(current_week, prod_str):
     """
     q = """select picks.id, picks.winner_id, picks.result, games.spread_winner_id, games.push from picks
     LEFT JOIN games on picks.game_id = games.id
-    where games.spread_winner_id is not NULL and picks.result is NULL and games.week = {}""".format(current_week)
+    where games.moneyline_winner_id is not NULL and picks.result is NULL and games.week = {}""".format(current_week)
     results = pd.read_sql(q, prod_str)
     if not results.empty:
         results['result'] = results.apply(determine_result, axis=1)
         for i, row in results.iterrows():
             update_q = """UPDATE picks SET result = '{0}' WHERE id = {1}""".format(row['result'], row['id'])
-            update(prod_str, update_q)
+            for x in range(0, 2):
+                while True:
+                    try:
+                        update(prod_str, update_q)
+                    except DatabaseError:
+                        continue
+                    break
 
 
 def main():
 
     delay = random.randrange(1, 120)
     time.sleep(delay)
-    prod_str = get_prod_str()
+    prod_str = ENV['ENGINE_STR']
     current_week = get_nfl_week_num()
     game_live = is_there_game_on(current_week, prod_str)
     if game_live:
