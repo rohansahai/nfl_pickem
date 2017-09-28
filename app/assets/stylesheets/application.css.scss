@@ -37,7 +37,7 @@ nav {
 
 #sidebar {
     margin-top: 50px;
-
+    white-space: nowrap;
     a {
         color: inherit;
     }
@@ -52,7 +52,7 @@ nav {
         margin-right: 0px;
 
         span {
-            margin-left: 15px;
+            margin-left: 10px;
             position: relative;
             top: -6px;
         }

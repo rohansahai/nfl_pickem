@@ -1,25 +1,38 @@
 $teal: rgb(68,150,139);
 
-.logos{
+.logos {
   border-radius: 25%;
-  height: 15%;
+  height: 20px;
   border: 1px solid white;
+
+  display: block;
+  margin: 0 auto;
+
+}
+
+#homeSpead{
+  text-align: center;
+  display: inline-block;
+
 }
 
 .score {
   text-align: center;
-  display: inline-block;
-  // padding-right: 40px;
-  width: 60px;
+  white-space: nowrap;
+  height: 10px;
+
 }
+
 .scoreTitle {
   // padding-left: 8px;
-  // text-align: center;
+  text-align: center;
+  white-space: nowrap;
+  
 }
+
 .blankColumn{
   width: 30px;
 }
-
 
 .card.weekly-picks-card {
   //backup
@@ -52,6 +65,8 @@ $teal: rgb(68,150,139);
 
     .select-team {
         cursor: pointer;
+        white-space: nowrap;
+        text-align: center;
     }
 
     .game-icon {

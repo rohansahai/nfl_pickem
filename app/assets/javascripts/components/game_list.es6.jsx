@@ -108,7 +108,7 @@ class GameList extends React.Component {
                                   <th id='homeLogo'></th>
                                 <th>Home Team</th>
                                 <th className="scoreTitle">Score</th>
-                                  <th id='blankTitle'></th>
+                                  {/* <th id='blankTitle'></th> */}
                                   <th id='awayLogo'></th>
                                 <th>Visiting Team</th>
                                 <th>Status</th>
