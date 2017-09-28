@@ -27,7 +27,7 @@ $teal: rgb(68,150,139);
   // padding-left: 8px;
   text-align: center;
   white-space: nowrap;
-  
+
 }
 
 .blankColumn{
@@ -66,7 +66,8 @@ $teal: rgb(68,150,139);
     .select-team {
         cursor: pointer;
         white-space: nowrap;
-        text-align: center;
+        text-align: left;
+
     }
 
     .game-icon {
@@ -83,5 +84,12 @@ $teal: rgb(68,150,139);
     .pick-loss .game-icon {
         color: #e53935;
     }
+    @media only screen
+      and (min-device-width: 375px)
+      and (max-device-width: 667px)
+      and (-webkit-min-device-pixel-ratio: 2) {
+        
 
+
+    }
 }
