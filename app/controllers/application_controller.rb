@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   end
 
   def is_user_logged_in
-    # redirect_to "/auth/google_oauth2" if current_user.nil?
+    redirect_to "/auth/google_oauth2" if current_user.nil?
   end
 
   def current_week
