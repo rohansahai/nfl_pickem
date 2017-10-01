@@ -35,15 +35,15 @@ class Standings extends React.Component {
     }
 
     getUserRecordNodes (users) {
-        var last_rank_points = users[0].cur_points;
+        var last_rank_points = users[0].points;
         var last_rank = 1;
 
         return users.map(function(user, index) {
-            if (last_rank_points === user.cur_points ) {
+            if (last_rank_points === user.points ) {
                 user.rank = last_rank;
             } else {
                 user.rank = index + 1;
-                last_rank_points = user.cur_points;
+                last_rank_points = user.points;
                 last_rank = index + 1;
             }
 
