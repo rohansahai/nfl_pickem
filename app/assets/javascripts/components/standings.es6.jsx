@@ -8,8 +8,13 @@ class Standings extends React.Component {
                 <div className="card-content">
                     <div className="row title-row">
                         <span className="card-title">Standings</span>
+                        <a className='dropdown-button btn' href='#' data-activates='dropdown1'>Week</a>
+                          <ul id='dropdown1' className='dropdown-content'>
+                            <li><a href="#!">1</a></li>
+                            <li><a href="#!">2</a></li>
+                            <li><a href="#!">3</a></li>
+                          </ul>
                     </div>
-
                     <table className="bordered">
                         <tbody>
                             <tr>
@@ -30,15 +35,15 @@ class Standings extends React.Component {
     }
 
     getUserRecordNodes (users) {
-        var last_rank_points = users[0].points;
+        var last_rank_points = users[0].cur_points;
         var last_rank = 1;
 
         return users.map(function(user, index) {
-            if (last_rank_points === user.points ) {
+            if (last_rank_points === user.cur_points ) {
                 user.rank = last_rank;
             } else {
                 user.rank = index + 1;
-                last_rank_points = user.points;
+                last_rank_points = user.cur_points;
                 last_rank = index + 1;
             }
 
