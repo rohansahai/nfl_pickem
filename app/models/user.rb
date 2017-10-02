@@ -66,24 +66,19 @@ class User < ApplicationRecord
       week_losses = picks.where(:result => 'loss', :week => this_week).count
       week_points = week_wins + (week_pushes * 0.5)
       total = week_wins + week_losses + week_pushes
-      if total > 0
-        perc = week_points  / total * 100
-        perc.round()
-      else
-        perc = 0
-      end
+      percent = total > 0 ? (week_points  / total * 100).round : 0
 
       week_standings[this_week] = {
         :wins => week_wins,
         :pushes => week_pushes,
         :losses => week_losses,
         :points => week_points,
-        :perc => perc
+        :percent => percent
       }
     end
 
     percentage_all = (points / picks.count) * 100
-    week_standings[:all] = {wins: wins, pushes: pushes, points: points, perc: percentage_all}
+    week_standings[:all] = {wins: wins, pushes: pushes, points: points, percent: percentage_all.round}
     week_standings
   end
 
