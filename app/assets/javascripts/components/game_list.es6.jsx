@@ -4,6 +4,8 @@ class GameList extends React.Component {
         this.state = {picks: props.picks, games: props.games, week: props.week};
     }
 
+
+
     addNewPick (new_pick) {
         // TODO: make this not hacky af
         var existing_pick = _.findWhere(this.state.picks, {game_id: new_pick.game_id})
@@ -85,6 +87,13 @@ class GameList extends React.Component {
         Materialize.toast(error_message, 4000);
     }
 
+
+
+    changeClass(){
+      var x = document.querySelector('#test')
+      x.id = "hidden10"
+      debugger
+    }
     render () {
         var _this = this;
         var gameNodes = this.state.games.map(function(game) {
@@ -100,15 +109,16 @@ class GameList extends React.Component {
                         <span className="card-title">Week {this.props.week} Picks</span>
                     </div>
 
-                    <table className="bordered">
+
+
+                    <table className="bordered highlight">
                         <tbody>
                             <tr>
                                 <th data-id="locked"></th>
-                                <th>Home Spread</th>
+                                <th className="homeSpead_th">Home Spread</th>
                                   <th id='homeLogo'></th>
                                 <th>Home Team</th>
                                 <th className="scoreTitle">Score</th>
-                                  {/* <th id='blankTitle'></th> */}
                                   <th id='awayLogo'></th>
                                 <th>Visiting Team</th>
                                 <th>Status</th>
@@ -118,6 +128,9 @@ class GameList extends React.Component {
                     </table>
                 </div>
             </div>
+
         );
     }
+
+
 }
