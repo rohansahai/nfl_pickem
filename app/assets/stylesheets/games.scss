@@ -23,7 +23,6 @@ $break-large: 1200px;
 }
 
 .scoreTitle {
-  // padding-left: 8px;
   text-align: center;
   white-space: nowrap;
 
@@ -48,15 +47,6 @@ $break-large: 1200px;
       border-color: black !important;
       font-size: 15px !important;
 
-      @media screen and (max-width: 857px) {
-          font-size: 10px !important;
-         }
-      @media screen and (max-width: 666px) {
-             font-size: 10px !important;
-             padding: 0px !important;
-
-          }
-
         .homeSpead_th{
           white-space: nowrap;
         }
@@ -78,44 +68,29 @@ $break-large: 1200px;
         td{
           font-size: 20px;
           border-radius: 0px !important;
-          @media screen and (min-width: 1000px) {
-              // font-size: 15px !important;
-              font-size: 20px;
-             }
-          @media screen and (max-width: 857px) {
-              // font-size: 10px !important;
-              font-size: 17px;
-              padding: 5px;
-             }
-          @media screen and (max-width: 666px) {
-                 font-size: 10px !important;
-                //  padding: 0px !important;
-                padding: 0;
-                // padding-left: 10px;
-              }
+          // @media screen and (min-width: 1000px) {
+          //     font-size: 20px;
+          //    }
+          // @media screen and (max-width: 857px) {
+          //     font-size: 17px;
+          //     padding: 5px;
+          //    }
+          // @media screen and (max-width: 666px) {
+          //        font-size: 10px !important;
+          //        padding: 0;
+          //     }
         }
     }
-
     .pick-active {
         // color: black;
         // background: rgba(30,144,255, 0.7);
         background: rgb(232,232,232); //grey
-    }
-    .pickWin {
-      // border-color: green;
-      border-width: 2px;
-      border-top: 5px;
-      color: green !important;
     }
     .team-selected {
         color: $teal;
         font-weight: 600;
         border: 5px;
 
-        @media screen and (max-width: 666px) {
-              // padding: 0;
-              // padding-left: 10px;
-        }
     }
     .select-team {
         cursor: pointer;
@@ -141,25 +116,20 @@ $break-large: 1200px;
       color: red;
     }
     .datePretty{
-      // white-space: nowrap
-      // white-space: none !important;
-      @media screen and (min-width: 1085px) {
-          // font-size: 10px !important;
-          font-size: 15px;
-      }
-      @media screen and (min-width: 1085px) {
-             // font-size: 10px !important;
-             font-size: 10px !important;
-             white-space: none !important;
-      }
-      @media screen and (max-width: 660px) {
-             // font-size: 10px !important;
-             font-size: 8px !important;
-             white-space: none !important;
-      }
-
-
-
+      font-size: 15px;
+      // @media screen and (min-width: 1085px) {
+      //        font-size: 15px !important;
+      //        white-space: none !important;
+      // }
+      // @media screen and (min-width: 1085px)
+      //   and (max-width: 661px) {
+      //        font-size: 12px !important;
+      //        white-space: none !important;
+      // }
+      // @media screen and (max-width: 660px) {
+      //        // font-size: 10px !important;
+      //        font-size: 10px !important;
+      //        white-space: none !important;
+      // }
     }
-
 }
