@@ -57,59 +57,34 @@ class User < ApplicationRecord
     end
   end
 
-  def cur_wins
-    week = Game.get_week
-    picks.where(:result => 'win').where(:week => week).count
-  end
-
-  def cur_losses
-    week = Game.get_week
-    picks.where(:result => 'loss').where(:week => week).count
-  end
-
-  def cur_pushes
-    week = Game.get_week
-    picks.where(:result => 'push').where(:week => week).count
-  end
-
-  def cur_points
-    cur_wins + (cur_pushes * 0.5)
-  end
-
-  def cur_percent
-    total = cur_wins + cur_losses + cur_pushes
-    if total > 0
-      perc = cur_points  / total * 100
-      perc.round()
-    else
-      return 0
-    end
-  end
-  #
   def week_standings
     week = Game.get_week
-    @week_standings = Hash.new
+    week_standings = Hash.new
     week.downto(1).each do |this_week|
-      wins = picks.where(:result => 'win').where(:week => this_week).count
-      pushes = picks.where(:result => 'push').where(:week => this_week).count
-      losses = picks.where(:result => 'loss').where(:week => this_week).count
-      points = wins + (pushes * 0.5)
-      total = wins + losses + pushes
+      week_wins = picks.where(:result => 'win', :week => this_week).count
+      week_pushes = picks.where(:result => 'push', :week => this_week).count
+      week_losses = picks.where(:result => 'loss', :week => this_week).count
+      week_points = week_wins + (week_pushes * 0.5)
+      total = week_wins + week_losses + week_pushes
       if total > 0
-        perc = points  / total * 100
+        perc = week_points  / total * 100
         perc.round()
       else
         perc = 0
       end
 
-    @week_standings[this_week] = {
-      :wins => wins,
-      :pushes => pushes,
-      :losses => losses,
-      :points => points,
-      :perc => perc
-    }
+      week_standings[this_week] = {
+        :wins => week_wins,
+        :pushes => week_pushes,
+        :losses => week_losses,
+        :points => week_points,
+        :perc => perc
+      }
     end
+
+    percentage_all = (points / picks.count) * 100
+    week_standings[:all] = {wins: wins, pushes: pushes, points: points, perc: percentage_all}
+    week_standings
   end
 
   def get_picks_summary(week)
