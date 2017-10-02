@@ -14,9 +14,9 @@ class Standings extends React.Component {
     }
 
     getWeekOptions() {
-        var weekOptions = [<li><a>all</a></li>]
+        var weekOptions = [<li key='all'><a>all</a></li>]
         for (var i = 1; i <= this.props.current_week; i++) {
-            weekOptions.push(<li><a>{i}</a></li>)
+            weekOptions.push(<li key={i}><a>{i}</a></li>)
         }
 
         return weekOptions
