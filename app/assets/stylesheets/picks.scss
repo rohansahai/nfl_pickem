@@ -1,28 +1,44 @@
 $teal: rgb(68,150,139);
-
+$pickem: #013369;
+$pickem2: #000080;
 .user-ranking {
-	text-align: center;
-	width: 50px;
-	font-weight: 500;
+    text-align: center;
+    width: 50px;
+    font-weight: 500;
 }
 
 .current-user {
-	color: $teal;
-	font-weight: 700;
+    color: $teal;
+    font-weight: 700;
 
-	a {
-		color: $teal;
-	}
+    a {
+        color: $teal;
+    }
 }
 
-
-
 .card.distribution-card {
-	margin: 40px;
+    margin: 40px;
 }
 
 #user-picks-name {
-	margin-left: 40px;
-	position: relative;
-	top: 20px;
+    margin-left: 40px;
+    position: relative;
+    top: 20px;
+}
+
+//--- dropdown ---
+// .dd {
+//     text-align: left;
+// }
+.dd {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 8;
+}
+.dropdown-content {
+  cursor: pointer;
+}
+.dropdown-button {
+  cursor: pointer;
 }

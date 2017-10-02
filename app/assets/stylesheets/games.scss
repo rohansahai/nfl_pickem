@@ -1,7 +1,7 @@
 $teal: rgb(68,150,139);
 $break-small: 320px;
 $break-large: 1200px;
-
+$pickem: #013369;
 .logos {
   height: 25px;
   display: block;
@@ -52,15 +52,6 @@ $break-large: 1200px;
       border-color: black !important;
       font-size: 15px !important;
 
-      // @media screen and (max-width: 857px) {
-      //     font-size: 10px !important;
-      //    }
-      // @media screen and (max-width: 666px) {
-      //        font-size: 10px !important;
-      //        padding: 0px !important;
-      //
-      //     }
-
         .homeSpead_th{
           white-space: nowrap;
         }
@@ -81,44 +72,32 @@ $break-large: 1200px;
         tr{
           font-size: 15px;
           @media screen and (max-width: 864px) {
-            // font-size: 10px !important;
             font-size: 10px;
           }
           @media screen and (max-width: 660px) {
-                 // font-size: 10px !important;
-                 font-size: 8px !important;
+            font-size: 8px !important;
           }
         }
-        td{
+        td {
           font-size: 15px;
           border-radius: 0px !important;
           @media screen and (max-width: 864px) {
-            // font-size: 10px !important;
             font-size: 10px;
             padding: 5px;
           }
           @media screen and (max-width: 660px) {
-                 // font-size: 10px !important;
-                 font-size: 8px !important;
-                 white-space: none !important;
-                 padding: 0;
+
+            font-size: 8px !important;
+            white-space: none !important;
+            padding: 0;
           }
-          // @media screen and (max-width: 666px) {
-          //        font-size: 10px !important;
-          //       //  padding: 0px !important;
-          //       padding: 0;
-          //       // padding-left: 10px;
-          //     }
         }
     }
 
     .pick-active {
-        // color: black;
-        // background: rgba(30,144,255, 0.7);
         background: rgb(232,232,232); //grey
     }
     .pickWin {
-      // border-color: green;
       border-width: 2px;
       border-top: 5px;
       color: green !important;
@@ -127,18 +106,12 @@ $break-large: 1200px;
         color: $teal;
         font-weight: 600;
         border: 5px;
-        //
-        // @media screen and (max-width: 666px) {
-        //       // padding: 0;
-        //       // padding-left: 10px;
-        // }
     }
     .select-team {
         cursor: pointer;
         white-space: nowrap;
         text-align: left;
     }
-
     .game-icon {
         font-size: 18px;
         top: 2px;
@@ -158,18 +131,10 @@ $break-large: 1200px;
     }
     .datePretty{
       font-size: 15px;
-      // white-space: nowrap
-      // white-space: none !important;
-        // @media screen and (min-width: 1085px) {
-        //     // font-size: 10px !important;
-        //     font-size: 15px;
-        // }
         @media screen and (min-width: 1085px) {
-               // font-size: 10px !important;
                white-space: none !important;
         }
         @media screen and (max-width: 660px) {
-               // font-size: 10px !important;
                font-size: 10px !important;
                white-space: none !important;
         }

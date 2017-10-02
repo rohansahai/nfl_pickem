@@ -20,13 +20,15 @@ $break-small: 320px;
 $break-large: 1200px;
 
 $navy: rgb(102,124,137);
+$pickem: #013369;
+$pickem2: #000080;
 $teal: rgb(68,150,139);
 //#013369
 body{
   background-position: white;
 }
 nav {
-    background-color: #013369;
+    background-color: #000080;
     position: fixed;
     z-index: 10;
     .title {
@@ -90,7 +92,7 @@ nav {
     }
 
     .active {
-        color: $teal;
+        color: #000080;
         font-size: 14px;
       @media screen and (min-width: 1000px) {
                font-size: 20px !important;
