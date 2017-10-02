@@ -16,12 +16,19 @@
 
 @import "materialize";
 
+$break-small: 320px;
+$break-large: 1200px;
+
 $navy: rgb(102,124,137);
 $teal: rgb(68,150,139);
 //#013369
+body{
+  background-position: white;
+}
 nav {
     background-color: #013369;
-
+    position: fixed;
+    z-index: 10;
     .title {
         margin-left: 24px;
         font-size: 20px;
@@ -36,6 +43,13 @@ nav {
 }
 
 #sidebar {
+  position: fixed;
+  top: 25px;
+
+  @media screen and (min-width: 1000px) {
+         font-size: 20px !important;
+        }
+
     margin-top: 50px;
     white-space: nowrap;
     a {
@@ -45,8 +59,15 @@ nav {
     a:visited {
         color: inherit;
     }
+    #icons {
+      @media screen and (max-width: 800px) {
+          font-size: 40px !important;
+          height: 40px;
+         }
+    }
 
     li {
+
         cursor: pointer;
         margin: 10px;
         margin-right: 0px;
@@ -55,13 +76,24 @@ nav {
             margin-left: 10px;
             position: relative;
             top: -6px;
+            @media screen and (max-width: 600px) {
+                display: none;
+                visibility: hidden;
+               }
+            @media screen and (max-width: 800px) {
+               font-size: 10px !important;
+              }
+        }
+        .material-icons{
+          // size: 60px;
         }
     }
 
     .active {
         color: $teal;
+        font-size: 14px;
+      @media screen and (min-width: 1000px) {
+               font-size: 20px !important;
+      }
     }
-
-
-
-}
+  }

@@ -1,23 +1,25 @@
 $teal: rgb(68,150,139);
+$break-small: 320px;
+$break-large: 1200px;
 
 .logos {
-  height: 30px;
+  height: 25px;
   display: block;
   margin: 0 auto;
-  border: 0;
 }
 
-#homeSpead{
+#homeSpread{
   text-align: center;
-  display: inline-block;
 
 }
-
 .score {
   text-align: center;
   white-space: nowrap;
   height: 10px;
 
+}
+#awayLogo{
+  padding-left: 20px;
 }
 
 .scoreTitle {
@@ -30,41 +32,94 @@ $teal: rgb(68,150,139);
 .blankColumn{
   width: 30px;
 }
-
+.distribution-card {
+  top: 40px;
+}
 .card.weekly-picks-card {
   //backup
     // margin: 40px;
-    margin: 20px;
-    .card-content {
-        padding: 0px;
 
+    margin: 20px;
+    top: 60px;
+
+    .card-content {
+      padding: 0px;
+      border: 2px;
+      border-color: black !important;
+      font-size: 15px !important;
+
+      @media screen and (max-width: 857px) {
+          font-size: 10px !important;
+         }
+      @media screen and (max-width: 666px) {
+             font-size: 10px !important;
+             padding: 0px !important;
+
+          }
+
+        .homeSpead_th{
+          white-space: nowrap;
+        }
         .title-row {
             border-bottom: 1px solid lightgray;
             height: 65px;
             margin-bottom: 0px;
+            border-radius: 0px !important;
+            white-space: nowrap;
+
 
             .card-title {
                 margin: 20px;
                 position: relative;
                 top: 10px;
+                height: 30px;
             }
+        }
+        td{
+          font-size: 1em;
+          border-radius: 0px !important;
+          @media screen and (min-width: 1000px) {
+              // font-size: 10px !important;
+              font-size: 20px;
+             }
+          @media screen and (max-width: 857px) {
+              // font-size: 10px !important;
+              padding: 5px;
+             }
+          @media screen and (max-width: 666px) {
+                //  font-size: 10px !important;
+                //  padding: 0px !important;
+                padding: 0;
+                // padding-left: 10px;
+              }
         }
     }
 
     .pick-active {
-        background: rgb(232,232,232);
+        // color: black;
+        // background: rgba(30,144,255, 0.7);
+        background: rgb(232,232,232); //grey
     }
-
+    .pickWin {
+      // border-color: green;
+      border-width: 2px;
+      border-top: 5px;
+      color: green !important;
+    }
     .team-selected {
         color: $teal;
         font-weight: 600;
-    }
+        border: 5px;
 
+        @media screen and (max-width: 666px) {
+              // padding: 0;
+              // padding-left: 10px;
+        }
+    }
     .select-team {
         cursor: pointer;
         white-space: nowrap;
         text-align: left;
-
     }
 
     .game-icon {
@@ -81,12 +136,29 @@ $teal: rgb(68,150,139);
     .pick-loss .game-icon {
         color: #e53935;
     }
-    @media only screen
-      and (min-device-width: 375px)
-      and (max-device-width: 667px)
-      and (-webkit-min-device-pixel-ratio: 2) {
+    #hidden10{
+      color: red;
+    }
+    .datePretty{
+      // white-space: nowrap
+      // white-space: none !important;
+      @media screen and (min-width: 1085px) {
+          // font-size: 10px !important;
+          font-size: 15px;
+      }
+      @media screen and (min-width: 1085px) {
+             // font-size: 10px !important;
+             font-size: 10px !important;
+             white-space: none !important;
+      }
+      @media screen and (max-width: 660px) {
+             // font-size: 10px !important;
+             font-size: 8px !important;
+             white-space: none !important;
+      }
 
 
 
     }
+
 }
