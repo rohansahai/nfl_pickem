@@ -6,6 +6,9 @@ $break-large: 1200px;
   height: 25px;
   display: block;
   margin: 0 auto;
+  @media screen and (max-width: 666px) {
+      // padding: 0;
+      margin-right: 10px;
 }
 
 #homeSpread{
