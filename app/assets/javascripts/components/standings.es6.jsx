@@ -3,6 +3,25 @@ class Standings extends React.Component {
         this.setState({week: 'all'})
     }
 
+    componentDidMount() {
+        $('.dropdown-button').dropdown()
+    }
+
+    changeWeek(e) {
+        var text = e.target.text
+        var week = (text === 'all') ? text : parseInt(text)
+        this.setState({week: week})
+    }
+
+    getWeekOptions() {
+        var weekOptions = [<li><a>all</a></li>]
+        for (var i = 1; i <= this.props.current_week; i++) {
+            weekOptions.push(<li><a>{i}</a></li>)
+        }
+
+        return weekOptions
+    }
+
     render () {
         var _this = this;
         var userRecordNodes = this.getUserRecordNodes(JSON.parse(this.props.users));
@@ -12,12 +31,11 @@ class Standings extends React.Component {
                 <div className="card-content">
                     <div className="row title-row">
                         <span className="card-title">Standings</span>
-                        <a className='dropdown-button btn' href='#' data-activates='dropdown1'>Week</a>
-                          <ul id='dropdown1' className='dropdown-content'>
-                            <li><a href="#!">1</a></li>
-                            <li><a href="#!">2</a></li>
-                            <li><a href="#!">3</a></li>
-                          </ul>
+                        <a className='dropdown-button btn' data-activates='dropdown1'>Week: {this.state.week}</a>
+
+                        <ul id='dropdown1' className='dropdown-content' onClick={this.changeWeek.bind(this)}>
+                            {this.getWeekOptions()}
+                        </ul>
                     </div>
                     <table className="bordered">
                         <tbody>

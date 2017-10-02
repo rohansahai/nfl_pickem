@@ -48,6 +48,7 @@ class PicksController < ApplicationController
   end
 
   def standings
+    @current_week = current_week
     @users = User.where.not(id: [64, 65, 66]).all.to_a
       .to_json(:methods => [:wins, :losses, :pushes, :percent, :points, :week_standings])
   end
