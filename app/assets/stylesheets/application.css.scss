@@ -20,6 +20,7 @@ $break-small: 320px;
 $break-large: 1200px;
 
 $navy: rgb(102,124,137);
+$nfl: rgb(1,51,105);
 $teal: rgb(68,150,139);
 //#013369
 body{
@@ -34,7 +35,9 @@ nav {
         font-size: 20px;
     }
 }
-
+// .dropDown {
+//   @extend #0d47a1 blue darken-4;
+// }
 .superPickemLogo {
   margin-left: 25px;
   margin-top: 7px;

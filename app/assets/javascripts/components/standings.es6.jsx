@@ -30,11 +30,12 @@ class Standings extends React.Component {
                 <div className="card-content">
                     <div className="row title-row">
                         <span className="card-title">Standings</span>
-                        <a className='dropdown-button btn' data-activates='dropdown1'>Week: {this.state.week}</a>
-
-                        <ul id='dropdown1' className='dropdown-content' onClick={this.changeWeek.bind(this)}>
-                            {this.getWeekOptions()}
-                        </ul>
+                        <div className="dropDown">
+                          <a className='dropdown-button btn' data-activates='dropdown1'>Week: {this.state.week}</a>
+                          <ul id='dropdown1' className='dropdown-content' onClick={this.changeWeek.bind(this)}>
+                              {this.getWeekOptions()}
+                          </ul>
+                        <div>
                     </div>
                     <table className="bordered">
                         <tbody>
