@@ -3,9 +3,7 @@ class PicksController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
-    @picks = @user
-              .picks
-              .includes([:game => [:home_team, :away_team]])
+    @picks = @user.picks.includes([:game => [:home_team, :away_team]])
     @weeks = (1...current_week+1).to_a.reverse
   end
 
@@ -44,16 +42,15 @@ class PicksController < ApplicationController
   end
 
   def previous
-    @picks = current_user
-              .picks
-              .includes([:game => [:home_team, :away_team]])
+    @picks = current_user.picks.includes([:game => [:home_team, :away_team]])
     @weeks = (1...current_week+1).to_a.reverse
     render "index"
   end
 
   def standings
-    @users = User.where.not(id: [64, 65, 66]).all.to_a.sort_by(&:points).
-    reverse.to_json(:methods => [:wins, :losses, :pushes, :percent, :points])
+    @current_week = current_week
+    @users = User.where.not(id: [64, 65, 66]).all.to_a
+      .to_json(:methods => [:wins, :losses, :pushes, :percent, :points, :week_standings])
   end
 
   def distribution
