@@ -1,4 +1,8 @@
 class Standings extends React.Component {
+    componentWillMount () {
+        this.setState({week: 'all'})
+    }
+
     render () {
         var _this = this;
         var userRecordNodes = this.getUserRecordNodes(JSON.parse(this.props.users));
