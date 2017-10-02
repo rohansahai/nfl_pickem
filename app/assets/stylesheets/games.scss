@@ -6,6 +6,10 @@ $break-large: 1200px;
   height: 25px;
   display: block;
   margin: 0 auto;
+  @media screen and (max-width: 660px) {
+         // font-size: 10px !important;
+         padding-right: 5px;
+  }
 }
 
 #homeSpread{
@@ -48,14 +52,14 @@ $break-large: 1200px;
       border-color: black !important;
       font-size: 15px !important;
 
-      @media screen and (max-width: 857px) {
-          font-size: 10px !important;
-         }
-      @media screen and (max-width: 666px) {
-             font-size: 10px !important;
-             padding: 0px !important;
-
-          }
+      // @media screen and (max-width: 857px) {
+      //     font-size: 10px !important;
+      //    }
+      // @media screen and (max-width: 666px) {
+      //        font-size: 10px !important;
+      //        padding: 0px !important;
+      //
+      //     }
 
         .homeSpead_th{
           white-space: nowrap;
@@ -67,7 +71,6 @@ $break-large: 1200px;
             border-radius: 0px !important;
             white-space: nowrap;
 
-
             .card-title {
                 margin: 20px;
                 position: relative;
@@ -75,24 +78,37 @@ $break-large: 1200px;
                 height: 30px;
             }
         }
+        tr{
+          font-size: 15px;
+          @media screen and (max-width: 864px) {
+            // font-size: 10px !important;
+            font-size: 10px;
+          }
+          @media screen and (max-width: 660px) {
+                 // font-size: 10px !important;
+                 font-size: 8px !important;
+          }
+        }
         td{
-          font-size: 20px;
+          font-size: 15px;
           border-radius: 0px !important;
-          @media screen and (min-width: 1000px) {
-              // font-size: 15px !important;
-              font-size: 20px;
-             }
-          @media screen and (max-width: 857px) {
-              // font-size: 10px !important;
-              font-size: 17px;
-              padding: 5px;
-             }
-          @media screen and (max-width: 666px) {
-                 font-size: 10px !important;
-                //  padding: 0px !important;
-                padding: 0;
-                // padding-left: 10px;
-              }
+          @media screen and (max-width: 864px) {
+            // font-size: 10px !important;
+            font-size: 10px;
+            padding: 5px;
+          }
+          @media screen and (max-width: 660px) {
+                 // font-size: 10px !important;
+                 font-size: 8px !important;
+                 white-space: none !important;
+                 padding: 0;
+          }
+          // @media screen and (max-width: 666px) {
+          //        font-size: 10px !important;
+          //       //  padding: 0px !important;
+          //       padding: 0;
+          //       // padding-left: 10px;
+          //     }
         }
     }
 
@@ -111,11 +127,11 @@ $break-large: 1200px;
         color: $teal;
         font-weight: 600;
         border: 5px;
-
-        @media screen and (max-width: 666px) {
-              // padding: 0;
-              // padding-left: 10px;
-        }
+        //
+        // @media screen and (max-width: 666px) {
+        //       // padding: 0;
+        //       // padding-left: 10px;
+        // }
     }
     .select-team {
         cursor: pointer;
@@ -141,25 +157,22 @@ $break-large: 1200px;
       color: red;
     }
     .datePretty{
+      font-size: 15px;
       // white-space: nowrap
       // white-space: none !important;
-      @media screen and (min-width: 1085px) {
-          // font-size: 10px !important;
-          font-size: 15px;
-      }
-      @media screen and (min-width: 1085px) {
-             // font-size: 10px !important;
-             font-size: 10px !important;
-             white-space: none !important;
-      }
-      @media screen and (max-width: 660px) {
-             // font-size: 10px !important;
-             font-size: 8px !important;
-             white-space: none !important;
-      }
-
-
-
+        // @media screen and (min-width: 1085px) {
+        //     // font-size: 10px !important;
+        //     font-size: 15px;
+        // }
+        @media screen and (min-width: 1085px) {
+               // font-size: 10px !important;
+               white-space: none !important;
+        }
+        @media screen and (max-width: 660px) {
+               // font-size: 10px !important;
+               font-size: 10px !important;
+               white-space: none !important;
+        }
     }
 
 }
