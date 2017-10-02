@@ -39,10 +39,22 @@ class Standings extends React.Component {
     }
 
     getUserRecordNodes (users) {
-        var last_rank_points = users[0].points;
+        var week = this.state.week
+
+        // sort users
+        users.sort((a, b) => {
+            return b.week_standings[week].points - a.week_standings[week].points
+        })
+
+        // modify user objects for user record component
+        var last_rank_points = users[0].week_standings[week].points;
         var last_rank = 1;
 
         return users.map(function(user, index) {
+            if (week != 'all') {
+                user = Object.assign(user, user.week_standings[week])
+            }
+
             if (last_rank_points === user.points ) {
                 user.rank = last_rank;
             } else {
@@ -52,7 +64,7 @@ class Standings extends React.Component {
             }
 
             return (
-                <UserRecord key={user.id} user={user} />
+                <UserRecord key={user.id} user={user}/>
             );
         });
     }
