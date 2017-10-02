@@ -57,31 +57,28 @@ class User < ApplicationRecord
     end
   end
 
-  def week_standings(week)
-    week_standings = {}
-    # @weeks_standings = Hash.new
+  def week_standings
+    week = Game.get_week
+    week_standings = Hash.new
     week.downto(1).each do |this_week|
-          # @week_standings[this_week] = []
-          wins = picks.where(:result => 'win').where(:week => this_week).count
-          pushes = picks.where(:result => 'push').where(:week => this_week).count
-          losses = picks.where(:result => 'loss').where(:week => this_week).count
-          points = wins + (pushes * 0.5)
-          total = wins + losses + pushes
-          if total > 0
-            perc = points  / total * 100
-            perc.round()
-          else
-            perc = 0
-          end
+      week_wins = picks.where(:result => 'win', :week => this_week).count
+      week_pushes = picks.where(:result => 'push', :week => this_week).count
+      week_losses = picks.where(:result => 'loss', :week => this_week).count
+      week_points = week_wins + (week_pushes * 0.5)
+      total = week_wins + week_losses + week_pushes
+      percent = total > 0 ? (week_points  / total * 100).round : 0
 
-          week_standings[this_week] = {
-            :wins => wins,
-            :pushes => pushes,
-            :losses => losses,
-            :points => points,
-            :perc => perc
-          }
+      week_standings[this_week] = {
+        :wins => week_wins,
+        :pushes => week_pushes,
+        :losses => week_losses,
+        :points => week_points,
+        :percent => percent
+      }
     end
+
+    percentage_all = (points / picks.count) * 100
+    week_standings[:all] = {wins: wins, pushes: pushes, points: points, percent: percentage_all.round}
     week_standings
   end
 
