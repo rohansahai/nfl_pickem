@@ -18,7 +18,6 @@ class Standings extends React.Component {
         for (var i = 1; i <= this.props.current_week; i++) {
             weekOptions.push(<li key={i}><a>{i}</a></li>)
         }
-
         return weekOptions
     }
 
@@ -61,7 +60,15 @@ class Standings extends React.Component {
 
         // sort users
         users.sort((a, b) => {
-            return b.week_standings[week].points - a.week_standings[week].points
+          var a = a.week_standings[week];
+          var b = b.week_standings[week];
+
+          if (b.points === a.points ) {
+            rank = b.percent - a.percent;
+          } else {
+            rank = b.points - a.points
+          }
+            return rank
         })
 
         // modify user objects for user record component
