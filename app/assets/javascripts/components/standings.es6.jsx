@@ -4,7 +4,9 @@ class Standings extends React.Component {
     }
 
     componentDidMount() {
-        $('.dropdown-button').dropdown()
+        $('.dropdown-button').dropdown({
+          hover: true
+        })
     }
 
     changeWeek(e) {
@@ -40,7 +42,7 @@ class Standings extends React.Component {
                           </button>
                         </span>
                         <span className="dd">
-                          <a className='dropdown-button btn blue white-text darken-4' data-activates='dropdown1'>
+                          <a className='dropdown-button btn blue white-text darken-4' data-hover="true" data-activates='dropdown1'>
                             Week: {this.state.week}</a>
                           <ul id='dropdown1' className='card-panel dropdown-content black-text text-darken-4' onClick={this.changeWeek.bind(this)}>
                               {this.getWeekOptions()}
