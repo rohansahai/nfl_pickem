@@ -42,3 +42,10 @@ $pickem2: #000080;
 .dropdown-button {
   cursor: pointer;
 }
+.curweek {
+    position: absolute;
+    top: 15px;
+    right: 190px;
+    z-index: 8;
+    cursor: pointer;
+}

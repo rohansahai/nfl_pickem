@@ -13,6 +13,10 @@ class Standings extends React.Component {
         this.setState({week: week})
     }
 
+    currentWeek() {
+      this.setState({week: this.props.current_week})
+    }
+
     getWeekOptions() {
         var weekOptions = [<li key='all'><a>all</a></li>]
         for (var i = 1; i <= this.props.current_week; i++) {
@@ -30,6 +34,11 @@ class Standings extends React.Component {
                 <div className="card-content">
                     <div className="row title-row">
                         <span className="card-title">Standings</span>
+                        <span className="curweek">
+                          <button className="waves-effect blue waves-light white-text darken-4 btn-flat" onClick={this.currentWeek.bind(this)}>
+                                Current Week
+                          </button>
+                        </span>
                         <span className="dd">
                           <a className='dropdown-button btn blue white-text darken-4' data-activates='dropdown1'>
                             Week: {this.state.week}</a>
