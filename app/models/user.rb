@@ -60,12 +60,11 @@ class User < ApplicationRecord
   def week_standings
     week = Game.get_week
     week_standings = Hash.new
-    # weekly_picks = picks.group(:week).count.sort_by {|k, v| v}.reverse.to_h
-    # weekly_picks.each do |[week, res], res_count|
+    weekly_picks = picks.group(:week).group(:result).count.sort_by {|k, v| v}.reverse.to_h
     week.downto(1).each do |this_week|
-      week_wins = picks.where(:result => 'win', :week => this_week).count
-      week_pushes = picks.where(:result => 'push', :week => this_week).count
-      week_losses = picks.where(:result => 'loss', :week => this_week).count
+      week_wins = weekly_picks[[this_week, "win"]] ||= 0
+      week_pushes = weekly_picks[[this_week, "push"]] ||= 0
+      week_losses = weekly_picks[[this_week, "loss"]] ||= 0
       week_points = week_wins + (week_pushes * 0.5)
       total = week_wins + week_losses + week_pushes
       percent = total > 0 ? (week_points  / total * 100).round : 0
