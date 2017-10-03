@@ -60,6 +60,8 @@ class User < ApplicationRecord
   def week_standings
     week = Game.get_week
     week_standings = Hash.new
+    # weekly_picks = picks.group(:week).count.sort_by {|k, v| v}.reverse.to_h
+    # weekly_picks.each do |[week, res], res_count|
     week.downto(1).each do |this_week|
       week_wins = picks.where(:result => 'win', :week => this_week).count
       week_pushes = picks.where(:result => 'push', :week => this_week).count
@@ -77,8 +79,8 @@ class User < ApplicationRecord
       }
     end
 
-    percentage_all = (points / picks.count) * 100
-    week_standings[:all] = {wins: wins, pushes: pushes, points: points, percent: percentage_all.round}
+    percentage_all = picks.count > 0 ? (points / picks.count * 100).round : 0
+    week_standings[:all] = {wins: wins, pushes: pushes, points: points, percent: percentage_all}
     week_standings
   end
 
