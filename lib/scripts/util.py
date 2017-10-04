@@ -1,4 +1,4 @@
-from db import get_gmail_creds
+# from db import get_gmail_creds
 
 
 class EmailBody:
@@ -210,31 +210,31 @@ def convert_tz(x, est_to_utc=False):
         return x
 
 
-def send_html_email(email_body, subject, sender, recipient):
-    """ Send an html email using smtp server. Only call this when using email tracebacks.
-    email_body: html input for your message
-    subject: subject line as string
-    sender: sender email address as string
-    recipient: semicolon delimited string of recipients
-    """
-
-    import smtplib
-    from email.mime.multipart import MIMEMultipart
-    from email.mime.text import MIMEText
-
-    msg = MIMEMultipart('alternative')
-    msg['Subject'] = subject
-    msg['From'] = sender
-    msg['To'] = recipient
-
-    part = MIMEText(email_body, 'html')
-
-    msg.attach(part)
-
-    server = smtplib.SMTP('smtp.gmail.com:587')
-    server.ehlo()
-    server.starttls()
-    username, pw = get_gmail_creds()
-    server.login(username, pw)
-    server.sendmail(sender, recipient.split(';'), msg.as_string())
-    server.close()
+# def send_html_email(email_body, subject, sender, recipient):
+#     """ Send an html email using smtp server. Only call this when using email tracebacks.
+#     email_body: html input for your message
+#     subject: subject line as string
+#     sender: sender email address as string
+#     recipient: semicolon delimited string of recipients
+#     """
+#
+#     import smtplib
+#     from email.mime.multipart import MIMEMultipart
+#     from email.mime.text import MIMEText
+#
+#     msg = MIMEMultipart('alternative')
+#     msg['Subject'] = subject
+#     msg['From'] = sender
+#     msg['To'] = recipient
+#
+#     part = MIMEText(email_body, 'html')
+#
+#     msg.attach(part)
+#
+#     server = smtplib.SMTP('smtp.gmail.com:587')
+#     server.ehlo()
+#     server.starttls()
+#     username, pw = get_gmail_creds()
+#     server.login(username, pw)
+#     server.sendmail(sender, recipient.split(';'), msg.as_string())
+#     server.close()
