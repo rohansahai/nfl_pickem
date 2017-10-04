@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup as bs
 import numpy as np
-from db import update, get_prod_str, get_local_str, get_ff_url
+from db import update, get_ff_url
 from util import get_nfl_week_num, convert_tz
 import random
 import time
