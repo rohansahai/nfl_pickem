@@ -1,4 +1,4 @@
-pandas
+pandas==0.20.2
 requests
 bs4
 python-dateutil
