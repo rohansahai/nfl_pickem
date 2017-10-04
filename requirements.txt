@@ -1,6 +1,6 @@
-pandas==0.18.1
-requests==2.11.1
-bs4==0.0.1
-python-dateutil==2.5.3
+pandas
+requests
+bs4
+python-dateutil
 lxml
 sqlalchemy
