@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*- 
+
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup as bs
@@ -190,7 +192,8 @@ def update_games_with_score(weekly_scores_df, current_week, prod_str):
     """
     exist_games_q = """
     select id, home_team_id, away_team_id, home_spread from games
-    where week = {} and game_status not in ('Final', 'Final (OT)');""".format(current_week)
+    where week = {} and game_status not in ('Final', 'Final (OT)') or game_status is NULL
+    and '{}' >= time;""".format(current_week, convert_tz(dt.now(), est_to_utc=True).strftime('%Y-%m-%d %H:%M:%S'))
     exist_games_df = pd.read_sql(exist_games_q, prod_str)
     weekly_scores_df = pd.merge(weekly_scores_df, exist_games_df, how='left', on=['home_team_id', 'away_team_id'])
     weekly_scores_df = weekly_scores_df[(weekly_scores_df['home_team_score'].notnull()) &
