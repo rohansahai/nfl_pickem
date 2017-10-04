@@ -10,6 +10,7 @@ import random
 import time
 from datetime import datetime as dt, timedelta as td
 from sqlalchemy.exc import DatabaseError
+from sqlalchemy import create_engine
 import os
 
 
@@ -272,7 +273,7 @@ def update_picks_table_with_result(current_week, prod_str):
 
 def main():
 
-    prod_str = os.environ['ENGINE_STR']
+    prod_str = create_engine(os.environ['ENGINE_STR'])
     current_week = get_nfl_week_num()
     game_live = is_there_game_on(current_week, prod_str)
     if game_live:
