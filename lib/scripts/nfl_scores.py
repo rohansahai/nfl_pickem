@@ -273,7 +273,7 @@ def main():
 
     delay = random.randrange(1, 120)
     time.sleep(delay)
-    prod_str = get_prod_str()
+    prod_str = ENV['ENGINE_STR']
     current_week = get_nfl_week_num()
     game_live = is_there_game_on(current_week, prod_str)
     if game_live:
