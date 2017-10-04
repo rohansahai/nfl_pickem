@@ -7,5 +7,6 @@ class AddVariousColumnsToGames < ActiveRecord::Migration[5.0]
     add_column :games, :push, :boolean
     add_column :games, :home_team_score, :integer
     add_column :games, :away_team_score, :integer
+    add_column :games, :game_status, :string
   end
 end

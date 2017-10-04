@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20161024065534) do
     t.integer  "week",                                        null: false
     t.integer  "home_team_id",                                null: false
     t.integer  "away_team_id",                                null: false
-    t.decimal  "home_spread",         precision: 3, scale: 1, null: true
+    t.decimal  "home_spread",         precision: 3, scale: 1
     t.datetime "time",                                        null: false
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20161024065534) do
     t.boolean  "push"
     t.integer  "home_team_score"
     t.integer  "away_team_score"
-    t.string "game_status"
+    t.string   "game_status"
     t.index ["away_team_id"], name: "index_games_on_away_team_id", using: :btree
     t.index ["home_team_id"], name: "index_games_on_home_team_id", using: :btree
   end
@@ -46,11 +46,19 @@ ActiveRecord::Schema.define(version: 20161024065534) do
     t.index ["winner_id"], name: "index_picks_on_winner_id", using: :btree
   end
 
+  create_table "team_mapping", id: false, force: :cascade do |t|
+    t.bigint "id"
+    t.text   "name"
+    t.text   "short_name"
+    t.text   "last_name"
+    t.text   "team_abr"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "logo_path", null: false
+    t.string   "logo_path"
   end
 
   create_table "users", force: :cascade do |t|
