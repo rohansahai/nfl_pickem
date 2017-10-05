@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161024065534) do
+ActiveRecord::Schema.define(version: 20171004202157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20161024065534) do
     t.integer  "home_team_score"
     t.integer  "away_team_score"
     t.string   "game_status"
+    t.string   "logo_path"
     t.index ["away_team_id"], name: "index_games_on_away_team_id", using: :btree
     t.index ["home_team_id"], name: "index_games_on_home_team_id", using: :btree
   end
@@ -54,11 +55,22 @@ ActiveRecord::Schema.define(version: 20161024065534) do
     t.text   "team_abr"
   end
 
+  create_table "team_mappings", force: :cascade do |t|
+    t.string   "name"
+    t.string   "short_name"
+    t.string   "last_name"
+    t.string   "team_abr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "logo_path"
+    t.integer  "wins"
+    t.integer  "losses"
   end
 
   create_table "users", force: :cascade do |t|
