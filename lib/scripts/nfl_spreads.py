@@ -120,6 +120,44 @@ def check_if_spreads_exist(nfl_spreads, week, prod_str):
         pass
 
 
+
+def add_record(prod_str):
+    """
+    :return:
+    """
+    games = pd.read_sql("select * from games where game_status in ('Final', 'Final (OT)')", prod_str)
+    games['wins'] = games.groupby('moneyline_winner_id')['id'].transform('count')
+    records = games[['moneyline_winner_id', 'wins']].drop_duplicates()
+    records.columns = ['id', 'wins']
+
+    games['home_games'] = games.groupby('home_team_id')['home_team_id'].transform('count')
+    home_games = games[['home_team_id', 'home_games']].drop_duplicates()
+    home_games.columns = ['id', 'home_games']
+
+    games['away_games'] = games.groupby('away_team_id')['away_team_id'].transform('count')
+    away_games = games[['away_team_id', 'away_games']].drop_duplicates()
+    away_games.columns = ['id', 'away_games']
+
+    total_games = pd.merge(home_games, away_games, how='outer', on='id')
+    total_games['total_games'] = total_games['home_games'] + total_games['away_games']
+
+    records = pd.merge(records, total_games[['id', 'total_games']], how='outer', on='id')
+    records.fillna(0, inplace=True)
+    records['losses'] = records['total_games'] - records['wins']
+    records = records[['id', 'wins', 'losses']].drop_duplicates().reset_index(drop=True)
+
+    if not records.empty:
+        for i, row in records.iterrows():
+            update_q = """UPDATE teams SET wins = {0}, losses = {1} WHERE id = {2}""".format(row['wins'], row['losses'], row['id'])
+            for x in range(0, 2):
+                while True:
+                    try:
+                        update(prod_str, update_q)
+                    except DatabaseError:
+                        continue
+                    break
+
+
 def main():
 
     prod_str = ENV['ENGINE_STR']
@@ -129,6 +167,7 @@ def main():
     nfl_spreads = unpack_game_values(nfl_data, week)
     nfl_spreads = add_team_id(nfl_spreads, prod_str)
     check_if_spreads_exist(nfl_spreads, week, prod_str)
+    add_record(prod_str)
 
 
 if __name__ == '__main__':

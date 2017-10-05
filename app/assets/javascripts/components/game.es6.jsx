@@ -18,12 +18,12 @@ class Game extends React.Component {
                 <td id="homeLogo" className={this.getHomeLogoClass(true)}>
               <img src={home_team.logo_path} className="logos" />
                 </td>
-                <td className={this.getTeamSelectedClass(home_team.id) + " select-team"} data-team-id={home_team.id}> {home_team.name} </td>
+                <td className={this.getTeamSelectedClass(home_team.id) + " select-team"} data-team-id={home_team.id}> {home_team.name} ({home_team.wins}-{home_team.losses}) </td>
                 <td className="score">{this.getScorePretty()}</td>
                 <td id="awayLogo" className={this.getAwayLogoClass(true)}>
               <img src={away_team.logo_path} className="logos" />
                 </td>
-                <td className={this.getTeamSelectedClass(away_team.id) + " select-team"} data-team-id={away_team.id}> {away_team.name} </td>
+                <td className={this.getTeamSelectedClass(away_team.id) + " select-team"} data-team-id={away_team.id}> {away_team.name} ({away_team.wins}-{away_team.losses}) </td>
                 <td className="datePretty"> {this.getDatePretty()} </td>
             </tr>
         );

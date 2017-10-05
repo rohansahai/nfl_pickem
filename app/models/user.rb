@@ -79,7 +79,11 @@ class User < ApplicationRecord
     end
 
     percentage_all = picks.count > 0 ? (points / picks.count * 100).round : 0
-    week_standings[:all] = {wins: wins, pushes: pushes, points: points, percent: percentage_all}
+    week_standings[:all] = {
+      wins: wins,
+      pushes: pushes,
+      points: points, 
+      percent: percentage_all}
     week_standings
   end
 
