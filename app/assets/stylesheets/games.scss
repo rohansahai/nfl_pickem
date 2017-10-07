@@ -61,6 +61,10 @@ $pickem: #013369;
             margin-bottom: 0px;
             border-radius: 0px !important;
             white-space: nowrap;
+            @media screen and (max-width: 793px) {
+              font-size: 8px !important;
+              white-space: none;
+            }
 
             .card-title {
                 margin: 20px;
@@ -71,22 +75,25 @@ $pickem: #013369;
         }
         tr{
           font-size: 15px;
-          @media screen and (max-width: 864px) {
-            font-size: 10px;
-          }
-          @media screen and (max-width: 660px) {
-            font-size: 8px !important;
-          }
+          // @media screen and (max-width: 876px) {
+          //   font-size: 10px;
+          // }
+          // @media screen and (max-width: 660px) {
+          //   font-size: 8px !important;
+          // }
         }
         td {
           font-size: 15px;
           border-radius: 0px !important;
-          @media screen and (max-width: 864px) {
+          @media screen and (max-width: 952px) {
             font-size: 10px;
             padding: 5px;
           }
+          @media screen and (max-width: 793px) {
+            font-size: 8px !important;
+            white-space: none !important;
+          }
           @media screen and (max-width: 660px) {
-
             font-size: 8px !important;
             white-space: none !important;
             padding: 0;
