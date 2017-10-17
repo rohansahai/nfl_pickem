@@ -1,7 +1,8 @@
 pandas==0.20.2
-requests
-bs4
-python-dateutil
+requests==2.18.3
+beautifulsoup4==4.4.1
+python-dateutil==2.5.1
 lxml
 sqlalchemy
 psycopg2
+numpy==1.11.0
