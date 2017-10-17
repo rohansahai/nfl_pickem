@@ -25,7 +25,7 @@ def is_there_game_on(current_week, prod_str):
     try:
         games['game_happening'] = games.apply(lambda row: 1 if row['start_time'] <= now <= row['end_time'] else 0, axis=1)
     except ValueError:
-        raise Exception(games)
+        raise Exception(pd.read_sql('select top 1 * from users', prod_str))
 
     return 1 if any(games['game_happening']) else 0
 
