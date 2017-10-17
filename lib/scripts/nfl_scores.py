@@ -22,7 +22,10 @@ def is_there_game_on(current_week, prod_str):
     games['start_time'] = games['time'].apply(convert_tz)
     games['end_time'] = games['start_time'] + td(hours=4)
     now = dt.now()
-    games['game_happening'] = games.apply(lambda row: 1 if row['start_time'] <= now <= row['end_time'] else 0, axis=1)
+    try:
+        games['game_happening'] = games.apply(lambda row: 1 if row['start_time'] <= now <= row['end_time'] else 0, axis=1)
+    except ValueError:
+        print(prod_str)
 
     return 1 if any(games['game_happening']) else 0
 
@@ -273,9 +276,8 @@ def update_picks_table_with_result(current_week, prod_str):
 
 def main():
 
-    prod_str = create_engine(os.environ.get('ENGINE_STR', True))
+    prod_str = create_engine(os.environ['ENGINE_STR'])
     current_week = get_nfl_week_num()
-    print(prod_str)
     game_live = is_there_game_on(current_week, prod_str)
     if game_live:
         # prod_str = get_local_str()
