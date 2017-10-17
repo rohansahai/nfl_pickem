@@ -277,10 +277,8 @@ def update_picks_table_with_result(current_week, prod_str):
 def main():
 
     prod_str = create_engine(os.environ['ENGINE_STR'])
-    # current_week = get_nfl_week_num()
-    current_week = 6
-    # game_live = is_there_game_on(current_week, prod_str)
-    game_live = 1
+    current_week = get_nfl_week_num()
+    game_live = is_there_game_on(current_week, prod_str)
     if game_live:
         # prod_str = get_local_str()
         delay = random.randrange(1, 120)
