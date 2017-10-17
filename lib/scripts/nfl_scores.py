@@ -275,6 +275,7 @@ def main():
 
     prod_str = create_engine(os.environ['ENGINE_STR'])
     current_week = get_nfl_week_num()
+    print(prod_str)
     game_live = is_there_game_on(current_week, prod_str)
     if game_live:
         # prod_str = get_local_str()
