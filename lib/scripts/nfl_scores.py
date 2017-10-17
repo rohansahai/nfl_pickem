@@ -273,7 +273,7 @@ def update_picks_table_with_result(current_week, prod_str):
 
 def main():
 
-    prod_str = create_engine(os.environ['ENGINE_STR'])
+    prod_str = create_engine(os.environ.get('ENGINE_STR', True))
     current_week = get_nfl_week_num()
     print(prod_str)
     game_live = is_there_game_on(current_week, prod_str)
