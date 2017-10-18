@@ -22,10 +22,7 @@ def is_there_game_on(current_week, prod_str):
     games['start_time'] = games['time'].apply(convert_tz)
     games['end_time'] = games['start_time'] + td(hours=4)
     now = dt.now()
-    try:
-        games['game_happening'] = games.apply(lambda row: 1 if row['start_time'] <= now <= row['end_time'] else 0, axis=1)
-    except ValueError:
-        raise Exception('select time from games where week = {} order by time ASC;'.format(current_week))
+    games['game_happening'] = games.apply(lambda row: 1 if row['start_time'] <= now <= row['end_time'] else 0, axis=1)
 
     return 1 if any(games['game_happening']) else 0
 
