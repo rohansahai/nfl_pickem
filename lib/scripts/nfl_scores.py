@@ -283,7 +283,10 @@ def main():
     url = get_ff_url(current_week)
     tables = get_xml(url)
     weekly_scores_df = get_weekly_scores(tables, current_week, prod_str)
-    print(weekly_scores_df)
+    try:
+        weekly_scores_df + 1
+    except:
+        raise Exception(weekly_scores_df)
     update_games_with_score(weekly_scores_df, current_week, prod_str)
     update_picks_table_with_result(current_week, prod_str)
 
