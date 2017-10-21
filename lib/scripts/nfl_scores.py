@@ -276,10 +276,6 @@ def main():
     prod_str = create_engine(os.environ['ENGINE_STR'])
     current_week = get_nfl_week_num()
     game_live = is_there_game_on(current_week, prod_str)
-    try:
-        prod_str + 1
-    except:
-        raise Exception(convert_tz(dt.today()))
     if game_live:
         # prod_str = get_local_str()
         delay = random.randrange(1, 120)
