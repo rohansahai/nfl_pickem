@@ -21,7 +21,7 @@ def is_there_game_on(current_week, prod_str):
     games = pd.read_sql('select time from games where week = {} order by time ASC;'.format(current_week), prod_str)
     games['start_time'] = games['time'].apply(convert_tz)
     games['end_time'] = games['start_time'] + td(hours=4)
-    now = dt.now()
+    now = convert_tz(dt.now())
     games['game_happening'] = games.apply(lambda row: 1 if row['start_time'] <= now <= row['end_time'] else 0, axis=1)
 
     return 1 if any(games['game_happening']) else 0
@@ -276,6 +276,10 @@ def main():
     prod_str = create_engine(os.environ['ENGINE_STR'])
     current_week = get_nfl_week_num()
     game_live = is_there_game_on(current_week, prod_str)
+    # try:
+    #     prod_str + 1
+    # except:
+    #     raise Exception(game_live)
     if game_live:
         # prod_str = get_local_str()
         delay = random.randrange(1, 120)

@@ -44,7 +44,7 @@ class Game extends React.Component {
     var homeScore = this.props.game.home_team_score;
     var awayScore = this.props.game.away_team_score;
     if (homeScore || awayScore || homeScore === 0 || awayScore === 0) {
-      return homeScore + " - " + awayScore
+      return (this.hasGameStarted()) ? homeScore + " - " + awayScore : '';
     }
   }
   getSpreadPretty (home) {
