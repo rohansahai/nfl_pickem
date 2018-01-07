@@ -222,7 +222,7 @@ def update_games_with_score(weekly_scores_df, current_week, prod_str):
                     except DatabaseError:
                         continue
                     break
-    elif not live_game.empty:
+    if not live_game.empty:
         for i, row in live_game.iterrows():
             update_q = """
             UPDATE games SET
