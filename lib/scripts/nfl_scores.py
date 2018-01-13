@@ -274,19 +274,20 @@ def update_picks_table_with_result(current_week, prod_str):
 def main():
 
     prod_str = create_engine(os.environ['ENGINE_STR'])
-    current_week = get_nfl_week_num()
-    game_live = is_there_game_on(current_week, prod_str)
+    # current_week = get_nfl_week_num()
+    current_week = 19
+    # game_live = is_there_game_on(current_week, prod_str)
+    game_live = 1
     if game_live:
         # prod_str = get_local_str()
         delay = random.randrange(1, 120)
         time.sleep(delay)
-        current_week = 18
         url = get_ff_url(current_week)
         tables = get_xml(url)
         weekly_scores_df = get_weekly_scores(tables, current_week, prod_str)
         prod_str = os.environ['ENGINE_STR']
-        weekly_scores_df['week'] = 1
-        current_week = 1
+        weekly_scores_df['week'] = 2
+        current_week = 2
         update_games_with_score(weekly_scores_df, current_week, prod_str)
         update_picks_table_with_result(current_week, prod_str)
 
