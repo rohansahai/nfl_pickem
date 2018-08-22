@@ -3,7 +3,7 @@ class Topbar extends React.Component {
         return (
             <nav>
                 <div className="nav-wrapper">
-                  <a href="http://www.superpickem.co/picks">                    
+                  <a href="https://www.superpickem.me/">
                     <img className="superPickemLogo" src='http://aroncey.com/nfl_pickemL/images/superpickem.png'></img>
                   </a>
                     <a href="#" className="brand-logo title"></a>
