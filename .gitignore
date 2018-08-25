@@ -16,6 +16,8 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+/lib/scripts/.idea/*
+/lib/scripts/auction_ff_model.py
 
 # Ignore Byebug command history file.
 .byebug_history
