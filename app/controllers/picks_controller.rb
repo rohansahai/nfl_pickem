@@ -11,7 +11,8 @@ class PicksController < ApplicationController
     pick = current_user.picks.create({
       :game_id => pick_params[:game_id],
       :winner_id => pick_params[:winner_id],
-      :week => pick_params[:week]
+      :week => pick_params[:week],
+      :league_id => session[:league_id],
     })
 
     if pick.valid?
