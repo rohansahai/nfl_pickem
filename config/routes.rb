@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   # get 'distribution', to: 'picks#distribution'
   get 'users', to: 'users#index'
   get 'distribution', to: 'weeks#index'
+  get 'change-league/:league_id', to: 'leagues#change_league'
 
   resources :sessions, only: [:create, :destroy]
   resource :home, only: [:show]
