@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   def current_user
     return unless session[:user_id]
     @current_user ||= User.find(session[:user_id])
-    # @current_user = User.find(2)
   end
 
   def is_user_logged_in

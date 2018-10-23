@@ -1,8 +1,14 @@
 class SessionsController < ApplicationController
   def create
     user = User.from_omniauth(env["omniauth.auth"])
-    session[:user_id] = user.id
-    redirect_to root_path
+    if user
+      session[:user_id] = user.id
+      redirect_to root_path
+    else
+      render json: {
+        :errors => 'League sign up closed! (or maybe you chose the wrong google account you silly goose)'
+      }, status: 400
+    end
   end
 
   def destroy
