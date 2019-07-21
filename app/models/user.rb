@@ -1,5 +1,10 @@
 class User < ApplicationRecord
   has_many :picks, dependent: :destroy
+  has_many :leagues_users
+  has_many :leagues, through: :leagues_users
+
+  # once we have more than 1 league we should remove this
+  after_create :add_to_default_league
 
   def self.from_omniauth(auth)
     if ENV['NEW_SIGNUPS']
@@ -33,6 +38,10 @@ class User < ApplicationRecord
       end
       user.send_text(body)
     end
+  end
+
+  def add_to_default_league
+    LeaguesUser.first_or_create(user_id: id, league_id: 1)
   end
 
   def wins
@@ -86,7 +95,7 @@ class User < ApplicationRecord
     week_standings[:all] = {
       wins: wins,
       pushes: pushes,
-      points: points, 
+      points: points,
       percent: percentage_all}
     week_standings
   end

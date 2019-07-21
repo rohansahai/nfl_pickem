@@ -3,7 +3,7 @@ class PicksController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
-    @picks = @user.picks.includes([:game => [:home_team, :away_team]])
+    @picks = @user.picks.where(league_id: current_league.id).includes([:game => [:home_team, :away_team]])
     @weeks = (1...current_week+1).to_a.reverse
   end
 
@@ -11,7 +11,8 @@ class PicksController < ApplicationController
     pick = current_user.picks.create({
       :game_id => pick_params[:game_id],
       :winner_id => pick_params[:winner_id],
-      :week => pick_params[:week]
+      :week => pick_params[:week],
+      :league_id => session[:league_id],
     })
 
     if pick.valid?

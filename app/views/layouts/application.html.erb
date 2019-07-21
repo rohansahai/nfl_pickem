@@ -19,7 +19,7 @@
   </head>
   <body>
     <%= react_component('Topbar', {
-      current_user: current_user,
+      current_user: current_user.as_json(:include => [:leagues]),
     }) %>
     <div class="row">
       <%= react_component('Sidebar', {}, {class: 'col s2'}) %>

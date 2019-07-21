@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180902004242) do
+ActiveRecord::Schema.define(version: 20180903021926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,19 +36,19 @@ ActiveRecord::Schema.define(version: 20180902004242) do
     t.index ["home_team_id"], name: "index_games_on_home_team_id", using: :btree
   end
 
-  create_table "league_users", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "league_id",  null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["league_id"], name: "index_league_users_on_league_id", using: :btree
-    t.index ["user_id"], name: "index_league_users_on_user_id", using: :btree
-  end
-
   create_table "leagues", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "leagues_users", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "league_id",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_leagues_users_on_league_id", using: :btree
+    t.index ["user_id"], name: "index_leagues_users_on_user_id", using: :btree
   end
 
   create_table "picks", force: :cascade do |t|
@@ -94,5 +94,14 @@ ActiveRecord::Schema.define(version: 20180902004242) do
     t.string   "phone_number"
   end
 
+  add_foreign_key "games", "teams", column: "away_team_id"
+  add_foreign_key "games", "teams", column: "home_team_id"
+  add_foreign_key "games", "teams", column: "moneyline_winner_id"
+  add_foreign_key "games", "teams", column: "spread_winner_id"
+  add_foreign_key "leagues_users", "leagues"
+  add_foreign_key "leagues_users", "users"
+  add_foreign_key "picks", "games"
   add_foreign_key "picks", "leagues"
+  add_foreign_key "picks", "teams", column: "winner_id"
+  add_foreign_key "picks", "users"
 end
