@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   def current_league
     if !session[:league_id]
-      session[:league_id] = LeaguesUser.where(user_id: user.id).first.league.id
+      session[:league_id] = LeaguesUser.where(user_id: current_user.id).first.league.id
     end
     @current_league ||= League.find(session[:league_id])
   end
