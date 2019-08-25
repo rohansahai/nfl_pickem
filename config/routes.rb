@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'change-league/:league_id', to: 'leagues#change_league'
 
   resources :sessions, only: [:create, :destroy]
+  resources :leagues, only: [:index]
   resource :home, only: [:show]
   resources :weeks, only: [:index] do
     resources :games, only: [:index]

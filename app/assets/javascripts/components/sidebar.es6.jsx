@@ -31,10 +31,25 @@ class Sidebar extends React.Component {
                             <span id="sidebarNames">Distributions</span>
                         </a>
                     </li>
+                    {this.checkToShowLeagues()}
                 </ul>
             </div>
 
         );
+    }
+
+    checkToShowLeagues () {
+        let leagues = this.props.current_user.leagues
+        if (leagues.length > 1) {
+            return (
+                <li className={this.isActive('leagues') && "active"}>
+                    <a href="/leagues">
+                        <i  id="icons" className="material-icons">group</i>
+                        <span id="sidebarNames">Leagues</span>
+                    </a>
+                </li>
+            )
+        }
     }
 
     isActive (route) {

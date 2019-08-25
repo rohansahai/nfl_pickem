@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190721215539) do
+ActiveRecord::Schema.define(version: 20190825223636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,8 +38,10 @@ ActiveRecord::Schema.define(version: 20190721215539) do
 
   create_table "leagues", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "creator_id"
+    t.text     "description"
   end
 
   create_table "leagues_users", force: :cascade do |t|
@@ -94,14 +96,5 @@ ActiveRecord::Schema.define(version: 20190721215539) do
     t.string   "phone_number"
   end
 
-  add_foreign_key "games", "teams", column: "away_team_id"
-  add_foreign_key "games", "teams", column: "home_team_id"
-  add_foreign_key "games", "teams", column: "moneyline_winner_id"
-  add_foreign_key "games", "teams", column: "spread_winner_id"
-  add_foreign_key "leagues_users", "leagues"
-  add_foreign_key "leagues_users", "users"
-  add_foreign_key "picks", "games"
-  add_foreign_key "picks", "leagues"
-  add_foreign_key "picks", "teams", column: "winner_id"
-  add_foreign_key "picks", "users"
+  add_foreign_key "leagues", "users", column: "creator_id"
 end

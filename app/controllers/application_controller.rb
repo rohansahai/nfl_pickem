@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_user, :current_week
+  helper_method :current_user, :current_week, :current_league
 
   def current_league
-    # todo remove the line that sets everybodys league to default
-    session[:league_id] = 1
-    return unless session[:league_id]
+    if !session[:league_id]
+      session[:league_id] = LeaguesUser.where(user_id: user.id).first.league.id
+    end
     @current_league ||= League.find(session[:league_id])
   end
 
