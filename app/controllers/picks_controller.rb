@@ -43,7 +43,7 @@ class PicksController < ApplicationController
   end
 
   def previous
-    @picks = current_user.picks.includes([:game => [:home_team, :away_team]])
+    @picks = current_user.picks.where(league_id: current_league.id).includes([:game => [:home_team, :away_team]])
     @weeks = (1...current_week+1).to_a.reverse
     render "index"
   end
@@ -58,10 +58,10 @@ class PicksController < ApplicationController
     @distribution_hash = {}
     current_week.downto(1).each do |week|
       @distribution_hash[week] = []
-      picks = Pick.joins(:game).where(:week => week).where("games.time < ?", Time.now)
+      picks = Pick.joins(:game).where(:week => week).where("games.time < ?", Time.now).where(league_id: current_league.id)
       weekly_distro = picks.group(:game_id, :winner_id).count.sort_by {|k, v| v}.reverse.to_h
       weekly_distro.each do |key, pick_count|
-        pick = Pick.find_by(:week => week, :winner_id => key[1])
+        pick = Pick.find_by(:week => week, :winner_id => key[1], league_id: current_league.id)
         game = Game.find(key[0])
 
         if game.home_team_id == pick.winner_id
