@@ -2,7 +2,8 @@ import pandas as pd
 from datetime import datetime as dt
 import numpy as np
 from util import convert_tz, get_nfl_week_num
-from db import get_vi_url, get_local_str, get_prod_str, update
+from db import get_vi_url, update
+from sqlalchemy.exc import DatabaseError
 
 
 def get_vi_lines(week):
@@ -66,7 +67,8 @@ def unpack_game_values(nfl_data, week):
     nfl_data = nfl_data[[0, 4, 'Time', 'Date']]
     nfl_data.columns = ['Teams', 'Spread', 'Time', 'Date']
     nfl_data['week'] = week
-    nfl_data = nfl_data.drop(1).reset_index(drop=True)
+    # nfl_data = nfl_data.drop(1).reset_index(drop=True)
+    nfl_data.reset_index(drop=True, inplace=True)
     nfl_data['DateTime'] = nfl_data['Date'] + ' ' + nfl_data['Time']
     nfl_data['DateTime'] = pd.to_datetime(nfl_data['DateTime'], format='%A %b %d, %Y %I:%M %p')
     nfl_data['time'] = nfl_data['DateTime'].apply(lambda x: convert_tz(x, est_to_utc=True))
@@ -120,7 +122,6 @@ def check_if_spreads_exist(nfl_spreads, week, prod_str):
         pass
 
 
-
 def add_record(prod_str):
     """
     :return:
@@ -161,7 +162,7 @@ def add_record(prod_str):
 def main():
 
     prod_str = ENV['ENGINE_STR']
-    # prod_str = get_local_str()
+    # prod_str = db.get_local_str()
     week = get_nfl_week_num()
     nfl_data = get_vi_lines(week)
     nfl_spreads = unpack_game_values(nfl_data, week)
