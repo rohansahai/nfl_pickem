@@ -14,7 +14,7 @@ class User < ApplicationRecord
         user.oauth_expires_at = Time.at(auth.credentials.expires_at)
         user.save!
 
-        LeaguesUser.create(user_id: user.id, league_id: ENV['MASTER_LEAGUE_ID'])
+        LeaguesUser.find_or_create_by(user_id: user.id, league_id: ENV['MASTER_LEAGUE_ID'])
       end
     else
       where(provider: auth.provider, uid: auth.uid).first
