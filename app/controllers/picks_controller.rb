@@ -12,7 +12,7 @@ class PicksController < ApplicationController
       :game_id => pick_params[:game_id],
       :winner_id => pick_params[:winner_id],
       :week => pick_params[:week],
-      :league_id => session[:league_id],
+      :league_id => current_league.id,
     })
 
     if pick.valid?

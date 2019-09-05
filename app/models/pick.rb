@@ -58,7 +58,7 @@ class Pick < ApplicationRecord
   private
 
   def max_picks
-    if self.user.picks.where(:week => week).length + 1 > MAX_PICKS
+    if self.user.picks.where(:week => week, :league_id => league.id).length + 1 > MAX_PICKS
       errors.add(:pick, "Already reached 5 picks")
     end
   end

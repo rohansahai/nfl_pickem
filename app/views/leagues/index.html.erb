@@ -1,0 +1,28 @@
+<div class="col s10 leagues">
+  <% current_user.leagues.each do |league| %>
+    <div class="card blue lighten-5">
+      <div class="card-content">
+        <span class="card-title">
+          <%= league.name %>
+        </span>
+        <p class='creator'>
+          Created by <%= league.creator.name %>
+        </p>
+
+        <% if league.description %>
+          <br>
+          <p><%= league.description %></p>
+        <% end %>
+      </div>
+      <% if league.id == current_league.id %>
+        <div class="card-action">
+          Current League
+        </div>
+      <% else %>
+        <div class="card-action">
+          <a href="<%= '/change-league/' + league.id.to_s %>" class="blue-text text-darken-2">Switch To This League</a>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
