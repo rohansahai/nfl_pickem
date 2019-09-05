@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'users', to: 'users#index'
   get 'distribution', to: 'weeks#index'
   get 'change-league/:league_id', to: 'leagues#change_league'
+  get 'league-invite/:league_id', to: 'leagues#league_invite'
 
   resources :sessions, only: [:create, :destroy]
   resources :leagues, only: [:index]

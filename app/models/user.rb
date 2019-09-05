@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :leagues_users, dependent: :destroy
   has_many :leagues, through: :leagues_users
 
-  def self.from_omniauth(auth)
+  def self.from_omniauth(auth, league_to_join)
     if ENV['NEW_SIGNUPS']
       where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
         user.provider = auth.provider
@@ -14,7 +14,7 @@ class User < ApplicationRecord
         user.oauth_expires_at = Time.at(auth.credentials.expires_at)
         user.save!
 
-        LeaguesUser.find_or_create_by(user_id: user.id, league_id: ENV['MASTER_LEAGUE_ID'])
+        LeaguesUser.find_or_create_by(user_id: user.id, league_id: league_to_join)
       end
     else
       where(provider: auth.provider, uid: auth.uid).first
