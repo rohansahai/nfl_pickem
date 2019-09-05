@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :picks, dependent: :destroy
-  has_many :leagues_users
+  has_many :leagues_users, dependent: :destroy
   has_many :leagues, through: :leagues_users
 
   def self.from_omniauth(auth)
