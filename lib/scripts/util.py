@@ -185,7 +185,7 @@ def get_nfl_week_num():
     today = dt(dt.today().year, dt.today().month, dt.today().day)
     today = convert_tz(today)
     week_mapping_df = pd.DataFrame(week_lol, columns=['Week_Begin', 'Week_End', 'Week_Num'])
-    week = week_mapping_df.loc[(week_mapping_df['Week_Begin'] >= today) &
+    week = week_mapping_df.loc[(week_mapping_df['Week_Begin'] <= today) &
                                (week_mapping_df['Week_End'] <= today)]['Week_Num'].iloc[0]
 
     return week
