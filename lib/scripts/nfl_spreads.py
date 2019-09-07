@@ -20,14 +20,18 @@ def get_vi_lines(week):
             if 'Game Time' in first_val or first_val.startswith('Week {}'.format(week)):
                 good_dfs.append(df)
 
+    for df in good_dfs:
+        if len(df) > 1:
+            df['Time'] = df[0].iloc[0].replace('Game Time', '')
+
     if len(good_dfs) > 0:
         spread_df = pd.concat(good_dfs)
         spread_df.drop_duplicates(inplace=True)
-    for col, val in [['Time', 'Game Time'], ['Date', 'Week {}'.format(week)]]:
-        spread_df[col] = spread_df[0].apply(lambda x: x if val in x else np.nan)
-        spread_df[col] = spread_df[col].ffill()
-        spread_df[col] = spread_df[col].str.replace(val, '')
-        spread_df[col] = spread_df[col].str.strip()
+    col, val = ['Date', 'Week {}'.format(week)]
+    spread_df[col] = spread_df[0].apply(lambda x: x if val in x else np.nan)
+    spread_df[col] = spread_df[col].ffill()
+    spread_df[col] = spread_df[col].str.replace(val, '')
+    spread_df[col] = spread_df[col].str.strip()
 
     spread_df = spread_df[spread_df[2].str.startswith('L-') | spread_df[2].str.startswith('W-')]
     spread_df[0] = spread_df[0].str.replace('\d+', '')
@@ -67,9 +71,8 @@ def unpack_game_values(nfl_data, week):
     nfl_data = nfl_data[[0, 4, 'Time', 'Date']]
     nfl_data.columns = ['Teams', 'Spread', 'Time', 'Date']
     nfl_data['week'] = week
-    # nfl_data = nfl_data.drop(1).reset_index(drop=True)
     nfl_data.reset_index(drop=True, inplace=True)
-    nfl_data['DateTime'] = nfl_data['Date'] + ' ' + nfl_data['Time']
+    nfl_data['DateTime'] = nfl_data['Date'] + ' ' + nfl_data['Time'].str.strip()
     nfl_data['DateTime'] = pd.to_datetime(nfl_data['DateTime'], format='%A %b %d, %Y %I:%M %p')
     nfl_data['time'] = nfl_data['DateTime'].apply(lambda x: convert_tz(x, est_to_utc=True))
     nfl_data.drop(['DateTime', 'Date', 'Time'], axis=1, inplace=True)
@@ -81,6 +84,7 @@ def unpack_game_values(nfl_data, week):
     nfl_data['Spread'] = nfl_data['Spread'].apply(lambda x: x if x <= 0 else np.nan)
     nfl_data = nfl_data.groupby('group_col').apply(fill_in_all_spreads)
     nfl_data.Spread.fillna(nfl_data.reverse_spread, inplace=True)
+    nfl_data['Teams'] = nfl_data['Teams'].str.replace(' Â«', '')
 
     return nfl_data.drop(['index', 'reverse_spread'], axis=1)
 
