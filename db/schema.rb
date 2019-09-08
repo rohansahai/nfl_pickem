@@ -96,5 +96,4 @@ ActiveRecord::Schema.define(version: 20190825223636) do
     t.string   "phone_number"
   end
 
-  add_foreign_key "leagues", "users", column: "creator_id"
 end

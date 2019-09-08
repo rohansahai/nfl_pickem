@@ -50,8 +50,9 @@ class PicksController < ApplicationController
 
   def standings
     @current_week = current_week
-    @users = League.find(current_league.id).users.to_a
-      .to_json(:methods => [:wins, :losses, :pushes, :percent, :points, :week_standings])
+    users_array = League.find(current_league.id).users.to_a
+    users_array.each {|user| user.current_league = current_league}
+    @users = users_array.to_json(:methods => [:wins, :losses, :pushes, :percent, :points, :week_standings])
   end
 
   def distribution
