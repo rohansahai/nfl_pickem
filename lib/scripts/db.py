@@ -65,8 +65,3 @@ def get_ff_url(current_week):
 def get_vi_url(week):
 
     return "http://www.vegasinsider.com/nfl/matchups/matchups.cfm/week/{}/season/2019".format(week)
-
-
-def get_gmail_creds():
-
-    return 'shaun.chaudhary@gmail.com', 'bjfwispetfyhzkxd'
