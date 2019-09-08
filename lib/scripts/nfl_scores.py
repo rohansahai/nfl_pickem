@@ -274,14 +274,14 @@ def update_picks_table_with_result(current_week, prod_str):
 
 def main():
 
-    prod_str = create_engine(os.environ['ENGINE_STR'])
+    prod_str = os.environ['ENGINE_STR']
     # prod_str = get_local_str()
     current_week = get_nfl_week_num()
     game_live = is_there_game_on(current_week, prod_str)
     if game_live:
         # prod_str = get_local_str()
-        delay = random.randrange(1, 120)
-        time.sleep(delay)
+        # delay = random.randrange(1, 120)
+        # time.sleep(delay)
         url = get_ff_url(current_week)
         tables = get_xml(url)
         weekly_scores_df = get_weekly_scores(tables, current_week, prod_str)
