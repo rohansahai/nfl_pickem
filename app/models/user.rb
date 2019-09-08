@@ -42,22 +42,27 @@ class User < ApplicationRecord
   end
 
   def wins
+    fail 'must have current league set' if !@current_league
     picks.where(:league_id => @current_league.id, :result => 'win').count
   end
 
   def losses
+    fail 'must have current league set' if !@current_league
     picks.where(:league_id => @current_league.id, :result => 'loss').count
   end
 
   def pushes
+    fail 'must have current league set' if !@current_league
     picks.where(:league_id => @current_league.id, :result => 'push').count
   end
 
   def points
+    fail 'must have current league set' if !@current_league
     wins + (pushes * 0.5)
   end
 
   def percent
+    fail 'must have current league set' if !@current_league
     total = wins + losses + pushes
     if total > 0
       perc = (wins + (pushes * 0.5))  / total * 100
@@ -68,9 +73,10 @@ class User < ApplicationRecord
   end
 
   def week_standings
+    fail 'must have current league set' if !@current_league
     week = Game.get_week
     week_standings = Hash.new
-    weekly_picks = picks.group(:week).group(:result).count.sort_by {|k, v| v}.reverse.to_h
+    weekly_picks = picks.where(league_id: current_league.id).group(:week).group(:result).count.sort_by {|k, v| v}.reverse.to_h
     week.downto(1).each do |this_week|
       week_wins = weekly_picks[[this_week, "win"]] ||= 0
       week_pushes = weekly_picks[[this_week, "push"]] ||= 0
