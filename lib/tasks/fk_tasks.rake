@@ -1,5 +1,5 @@
 
-desc 'trying things out'
+desc 'dealing with fks while importing local data'
 
 namespace :db do
     namespace :data do
