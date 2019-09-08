@@ -1,12 +1,12 @@
 class SessionsController < ApplicationController
   def create
-    league_to_join = session[:invited_league_id] || ENV['MASTER_LEAGUE_ID']
+    league_to_join_id = session[:invited_league_id]
     session[:invited_league_id] = nil
 
-    user = User.from_omniauth(env["omniauth.auth"], league_to_join)
+    user = User.from_omniauth(env["omniauth.auth"], league_to_join_id)
     if user
       session[:user_id] = user.id
-      session[:league_id] = league_to_join
+      session[:league_id] = league_to_join_id || user.leagues.first.id
       redirect_to root_path
     else
       render json: {
