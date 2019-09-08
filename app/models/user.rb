@@ -3,6 +3,8 @@ class User < ApplicationRecord
   has_many :leagues_users, dependent: :destroy
   has_many :leagues, through: :leagues_users
 
+  attr_accessor :current_league
+
   def self.from_omniauth(auth, league_to_join)
     if ENV['NEW_SIGNUPS']
       where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
@@ -40,15 +42,15 @@ class User < ApplicationRecord
   end
 
   def wins
-    picks.where(:result => 'win').count
+    picks.where(:league_id => @current_league.id, :result => 'win').count
   end
 
   def losses
-    picks.where(:result => 'loss').count
+    picks.where(:league_id => @current_league.id, :result => 'loss').count
   end
 
   def pushes
-    picks.where(:result => 'push').count
+    picks.where(:league_id => @current_league.id, :result => 'push').count
   end
 
   def points
