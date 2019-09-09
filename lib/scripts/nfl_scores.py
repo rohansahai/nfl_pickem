@@ -74,7 +74,7 @@ def identify_live_games(row):
     if row['game_status'] == 'Final':
         game_live = 0
         game_status = row['game_status']
-    elif row['game_status'] == 'OT':
+    elif row['game_status'] == 'Final OT':
         game_live = 0
         game_status = 'Final (OT)'
     else:
