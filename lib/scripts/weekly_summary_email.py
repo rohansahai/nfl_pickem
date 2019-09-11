@@ -1,6 +1,7 @@
 import pandas as pd
 from util import send_html_email, get_nfl_week_num, EmailBody, EmailBodyError
 from db import get_prod_str
+import seaborn as sns
 
 
 def get_weekly_picks(outcome_cols, prod_str):
@@ -15,12 +16,14 @@ def get_weekly_picks(outcome_cols, prod_str):
         t.name as team,
         p.week,
         p.result
-
+        
     from picks p
 
     LEFT JOIN users u on p.user_id = u.id
 
-    LEFT JOIN teams t on p.winner_id = t.id"""
+    LEFT JOIN teams t on p.winner_id = t.id
+    
+    where p.league_id = 1"""
 
     picks_df = pd.read_sql(picks_q, prod_str)
     for col in outcome_cols:
@@ -62,10 +65,7 @@ def get_weekly_ind_record(picks_df, outcome_cols, week):
     weekly_ind_record['weekly_points'] = weekly_ind_record['user_win'] + (weekly_ind_record['user_push'] * .5)
     weekly_ind_record = weekly_ind_record[['user', 'week', 'weekly_record', 'weekly_points']]
     weekly_ind_record['record_count'] = weekly_ind_record.groupby(['weekly_record', 'week'])['user'].transform('count')
-    weekly_ind_record = weekly_ind_record[weekly_ind_record['week'] == week].drop('record_count', axis=1).sort_values(
-        'weekly_points', ascending=False)
-    weekly_ind_record.drop('week', axis=1, inplace=True)
-    weekly_ind_record.columns = ['Name', 'Record', 'Points']
+    weekly_ind_record = weekly_ind_record[weekly_ind_record['week'] == week].sort_values('weekly_points', ascending=False)
 
     return weekly_ind_record
 
@@ -82,6 +82,9 @@ def get_current_week_rec_dis(weekly_ind_record, week):
     current_week_rec_dist = current_week_rec_dist[current_week_rec_dist['week'] == week]
     current_week_rec_dist.drop('week', axis=1, inplace=True)
     current_week_rec_dist.columns = ['Record', 'Count', 'Points']
+    sns.set(style="whitegrid")
+    ax = sns.barplot(x="Record", y="Count", data=current_week_rec_dist, hue="Record", dodge=False)
+    ax.figure.savefig('/Users/shaunchaudhary/Desktop/Weekly Record Distribution.png')
 
     return current_week_rec_dist
 
@@ -105,7 +108,7 @@ def build_weekly_email(weekly_league_record, weekly_ind_record, current_week_rec
     picks_email.add_df_html(current_week_rec_dist, msg='Record Distributions', underline=True, bold=True, index=False)
 
     outro = """
-    Also, <a href="http://www.superpickem.co/picks">Week 3 spreads</a> are up!\n
+    Also, <a href="http://www.superpickem.co/picks">Week 2 spreads</a> are up!\n
     Best,
     Shaun"""
 
