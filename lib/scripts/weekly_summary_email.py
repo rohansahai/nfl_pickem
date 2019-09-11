@@ -1,6 +1,6 @@
 import pandas as pd
-from util import send_html_email, get_nfl_week_num, EmailBody, EmailBodyError
-from db import get_prod_str
+# from util import send_html_email, get_nfl_week_num, EmailBody, EmailBodyError
+# from db import get_prod_str
 import seaborn as sns
 
 
@@ -83,7 +83,7 @@ def get_current_week_rec_dis(weekly_ind_record, week):
     current_week_rec_dist.drop('week', axis=1, inplace=True)
     current_week_rec_dist.columns = ['Record', 'Count', 'Points']
     sns.set(style="whitegrid")
-    ax = sns.barplot(x="Record", y="Count", data=current_week_rec_dist, hue="Record", dodge=False)
+    ax = sns.barplot(x="Record", y="Count", data=current_week_rec_dist, dodge=False)
     ax.figure.savefig('/Users/shaunchaudhary/Desktop/Weekly Record Distribution.png')
 
     return current_week_rec_dist

@@ -33,7 +33,8 @@ def get_vi_lines(week):
     spread_df[col] = spread_df[col].str.replace(val, '')
     spread_df[col] = spread_df[col].str.strip()
 
-    spread_df = spread_df[spread_df[2].str.startswith('L-') | spread_df[2].str.startswith('W-')]
+    spread_df = spread_df[spread_df[2].str.startswith('L-') | spread_df[2].str.startswith('W-')
+                          | spread_df[2].str.startswith('T-')]
     spread_df[0] = spread_df[0].str.replace('\d+', '')
     spread_df[0] = spread_df[0].str.strip()
 
@@ -144,6 +145,7 @@ def add_record(prod_str):
     away_games.columns = ['id', 'away_games']
 
     total_games = pd.merge(home_games, away_games, how='outer', on='id')
+    total_games.fillna(0, inplace=True)
     total_games['total_games'] = total_games['home_games'] + total_games['away_games']
 
     records = pd.merge(records, total_games[['id', 'total_games']], how='outer', on='id')
