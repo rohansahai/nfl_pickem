@@ -171,7 +171,7 @@ class EmailBodyError(Exception):
 
 def get_nfl_week_num():
     """
-    returns: Use beginning and end dates of 2017 nfl season to map weeks to date ranges.
+    returns: Use beginning and end dates of 2019 nfl season to map weeks to date ranges.
     Use today's date to determine what week of the season we fall under. Return week (int).
     """
     import pandas as pd
@@ -185,7 +185,7 @@ def get_nfl_week_num():
     today = dt(dt.today().year, dt.today().month, dt.today().day)
     today = convert_tz(today)
     week_mapping_df = pd.DataFrame(week_lol, columns=['Week_Begin', 'Week_End', 'Week_Num'])
-    week = week_mapping_df[(week_mapping_df['Week_Begin'] >= today) & (week_mapping_df['Week_End'] <= today)]['Week_Num'].iloc[0]
+    week = week_mapping_df[(week_mapping_df['Week_Begin'] <= today) & (week_mapping_df['Week_End'] <= today)]['Week_Num'].iloc[-1]
 
     return week
 
