@@ -4,8 +4,6 @@ class GameList extends React.Component {
         this.state = {picks: props.picks, games: props.games, week: props.week};
     }
 
-
-
     addNewPick (new_pick) {
         // TODO: make this not hacky af
         var existing_pick = _.findWhere(this.state.picks, {game_id: new_pick.game_id})
@@ -92,7 +90,7 @@ class GameList extends React.Component {
     changeClass(){
       var x = document.querySelector('#test')
       x.id = "hidden10"
-      debugger
+
     }
     render () {
         var _this = this;
@@ -112,17 +110,19 @@ class GameList extends React.Component {
 
 
                     <table className="bordered highlight">
-                        <tbody>
-                            <tr>
-                                <th data-id="locked"></th>
+                        <thead>
+                            <tr id="columnName">
+                                <th id="locksCol" data-id="locked"></th>
                                 <th className="homeSpead_th">Home Spread</th>
-                                  <th id='homeLogo'></th>
-                                <th>Home Team</th>
+                                  <th id='homeLogoHeader'></th>
+                                <th id="teamName">Home Team</th>
                                 <th className="scoreTitle">Score</th>
-                                  <th id='awayLogo'></th>
-                                <th>Visiting Team</th>
-                                <th>Status</th>
+                                  <th id='awayLogoHeader'></th>
+                                <th id="teamName">Visiting Team</th>
+                                <th id="status">Status</th>
                             </tr>
+                        </thead>
+                        <tbody>
                             {gameNodes}
                         </tbody>
                     </table>

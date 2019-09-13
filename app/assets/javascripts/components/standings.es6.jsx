@@ -32,22 +32,24 @@ class Standings extends React.Component {
         var userRecordNodes = this.getUserRecordNodes(JSON.parse(this.props.users));
 
         return (
-            <div className="card weekly-picks-card">
+            <div id="standings" className="card weekly-picks-card">
                 <div className="card-content">
-                    <div className="row title-row">
-                        <span className="card-title">Standings</span>
-                        <span className="curweek">
-                          <button className="waves-effect blue waves-light white-text darken-4 btn-flat" onClick={this.currentWeek.bind(this)}>
-                                Current Week
-                          </button>
-                        </span>
-                        <span className="dd">
-                          <a className='dropdown-button btn blue white-text darken-4' data-hover="true" data-activates='dropdown1'>
-                            Week: {this.state.week}</a>
-                          <ul id='dropdown1' className='card-panel dropdown-content black-text text-darken-4' onClick={this.changeWeek.bind(this)}>
-                              {this.getWeekOptions()}
-                          </ul>
-                        </span>
+                  <div className="TopRow">
+                      <span className="curweek">
+                        <button className="waves-effect blue waves-light white-text darken-4 btn-flat" onClick={this.currentWeek.bind(this)}>
+                              Current Week
+                        </button>
+                      </span>
+                      <span className="dd">
+                        <a className='dropdown-button btn blue white-text darken-4' data-hover="true" data-activates='dropdown1'>
+                          Week: {this.state.week}</a>
+                        <ul id='dropdown1' className='card-panel dropdown-content black-text text-darken-4' onClick={this.changeWeek.bind(this)}>
+                            {this.getWeekOptions()}
+                        </ul>
+                      </span>
+                  </div>
+                  <div className="row title-row">
+                      <span className="card-title">Standings</span>
                     </div>
                     <table className="bordered">
                         <tbody>

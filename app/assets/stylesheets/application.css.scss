@@ -30,15 +30,19 @@ body{
 nav {
     background-color: #000080;
     position: fixed;
-    z-index: 10;
+    z-index: 10000;
+    height: 66px;
     .title {
         margin-left: 24px;
         font-size: 20px;
     }
 }
+.nav-wrapper{
 
+
+}
 .superPickemLogo {
-  margin-left: 25px;
+  margin-left: 9px;
   margin-top: 7px;
   width: 150px;
   height: 50px;
@@ -47,55 +51,90 @@ nav {
 #sidebar {
   position: fixed;
   top: 25px;
-
-  @media screen and (min-width: 1000px) {
-         font-size: 15px !important;
-        }
-
-    margin-top: 50px;
-    white-space: nowrap;
+  margin-top: 50px;
+  white-space: nowrap;
+  color: white;
+  font-size: 11px;
+  z-index: 500;
+    #backbar{
+        background-color: #000080;
+        width: 50px;
+        height: 100%;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        -webkit-box-shadow: 3px 1px 6px 1px rgba(87,87,89,0.99);
+        -moz-box-shadow: 3px 1px 6px 1px rgba(87,87,89,0.99);
+        box-shadow: 3px 1px 6px 1px rgba(87,87,89,0.99);
+    }
+    .active {
+          color: white;
+          font-size: 12px;
+          font-weight: bold;
+          text-shadow: 1px 1px #ad8629;
+    }
     a {
         color: inherit;
+        z-index: 50;
     }
-
     a:visited {
         color: inherit;
     }
     #icons {
-      @media screen and (max-width: 800px) {
-          font-size: 40px !important;
-          height: 40px;
-         }
+      color: white;
     }
-
     li {
-
         cursor: pointer;
         margin: 10px;
         margin-right: 0px;
-
         span {
             margin-left: 10px;
             position: relative;
             top: -6px;
-            @media screen and (max-width: 600px) {
-                display: none;
-                visibility: hidden;
-               }
-            @media screen and (max-width: 800px) {
-               font-size: 10px !important;
-              }
+            display: none;
         }
         .material-icons{
           // size: 60px;
         }
-    }
-
-    .active {
-        color: #000080;
-        font-size: 14px;
-      @media screen and (min-width: 1000px) {
-               font-size: 20px !important;
       }
     }
-  }
+    // HOVER
+    #backbar:hover{
+      z-index: 100px;
+        width: 140px !important;
+        -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+        transition: width 1s;
+        li span {
+          display: inline-block;
+          -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+          transition: width 1s;
+        }
+        .card.weekly-picks-card {
+          margin-left: 85px;
+        }
+      }
+#standings{
+  width: 88% !important;
+}
+
+// MOBILE VIEW
+@media (hover:none) and (orientation: portrait) {
+    nav{
+      height: 65px;
+      /* top: 66px; */
+      z-index: 5000;
+    }
+    #standings{
+        width: 80% !important;
+    }
+}
+@media (hover:none) and (orientation: landscape) {
+    nav{
+      height: 65px;
+      /* top: 66px; */
+      z-index: 5000;
+    }
+    #standings{
+
+    }
+}

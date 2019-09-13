@@ -25,11 +25,6 @@ $pickem2: #000080;
     position: relative;
     top: 20px;
 }
-
-//--- dropdown ---
-// .dd {
-//     text-align: left;
-// }
 .dd {
     position: absolute;
     top: 15px;
@@ -48,4 +43,15 @@ $pickem2: #000080;
     right: 190px;
     z-index: 8;
     cursor: pointer;
+}
+@media (hover:none) and (orientation: portrait) {
+  .curweek {
+      position: absolute;
+      top: 15px;
+      right: 190px;
+      height: 50px;
+      width: 50px;
+      z-index: 8;
+      cursor: pointer;
+  }
 }
