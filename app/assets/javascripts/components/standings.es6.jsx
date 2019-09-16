@@ -37,12 +37,12 @@ class Standings extends React.Component {
                   <div className="TopRow">
                       <span className="curweek">
                         <button className="waves-effect blue waves-light white-text darken-4 btn-flat" onClick={this.currentWeek.bind(this)}>
-                              Current Week
+                              <p>Current Week</p>
                         </button>
                       </span>
                       <span className="dd">
                         <a className='dropdown-button btn blue white-text darken-4' data-hover="true" data-activates='dropdown1'>
-                          Week: {this.state.week}</a>
+                          <p>Week: {this.state.week}</p></a>
                         <ul id='dropdown1' className='card-panel dropdown-content black-text text-darken-4' onClick={this.changeWeek.bind(this)}>
                             {this.getWeekOptions()}
                         </ul>

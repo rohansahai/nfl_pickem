@@ -15,21 +15,13 @@ $pickem2: #000080;
         color: $teal;
     }
 }
-
 .card.distribution-card {
     margin: 40px;
 }
-
 #user-picks-name {
     margin-left: 40px;
     position: relative;
     top: 20px;
-}
-.dd {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    z-index: 8;
 }
 .dropdown-content {
   cursor: pointer;
@@ -37,21 +29,31 @@ $pickem2: #000080;
 .dropdown-button {
   cursor: pointer;
 }
-.curweek {
+@media screen and (max-width: 800px)
+and (hover: hover) {
+  .curweek {
     position: absolute;
     top: 15px;
-    right: 190px;
-    z-index: 8;
+    left: 140px;
     cursor: pointer;
+  }
+  .dd {
+    position: absolute;
+    top: 15px;
+    left: 310px;
+    cursor: pointer;
+  }
 }
 @media (hover:none) and (orientation: portrait) {
-  .curweek {
-      position: absolute;
-      top: 15px;
-      right: 190px;
-      height: 50px;
-      width: 50px;
-      z-index: 8;
-      cursor: pointer;
+  .dropdown-content {
+    background-color: #fff;
+    margin: 0;
+    display: none;
+    /* min-width: 100px; */
+    max-height: 650px;
+    overflow-y: auto;
+    opacity: 0;
+    position: absolute;
+    z-index: 999;
   }
 }

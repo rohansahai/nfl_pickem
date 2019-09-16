@@ -16,18 +16,22 @@ class Game extends React.Component {
                 <td id="iconColumn"><i className="game-icon material-icons">{this.getIcon()}</i></td>
                 <td id="homeSpread" className={this.getTeamSelectedClass(home_team.id)}> {this.getSpreadPretty(true)} </td>
                 <td id="homeLogo" data-team-id={home_team.id} className={this.getHomeLogoClass(true)}>
-                    <img src={home_team.logo_path} className="logos homeLogo" />
+                    <img id="img" data-team-id={home_team.id} src={home_team.logo_path} className="logos homeLogo" />
                 </td>
-                <td id="ht" className={this.getTeamSelectedClass(home_team.id) + " select-team"} data-team-id={home_team.id}> {home_team.name} <br/> ({home_team.wins}-{home_team.losses}) </td>
+                <td id="ht" className={this.getTeamSelectedClass(home_team.id) + " select-team ht"} data-team-id={home_team.id}> {home_team.name} <br/> ({home_team.wins}-{home_team.losses}) </td>
                 <td  className="score">{this.getScorePretty()}</td>
                 <td id="awayLogo" className={this.getAwayLogoClass(true)}>
-                    <img data-team-id={away_team.id} src={away_team.logo_path} className="logos awayLogo" />
+                    <img id="img" data-team-id={away_team.id} src={away_team.logo_path} className="logos awayLogo" />
                 </td>
-                <td id="at" className={this.getTeamSelectedClass(away_team.id) + " select-team"} data-team-id={away_team.id}> {away_team.name} <br/> ({away_team.wins}-{away_team.losses}) </td>
+                <td id="at" className={this.getTeamSelectedClass(away_team.id) + " select-team at"} data-team-id={away_team.id}> {away_team.name} <br/> ({away_team.wins}-{away_team.losses}) </td>
                 <td className="datePretty"> {this.getDatePretty()} </td>
             </tr>
         );
     }
+  test(){
+    debugger
+    return
+  }
 
   whoIsTheAwayTeam(away_team){
     return away_team.name
@@ -115,10 +119,39 @@ class Game extends React.Component {
     return (this.hasGameStarted()) ? gameStatus : moment(this.props.game.time).format('ddd. MMM. DD h:mm A');
   }
   handlePickSelect (e) {
+    function getString(subString, string){
+        return (string.match(new RegExp("\S*" + subString + "\S*")) || [null])[0];
+    }
+    var className = $(e.target).attr('class');
+    if(getString("awayLogo",className)){
+      //add bottomBar to selected logo
+      $(e.target).css('box-shadow','0 6px 0px -3px #44968b');
+      //remove logoSelected styles from other team
+      $(e.target).parent().siblings('#homeLogo').children('img').css('box-shadow','none')
+    }else if(getString("homeLogo",className)){
+      //add pick logoSelected style
+      $(e.target).css('box-shadow','0 6px 0px -3px #44968b');
+      //remove logoSelected styles from other team
+      $(e.target).parent().siblings('#awayLogo').children().css('box-shadow','none')
+    }else if(getString("ht",className)){
+      //add pick logoSelected style
+       $(e.target).siblings('#homeLogo').children().css('box-shadow','0 6px 0px -3px #44968b');
+      //remove logoSelected styles from other team
+       $(e.target).siblings('#awayLogo').children().css('box-shadow','none')
+
+    }else if(getString("at",className)){
+      //add bottomBar to selected logo
+       $(e.target).siblings('#awayLogo').children().css('box-shadow','0 6px 0px -3px #44968b');
+      //remove logoSelected styles from other team
+      $(e.target).siblings('#homeLogo').children('img').css('box-shadow','none')
+    }
+
       var winner_id = $(e.target).data('team-id');
 
       // check if they are deselecting
       if (this.props.game.pick && this.props.game.pick.winner_id == winner_id) {
+
+          $(e.target)
           this.props.removePick(this.props.game.id);
           return;
       }
@@ -129,6 +162,7 @@ class Game extends React.Component {
           game_id: _this.props.game.id,
           week: _this.props.game.week
       });
+      this.test.bind(this)
   }
 }
 

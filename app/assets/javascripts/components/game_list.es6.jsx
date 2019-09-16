@@ -5,6 +5,7 @@ class GameList extends React.Component {
     }
 
     addNewPick (new_pick) {
+
         // TODO: make this not hacky af
         var existing_pick = _.findWhere(this.state.picks, {game_id: new_pick.game_id})
         var request_type = 'POST';
@@ -30,6 +31,7 @@ class GameList extends React.Component {
     }
 
     removePick (game_id) {
+      
         var pick = _.findWhere(this.state.picks, {
             game_id: game_id
         });

@@ -98,23 +98,32 @@ nav {
         }
       }
     }
-    // HOVER
-    #backbar:hover{
-      z-index: 100px;
-        width: 140px !important;
-        -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
-        transition: width 1s;
-        li span {
-          display: inline-block;
-          -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
-          transition: width 1s;
-        }
-        .card.weekly-picks-card {
-          margin-left: 85px;
-        }
-      }
+// HOVER
+#backbar:hover{
+z-index: 100px;
+  width: 140px !important;
+  -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+  transition: width 1s;
+  li span {
+    display: inline-block;
+    -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+    transition: width 1s;
+  }
+  .card.weekly-picks-card {
+    margin-left: 85px;
+  }
+}
 #standings{
-  width: 88% !important;
+  width: 89% !important;
+  @media screen and (min-width: 800px) {
+    width: 88% !important;
+  }
+  @media screen and (min-width: 900px) {
+    width: 94% !important;
+  }
+  @media screen and (min-width: 950px) {
+    width: 92% !important;
+  }
 }
 
 // MOBILE VIEW
@@ -128,13 +137,194 @@ nav {
         width: 80% !important;
     }
 }
-@media (hover:none) and (orientation: landscape) {
+//iphone 5/SE
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : portrait) {
     nav{
       height: 65px;
-      /* top: 66px; */
       z-index: 5000;
     }
     #standings{
+        width: 78% !important;
+    }
+    .dd {
 
+    }
+    .dd a{
+      position: absolute;
+      top: 2px;
+      left: 150px;
+      height: 31px;
+      width: 90px;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .dd a p{
+      width: 100%;
+      display: inline-block;
+      position: absolute;
+      left: 0px;
+    }
+    .curweek {
+      position: absolute;
+      top: 0px;
+    }
+    .curweek button{
+      position: absolute;
+      top: 34px;
+      left: 150px;
+      height: 29px;
+      width: 90px;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .curweek button p {
+      width: 100%;
+      display: inline-block;
+      position: absolute;
+      left: 0px;
+      top: -2px;
+    }
+    #dropdown1{
+      overflow: hidden;
+    }
+    .dropdown-content li > a, .dropdown-content li > span {
+      left: 10px;
+    }
+    .dropdown-content li {
+      position: relative;
+    }
+}
+//iphone 6/7/8 - portrait
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px)
+and (orientation : portrait) {
+    nav{
+      height: 65px;
+      z-index: 5000;
+    }
+    #standings{
+      width: 304px !important;
+      height: 652px !important;
+    }
+    .dd {
+      position: absolute;
+      top: 0px;
+      left: 1px;
+    }
+    .dd > a{
+      position: absolute;
+      top: 2px;
+      left: 170px;
+      height: 31px;
+      width: 111px;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .dd a p{
+      width: 100%;
+      display: inline-block;
+      position: absolute;
+      left: 0px;
+    }
+    .curweek {
+      position: absolute;
+      top: 16px;
+      left: 148px;
+      cursor: pointer;
+    }
+    .curweek button{
+      position: absolute;
+      top: 19px;
+      left: 23px;
+      height: 29px;
+      width: 111px;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .curweek button p {
+      width: 100%;
+      display: inline-block;
+      position: absolute;
+      left: 0px;
+      top: -2px;
+    }
+    #dropdown1{
+      overflow: hidden;
+    }
+    .dropdown-content li > a, .dropdown-content li > span {
+      left: 10px;
+    }
+    .dropdown-content li {
+      position: relative;
+    }
+}
+//iphone x - portrait
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 812px)
+and (-webkit-device-pixel-ratio : 3)
+and (orientation : portrait) {
+    nav{
+      height: 65px;
+      z-index: 5000;
+    }
+    #standings{
+      width: 300px !important;
+      height: 729px !important;
+    }
+    .dd {
+      position: absolute;
+      top: 0px;
+      left: 11px;
+    }
+    .dd a{
+      position: absolute;
+      top: 1px;
+      left: 160px;
+      height: 31px;
+      width: 114px;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .dd a p{
+      width: 100%;
+      display: inline-block;
+      position: absolute;
+      left: 0px;
+    }
+    .curweek {
+      position: absolute;
+      top: 17px;
+      left: 121px;
+      cursor: pointer;
+    }
+    .curweek button{
+      position: absolute;
+      top: 18px;
+      left: 50px;
+      height: 29px;
+      width: 114px;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .curweek button p {
+      width: 100%;
+      display: inline-block;
+      position: absolute;
+      left: 0px;
+      top: -2px;
+    }
+    #dropdown1{
+      overflow: hidden;
+    }
+    .dropdown-content li > a, .dropdown-content li > span {
+      left: 10px;
+    }
+    .dropdown-content li {
+      position: relative;
     }
 }
