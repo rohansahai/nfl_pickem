@@ -201,8 +201,8 @@ $pickem: #013369;
 // portrait
 @media (hover:none) and (orientation: portrait) {
   .card.weekly-picks-card {
-    width: 80% !important;
-    height: 84% !important;
+    // width: 80% !important;
+    // height: 84% !important;
       .select-team {
         display: none;
       }
@@ -227,5 +227,5 @@ $pickem: #013369;
     .logoSelected{
           box-shadow: 0 6px 0px -3px #44968b;
     }
-    
+
 }

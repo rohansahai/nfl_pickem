@@ -272,6 +272,10 @@ and (orientation : portrait) {
       height: 65px;
       z-index: 5000;
     }
+    .card.weekly-picks-card {
+      width: 80% !important;
+      height: 89% !important;
+    }
     #standings{
       width: 300px !important;
       height: 729px !important;
