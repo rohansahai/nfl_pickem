@@ -1,6 +1,6 @@
 import pandas as pd
-# from util import send_html_email, get_nfl_week_num, EmailBody, EmailBodyError
-# from db import get_prod_str
+from util import send_html_email, get_nfl_week_num, EmailBody
+from db import get_prod_str
 import seaborn as sns
 
 
@@ -48,8 +48,15 @@ def get_weekly_league_record(picks_df, outcome_cols, week):
     weekly_league_record['win_rate'] = weekly_league_record['win_rate'].apply(lambda x: '{:.1f}'.format(x))
     weekly_league_record.sort_values('week', inplace=True)
     weekly_league_record.columns = ['Week', 'Wins', 'Loss', 'Push', 'Points', 'Win Rate (%)']
+    weekly_league_record = weekly_league_record[weekly_league_record['Week'] <= week]
+    weekly_league_record['Win Rate (%)'] = weekly_league_record['Win Rate (%)'].astype(float)
 
-    return weekly_league_record[weekly_league_record['Week'] <= week]
+    sns.set(style="darkgrid")
+    ax = sns.lineplot(x="Week", y="Win Rate (%)", data=weekly_league_record)
+    ax.figure.savefig('/Users/shaunchaudhary/Desktop/Weekly League Batting Average.png')
+    ax.figure.clf()
+
+    return weekly_league_record
 
 
 def get_weekly_ind_record(picks_df, outcome_cols, week):
@@ -82,33 +89,30 @@ def get_current_week_rec_dis(weekly_ind_record, week):
     current_week_rec_dist = current_week_rec_dist[current_week_rec_dist['week'] == week]
     current_week_rec_dist.drop('week', axis=1, inplace=True)
     current_week_rec_dist.columns = ['Record', 'Count', 'Points']
-    sns.set(style="whitegrid")
-    ax = sns.barplot(x="Record", y="Count", data=current_week_rec_dist, dodge=False)
-    ax.figure.savefig('/Users/shaunchaudhary/Desktop/Weekly Record Distribution.png')
 
-    return current_week_rec_dist
+    e = sns.barplot(x="Record", y="Count", data=current_week_rec_dist, dodge=False)
+    e.figure.savefig('/Users/shaunchaudhary/Desktop/Weekly Record Distribution.png')
+    e.figure.clf()
 
 
-def build_weekly_email(weekly_league_record, weekly_ind_record, current_week_rec_dist):
+def build_weekly_email(weekly_league_record):
     """
     :param weekly_league_record:
-    :param weekly_ind_record:
-    :param current_week_rec_dist:
     :return:
     """
     intro = """Hello!\n
-    We have 5 5-0s this week so each person will receive $20 dollars via venmo.\n
-    $100 will be split across the best performing players each week. For week 1, Brett will receive the full $100 since he was the only 5-0. That leaves $100 dollars left in the pot that we are going to use to pay for web app hosting and domain costs (gotta pay to keep the lights on!).\n
-    Updated <a href="http://www.superpickem.co/standings">standings</a> are available on the website as is the <a href="http://www.superpickem.co/distribution">picks distribution</a> for week 1 (4 out of the top 5 most picked teams were incorrect last week!).\n
-    Let me know if you have any questions. I hope everyone's week 1 experience using the web app was smooth."""
+    We have 5 5-0s this week so each person will receive $30 dollars via venmo.\n
+
+    Updated <a href="https://www.superpickem.me/standings">standings</a> are available on the website.\n
+    Let me know if you have any questions."""
 
     picks_email = EmailBody(msg=intro)
     picks_email.add_df_html(weekly_league_record, msg='League Record', underline=True, bold=True, index=False)
-    picks_email.add_df_html(weekly_ind_record, msg='Individual Records', underline=True, bold=True, index=False)
-    picks_email.add_df_html(current_week_rec_dist, msg='Record Distributions', underline=True, bold=True, index=False)
+    # picks_email.add_df_html(weekly_ind_record, msg='Individual Records', underline=True, bold=True, index=False)
+    # picks_email.add_df_html(current_week_rec_dist, msg='Record Distributions', underline=True, bold=True, index=False)
 
     outro = """
-    Also, <a href="http://www.superpickem.co/picks">Week 2 spreads</a> are up!\n
+    Also, <a href="https://www.superpickem.me/picks">Week 3 spreads</a> are up!\n
     Best,
     Shaun"""
 
@@ -117,27 +121,17 @@ def build_weekly_email(weekly_league_record, weekly_ind_record, current_week_rec
     return picks_email
 
 
-def get_all_emails(prod_str):
-    """
-    :param prod_str:
-    :return:
-    """
-    emails = pd.read_sql('select email from users;', prod_str)['email'].tolist()
-
-    return '; '.join(emails)
-
-
 def main():
 
     prod_str = get_prod_str()
-    week = get_nfl_week_num() - 1
+    week = get_nfl_week_num()
     outcome_cols = ['win', 'loss', 'push']
     picks_df = get_weekly_picks(outcome_cols, prod_str)
     weekly_league_record = get_weekly_league_record(picks_df, outcome_cols, week)
     weekly_ind_record = get_weekly_ind_record(picks_df, outcome_cols, week)
-    current_week_rec_dist = get_current_week_rec_dis(weekly_ind_record, week)
-    picks_email = build_weekly_email(weekly_league_record, weekly_ind_record, current_week_rec_dist)
-    user_emails = get_all_emails(prod_str)
+    get_current_week_rec_dis(weekly_ind_record, week)
+    picks_email = build_weekly_email(weekly_league_record)
+
     send_html_email(picks_email.html, 'Week {0} Results and Week {1} Spreads'.format(week-1, week),
                     'shaun.chaudhary@gmail.com', 'shaun.chaudhary@gmail.com')
 
