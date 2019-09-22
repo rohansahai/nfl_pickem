@@ -176,16 +176,15 @@ def get_nfl_week_num():
     """
     import pandas as pd
     from datetime import datetime as dt
-    week_begin = pd.date_range(start='2019-09-04', end='2019-12-28', freq='7D')
-    week_end = pd.date_range(start='2018-09-10', end='2019-01-02', freq='7D')
+    week_begin = pd.date_range(start='2019-09-04', end='2019-12-29', freq='7D')
+    week_end = pd.date_range(start='2019-09-10', end='2020-01-03', freq='7D')
     week_nums = list(range(1, 18))
-    week_lol = [[dt(2019, 8, 1), dt(2019, 9, 3), 1]] + [[week_b, week_e, num] for week_b, week_e, num in
-                                                        zip(week_begin, week_end, week_nums)]
+    week_lol = [[week_b, week_e, num] for week_b, week_e, num in zip(week_begin, week_end, week_nums)]
 
     today = dt(dt.today().year, dt.today().month, dt.today().day)
     today = convert_tz(today)
     week_mapping_df = pd.DataFrame(week_lol, columns=['Week_Begin', 'Week_End', 'Week_Num'])
-    week = week_mapping_df[(week_mapping_df['Week_Begin'] <= today) & (week_mapping_df['Week_End'] <= today)]['Week_Num'].iloc[-1]
+    week = week_mapping_df[(week_mapping_df['Week_Begin'] <= today) & (week_mapping_df['Week_End'] >= today)]['Week_Num'].iloc[0]
 
     return week
 

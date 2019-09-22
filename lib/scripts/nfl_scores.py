@@ -94,8 +94,9 @@ def insert_possession_team(row, team_mapping):
     if '&' in row['game_status']:
         game_status = row['game_status']
         try:
-            i = game_status.index('at') - 1
-            down = game_status[10:i]
+            down_begin = game_status.index('&') - 4
+            down_end = game_status.index('at') - 1
+            down = game_status[down_begin:down_end]
         except ValueError:
             pass
 
