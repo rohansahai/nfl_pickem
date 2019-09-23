@@ -1,4 +1,4 @@
-from db import get_gmail_creds
+# from db import get_gmail_creds
 
 
 class EmailBody:
