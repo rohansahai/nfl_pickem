@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/rohansahai/nfl_pickem/issues"
   },
-  "homepage": "https://github.com/rohansahai/nfl_pickem#readme"
+  "homepage": "https://github.com/rohansahai/nfl_pickem#readme",
+  "dependencies": {
+    "materialize-css": "^1.0.0"
+  }
 }

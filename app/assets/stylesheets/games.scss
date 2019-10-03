@@ -22,6 +22,9 @@ $pickem: #013369;
   height: 10px;
 
 }
+.selectedLogo {
+    box-shadow: 'none';
+  }
 .homeSpead_th{
   white-space: nowrap;
   text-align: center;
@@ -54,13 +57,13 @@ $pickem: #013369;
   overflow: auto;
   height: 80%;
   width: 80%;
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 700px) and (hover:hover) {
     width: 88% !important;
   }
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1000px) and (hover:hover) {
     width: 93% !important;
   }
-  @media screen and (min-height: 500px) {
+  @media screen and (min-height: 500px) and (hover:hover) {
     height: 90% !important;
   }
 }
@@ -74,29 +77,29 @@ $pickem: #013369;
     height: 87%;
     width: 85%;
   //Width
-  @media screen and (min-width: 500px) {
+  @media screen and (min-width: 500px) and (hover:hover) {
     width: 90% !important;
   }
-  @media screen and (min-width: 900px) {
+  @media screen and (min-width: 900px) and (hover:hover) {
     width: 93% !important;
   }
   //Height
-  @media screen and (max-height: 400px) {
+  @media screen and (max-height: 400px) and (hover:hover) {
     height: 76% !important;
   }
-  @media screen and (min-height: 400px) {
+  @media screen and (min-height: 400px) and (hover:hover) {
     height: 78% !important;
   }
-  @media screen and (min-height: 500px) {
+  @media screen and (min-height: 500px) and (hover:hover) {
     height: 83% !important;
   }
-  @media screen and (min-height: 600px) {
+  @media screen and (min-height: 600px) and (hover:hover) {
     height: 85% !important;
   }
-  @media screen and (min-height: 700px) {
+  @media screen and (min-height: 700px) and (hover:hover) {
     height: 86% !important;
   }
-  @media screen and (min-height: 800px) {
+  @media screen and (min-height: 800px) and (hover:hover) {
     height: 88% !important;
   }
   .card-content {
@@ -200,9 +203,7 @@ $pickem: #013369;
 // MOBILE VIEW
 // portrait
 @media (hover:none) and (orientation: portrait) {
-  .card.weekly-picks-card {
-    // width: 80% !important;
-    // height: 84% !important;
+  #picks {
       .select-team {
         display: none;
       }
@@ -224,8 +225,15 @@ $pickem: #013369;
     #awayLogo{
       padding-left: 5px;
     }
-    .logoSelected{
-          box-shadow: 0 6px 0px -3px #44968b;
+    // .logoSelected{
+    //       box-shadow: 0 6px 0px -3px #44968b;
+    // }
+    .selectedLogo {
+        box-shadow: 0 6px 0px -3px #44968b;
     }
-
+}
+@media (hover:none) and (orientation: landscape) {
+    .selectedLogo {
+        box-shadow: 0 6px 0px -3px #44968b;
+    }
 }

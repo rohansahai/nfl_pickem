@@ -31,7 +31,7 @@ class GameList extends React.Component {
     }
 
     removePick (game_id) {
-      
+
         var pick = _.findWhere(this.state.picks, {
             game_id: game_id
         });
@@ -88,12 +88,6 @@ class GameList extends React.Component {
     }
 
 
-
-    changeClass(){
-      var x = document.querySelector('#test')
-      x.id = "hidden10"
-
-    }
     render () {
         var _this = this;
         var gameNodes = this.state.games.map(function(game) {
@@ -103,7 +97,7 @@ class GameList extends React.Component {
         });
 
         return (
-            <div className="card weekly-picks-card">
+            <div id="picks" className="card weekly-picks-card">
                 <div className="card-content">
                     <div className="row title-row">
                         <span className="card-title">Week {this.props.week} Picks</span>

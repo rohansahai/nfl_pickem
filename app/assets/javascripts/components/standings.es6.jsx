@@ -35,6 +35,9 @@ class Standings extends React.Component {
             <div id="standings" className="card weekly-picks-card">
                 <div className="card-content">
                   <div className="TopRow">
+                  </div>
+                  <div className="row title-row">
+                      <span className="card-title">Standings</span>
                       <span className="curweek">
                         <button className="waves-effect blue waves-light white-text darken-4 btn-flat" onClick={this.currentWeek.bind(this)}>
                               <p>Current Week</p>
@@ -47,9 +50,6 @@ class Standings extends React.Component {
                             {this.getWeekOptions()}
                         </ul>
                       </span>
-                  </div>
-                  <div className="row title-row">
-                      <span className="card-title">Standings</span>
                     </div>
                     <table className="bordered">
                         <tbody>

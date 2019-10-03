@@ -38,8 +38,6 @@ nav {
     }
 }
 .nav-wrapper{
-
-
 }
 .superPickemLogo {
   margin-left: 9px;
@@ -47,7 +45,6 @@ nav {
   width: 150px;
   height: 50px;
 }
-
 #sidebar {
   position: fixed;
   top: 25px;
@@ -93,11 +90,17 @@ nav {
             top: -6px;
             display: none;
         }
-        .material-icons{
-          // size: 60px;
-        }
       }
     }
+#picks{
+
+}
+#standings{
+  .dd{
+    margin-left: 5px;
+  }
+}
+
 // HOVER
 #backbar:hover{
 z-index: 100px;
@@ -126,18 +129,63 @@ z-index: 100px;
   }
 }
 
-// MOBILE VIEW
+// MOBILE VIEW PORTRAIT
 @media (hover:none) and (orientation: portrait) {
     nav{
       height: 65px;
       /* top: 66px; */
       z-index: 5000;
     }
-    #standings{
-        width: 80% !important;
+    .dropdown-content{
+      top: 67px !important;
+    }
+    #backbar {
+       width: 50px;
     }
 }
+// MOBILE VIEW landscape
+@media (hover:none) and (orientation: landscape) {
+  #backbar {
+    width: 50px;
+  }
+}
 //iphone 5/SE
+//landscape
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+  #picks {
+    height: 74%;
+    width: 500px;
+  }
+  #standings{
+    width: 88% !important;
+    height: 75% !important;
+  }
+  .dd {
+    margin-left: 0px !important;
+  }
+  .dd a{
+    position: absolute;
+    top: 20px;
+    left: 321px;
+    white-space: nowrap;
+  }
+  .curweek {
+    position: absolute;
+    top: 0px;
+  }
+  .curweek button{
+    position: absolute;
+    top: 21px;
+    left: 150px;
+    white-space: nowrap;
+  }
+}
+//iphone 5/SE
+//portrait
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 568px)
@@ -146,11 +194,21 @@ and (orientation : portrait) {
       height: 65px;
       z-index: 5000;
     }
+    #picks {
+      width: 250px !important;
+      height: 490px !important;
+    }
     #standings{
-        width: 78% !important;
+      width: 78% !important;
+      height: 485px;
+    }
+    .card.distribution-card{
+      margin: 31px;
+      width: 245px;
+      height: 488px;
     }
     .dd {
-
+      margin-left: 0px !important;
     }
     .dd a{
       position: absolute;
@@ -197,6 +255,55 @@ and (orientation : portrait) {
       position: relative;
     }
 }
+//iphone 6/7/8 - landscape
+  // @media only screen
+  // and (min-device-width :667px)
+  // and (max-device-width : 667px)
+  // and (orientation : landscape) {
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+  #picks {
+    height: 295px !important;
+    width: 597px !important;
+
+    .select-team {
+      display: none;
+    }
+    #columnName #teamName{
+        display: none !important;
+    }
+  }
+  #standings {
+    height: 78% !important;
+  }
+  .card.distribution-card{
+    margin: 31px;
+    width: 570px;
+    height: 240px;
+  }
+  .dd {
+    margin-left: 0px !important;
+  }
+  .dd a{
+    position: absolute;
+    top: 20px;
+    left: 321px;
+    white-space: nowrap;
+  }
+  .curweek {
+    position: absolute;
+    top: 0px;
+  }
+  .curweek button{
+    position: absolute;
+    top: 20px;
+    left: 150px;
+    white-space: nowrap;
+  }
+}
 //iphone 6/7/8 - portrait
 @media only screen
 and (min-device-width : 375px)
@@ -206,14 +313,23 @@ and (orientation : portrait) {
       height: 65px;
       z-index: 5000;
     }
+    #picks {
+      width: 300px !important;
+      height: 85% !important;
+    }
     #standings{
       width: 304px !important;
-      height: 652px !important;
+      height: 85% !important;
+    }
+    .card.distribution-card{
+      width: 290px;
+      height: 85%
     }
     .dd {
       position: absolute;
       top: 0px;
       left: 1px;
+      margin-left: 0px !important;
     }
     .dd > a{
       position: absolute;
@@ -262,6 +378,45 @@ and (orientation : portrait) {
       position: relative;
     }
 }
+//iphone X - landscape
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 812px)
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) {
+      #picks {
+        width: 740px;
+        height: 295px;
+      }
+      #standings{
+        width: 738px !important;
+        height: 292px !important;
+      }
+      .card.distribution-card{
+        margin: 31px;
+        width: 245px;
+        height: 488px;
+      }
+      .dd {
+        margin-left: 0px !important;
+      }
+      .dd a{
+        position: absolute;
+        top: 20px;
+        left: 321px;
+        white-space: nowrap;
+      }
+      .curweek {
+        position: absolute;
+        top: 0px;
+      }
+      .curweek button{
+        position: absolute;
+        top: 20px;
+        left: 150px;
+        white-space: nowrap;
+      }
+}
 //iphone x - portrait
 @media only screen
 and (min-device-width : 375px)
@@ -272,7 +427,7 @@ and (orientation : portrait) {
       height: 65px;
       z-index: 5000;
     }
-    .card.weekly-picks-card {
+    #picks {
       width: 80% !important;
       height: 89% !important;
     }
@@ -280,10 +435,16 @@ and (orientation : portrait) {
       width: 300px !important;
       height: 729px !important;
     }
+    .card.distribution-card{
+      margin: 31px;
+      width: 300px;
+      height: 732px;
+    }
     .dd {
       position: absolute;
       top: 0px;
       left: 11px;
+      margin-left: 0px !important;
     }
     .dd a{
       position: absolute;
@@ -331,4 +492,151 @@ and (orientation : portrait) {
     .dropdown-content li {
       position: relative;
     }
+}
+//Pixel 2 - portrait
+//pixel 2 - landscape
+@media screen
+  and (max-height: 730px)
+  and (min-height: 730px)
+  and (-webkit-device-pixel-ratio: 3)
+  and (orientation: landscape) {
+    #picks {
+      width: 658px;
+      .select-team {
+        display: none;
+      }
+      #columnName #teamName{
+          display: none !important;
+      }
+    }
+    #standings {
+      height: 328px;
+    }
+}
+//Pixel 2 XL - portrait
+@media only screen
+and (min-height: 820px)
+and (-webkit-min-device-pixel-ratio: 1.77)
+and (orientation:portrait) {
+    #picks {
+      width: 337px;
+      height: 740px;
+    }
+    #standings {
+      width: 338px;
+      height: 742px;
+    }
+}
+//ipad (normal) portrait
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 768px)
+and (orientation : portrait){
+  #picks {
+    width: 695px;
+    height: 942px;
+  }
+  #standings {
+    width: 695px;
+    height: 942px;
+  }
+  .dd {
+    margin-left: 0px !important;
+  }
+  .dd a{
+    position: absolute;
+    top: 20px;
+    left: 321px;
+    white-space: nowrap;
+  }
+  .curweek {
+    position: absolute;
+    top: 0px;
+  }
+  .curweek button{
+    position: absolute;
+    top: 20px;
+    left: 150px;
+    white-space: nowrap;
+  }
+}
+//ipad (normal) landscape
+
+//ipad PRO - portrait
+@media only screen
+and (min-device-width: 1024px)
+and (max-device-width: 1024px)
+and (orientation: portrait)
+and (-webkit-min-device-pixel-ratio: 2)
+{
+  #picks {
+    width: 948px;
+    height: 1270px;
+  }
+  #standings {
+    width: 948px;
+    height: 1270px;
+  }
+  .card.distribution-card{
+
+  }
+  .dd {
+    margin-left: 0px !important;
+  }
+  .dd a{
+    position: absolute;
+    top: 20px;
+    left: 321px;
+    white-space: nowrap;
+  }
+  .curweek {
+    position: absolute;
+    top: 0px;
+  }
+  .curweek button{
+    position: absolute;
+    top: 20px;
+    left: 150px;
+    white-space: nowrap;
+  }
+}
+//ipad PRO - landscape
+@media only screen
+and (min-device-width: 1366px)
+and (max-device-width: 1366px)
+and (orientation: landscape)
+and (-webkit-min-device-pixel-ratio: 2)
+{
+  #picks {
+    width: 1287px;
+    height: 940px;
+  }
+  #standings {
+    width: 1287px;
+    height: 940px;
+  }
+  .card.distribution-card{
+    margin: 31px;
+    width: 1287px;
+    height: 940px;
+  }
+  .dd {
+    margin-left: 0px !important;
+  }
+  .dd a{
+    position: absolute;
+    top: 20px;
+    left: 321px;
+    white-space: nowrap;
+  }
+  .curweek {
+    position: absolute;
+    top: 0px;
+  }
+  .curweek button{
+    position: absolute;
+    top: 20px;
+    left: 150px;
+    white-space: nowrap;
+  }
 }

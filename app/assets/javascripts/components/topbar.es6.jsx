@@ -12,7 +12,6 @@ class Topbar extends React.Component {
                     </ul>
                 </div>
             </nav>
-          
         );
     }
 }
