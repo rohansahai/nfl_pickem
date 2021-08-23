@@ -4,5 +4,7 @@ beautifulsoup4==4.4.1
 python-dateutil==2.5.1
 lxml
 sqlalchemy
-psycopg2
+psycopg2-binary
 numpy==1.11.0
+html5lib==1.0b8
+seaborn
